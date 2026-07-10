@@ -1,0 +1,95 @@
+TABCHANGE As CanvasComponent:
+    FBOnSelect():
+        ThisProperty:
+            Default: ="Text"
+    SBOnSelect():
+        ThisProperty:
+            Default: ="Text"
+    Fill: =RGBA(0, 0, 0, 0)
+    FirstButFill: =RGBA(255, 255, 255, 1)
+    FirstButText: ="First Tab Name"
+    FirstButTextSize: =15
+    Height: =640
+    SecondButFill: =RGBA(200, 200, 200, 200)
+    SecondButText: ="Second Tab Name"
+    SecondButTextSize: =15
+    TabFill: =RGBA(0, 0, 0, 1)
+    TabHeight: =50
+    TabText: ="Text"
+    TabWidth: =10
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Container3 As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(214, 221, 224, 1)
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        X: =76
+        Y: =208
+        ZIndex: =1
+
+        Container5 As groupContainer.horizontalAutoLayoutContainer:
+            Height: =61
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+            LayoutMode: =LayoutMode.Auto
+            Width: =444
+            X: =24
+            Y: =60
+            ZIndex: =1
+
+            btnLeft_1 As button:
+                BorderThickness: =0
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledFill: =Self.Fill
+                Fill: =TABCHANGE.FirstButFill
+                FocusedBorderThickness: =0
+                Font: =Font.'Lato Black'
+                Height: =Parent.Height
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                OnSelect: =TABCHANGE.FBOnSelect()
+                PressedColor: =Self.Color
+                PressedFill: =ColorFade(Self.Fill, - 30%)
+                RadiusBottomLeft: =
+                RadiusBottomRight: =
+                RadiusTopLeft: =40
+                RadiusTopRight: =40
+                Size: =TABCHANGE.FirstButTextSize
+                Text: =TABCHANGE.FirstButText
+                Width: =Parent.Width / 2.1
+                ZIndex: =1
+
+            btnLeft_2 As button:
+                AlignInContainer: =
+                BorderThickness: =0
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledFill: =Self.Fill
+                Fill: =TABCHANGE.SecondButFill
+                FocusedBorderThickness: =0
+                Font: =Font.'Lato Black'
+                Height: =Parent.Height
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                OnSelect: =TABCHANGE.SBOnSelect()
+                PressedColor: =Self.Color
+                PressedFill: =ColorFade(Self.Fill, - 30%)
+                RadiusBottomLeft: =
+                RadiusBottomRight: =
+                RadiusTopLeft: =40
+                RadiusTopRight: =40
+                Size: =TABCHANGE.SecondButTextSize
+                Text: =TABCHANGE.SecondButText
+                Width: =Parent.Width / 2.1
+                X: =
+                ZIndex: =2
+

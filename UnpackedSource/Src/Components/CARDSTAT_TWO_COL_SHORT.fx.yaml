@@ -1,0 +1,143 @@
+CARDSTAT_TWO_COL_SHORT As CanvasComponent:
+    BgColor: =RGBA(255, 255, 10, 10)
+    CardColor: =RGBA(0, 0, 0, 1)
+    CountData: =100
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =140
+    IconSVG: ="Text"
+    IconSVG2: ="Text"
+    NavigateColor1: =RGBA(0, 0, 0, 1)
+    NavigateColor2: =RGBA(0, 0, 0, 1)
+    NavigateCount1: =0
+    NavigateCount2: =0
+    NavigateFIll1: =RGBA(0, 0, 0, 0)
+    NavigateFill2: =RGBA(0, 0, 0, 0)
+    NavigateText1: =App.ActiveScreen
+    NavigateText2: =App.ActiveScreen
+    NavigateTitle1: ="Text"
+    NavigateTitle2: ="Text"
+    Title: ="Text"
+    TitleColor: =RGBA(0, 0, 0, 1)
+    Width: =300
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    card_5 As groupContainer.manualLayoutContainer:
+        Fill: =CARDSTAT_TWO_COL_SHORT.CardColor
+        Height: =140
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Width: =Parent.Width
+        ZIndex: =1
+
+        Container11_5 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Height: =120
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            Width: =280
+            X: =10
+            Y: =10
+            ZIndex: =1
+
+            Container10_5 As groupContainer.horizontalAutoLayoutContainer:
+                DropShadow: =DropShadow.None
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =0
+                LayoutMaxWidth: =
+                LayoutMinHeight: =120
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                X: =40
+                Y: =40
+                ZIndex: =2
+
+                Container13_4 As groupContainer.manualLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =0
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =200
+                    Width: =280
+                    ZIndex: =3
+
+                    Button1_3 As button:
+                        BorderColor: =
+                        BorderStyle: =BorderStyle.None
+                        Color: =CARDSTAT_TWO_COL_SHORT.NavigateColor1
+                        Fill: =CARDSTAT_TWO_COL_SHORT.NavigateFIll1
+                        FontWeight: =FontWeight.Bold
+                        Height: =25
+                        HoverColor: =RGBA(0, 0, 0, 1)
+                        HoverFill: =ColorFade(RGBA(255, 255, 200, 0.5), -20%)
+                        OnSelect: =Navigate(CARDSTAT_TWO_COL_SHORT.NavigateText1)
+                        PaddingBottom: =20
+                        PaddingTop: =10
+                        Size: =22
+                        Text: =CARDSTAT_TWO_COL_SHORT.NavigateTitle1
+                        Width: =106
+                        X: =117
+                        Y: =11
+                        ZIndex: =4
+
+                    SVG_10 As image:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Height: =58
+                        Image: |-
+                            ="data:image/svg+xml;utf8," & EncodeUrl(CARDSTAT_TWO_COL_SHORT.IconSVG)
+                        Width: =56
+                        X: =12
+                        Y: =5
+                        ZIndex: =5
+
+                    SVG_11 As image:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Height: =50
+                        Image: |-
+                            ="data:image/svg+xml;utf8," & EncodeUrl(CARDSTAT_TWO_COL_SHORT.IconSVG2)
+                        Width: =51
+                        X: =110
+                        Y: =60
+                        ZIndex: =6
+
+                    Button1_4 As button:
+                        Align: =Align.Left
+                        BorderColor: =
+                        BorderStyle: =BorderStyle.None
+                        Color: =CARDSTAT_TWO_COL_SHORT.NavigateColor1
+                        Fill: =CARDSTAT_TWO_COL_SHORT.NavigateFIll1
+                        FontWeight: =FontWeight.Bold
+                        Height: =45
+                        HoverColor: =RGBA(0, 0, 0, 1)
+                        HoverFill: =ColorFade(RGBA(255, 255, 200, 0.5), -20%)
+                        OnSelect: |-
+                            =//Navigate
+                            //(CARDSTAT_TWO_COL_SHORT.CountData)
+                        PaddingBottom: =20
+                        PaddingTop: =10
+                        Size: =24
+                        Text: =CARDSTAT_TWO_COL_SHORT.CountData
+                        Width: =67
+                        X: =167
+                        Y: =73
+                        ZIndex: =10
+

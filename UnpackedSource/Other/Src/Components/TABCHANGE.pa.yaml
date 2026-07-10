@@ -1,0 +1,160 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  TABCHANGE:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      FBOnSelect:
+        PropertyKind: Event
+        DisplayName: FB OnSelect
+        Description: A custom property
+        ReturnType: Text
+        Default: ="Text"
+      FirstButFill:
+        PropertyKind: Input
+        DisplayName: FirstBut Fill
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(255, 255, 255, 1)
+      FirstButText:
+        PropertyKind: Input
+        DisplayName: FirstBut Text
+        Description: A custom property
+        DataType: Text
+        Default: ="First Tab Name"
+      FirstButTextSize:
+        PropertyKind: Input
+        DisplayName: First But Text Size
+        Description: A custom property
+        DataType: Number
+        Default: =15
+      SBOnSelect:
+        PropertyKind: Event
+        DisplayName: SB OnSelect
+        Description: A custom property
+        ReturnType: Text
+        Default: ="Text"
+      SecondButFill:
+        PropertyKind: Input
+        DisplayName: SecondBut Fill
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(200, 200, 200, 200)
+      SecondButText:
+        PropertyKind: Input
+        DisplayName: SecondBut Text
+        Description: A custom property
+        DataType: Text
+        Default: ="Second Tab Name"
+      SecondButTextSize:
+        PropertyKind: Input
+        DisplayName: Second But Text Size
+        Description: A custom property
+        DataType: Number
+        Default: =15
+      TabFill:
+        PropertyKind: Input
+        DisplayName: Tab Fill
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      TabHeight:
+        PropertyKind: Input
+        DisplayName: Tab Height
+        Description: A custom property
+        DataType: Number
+        Default: =50
+      TabText:
+        PropertyKind: Input
+        DisplayName: Tab Text
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      TabWidth:
+        PropertyKind: Input
+        DisplayName: Tab Width
+        Description: A custom property
+        DataType: Number
+        Default: =10
+    Children:
+      - Container3:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(214, 221, 224, 1)
+            X: =76
+            Y: =208
+          Children:
+            - Container5:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Height: =61
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                  Width: =444
+                  X: =24
+                  Y: =60
+                Children:
+                  - btnLeft_1:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderThickness: =0
+                        Color: =RGBA(0, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledFill: =Self.Fill
+                        Fill: =TABCHANGE.FirstButFill
+                        FocusedBorderThickness: =0
+                        Font: =Font.'Lato Black'
+                        Height: =Parent.Height
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(Self.Fill, -20%)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: =TABCHANGE.FBOnSelect()
+                        PressedBorderColor: =Self.Fill
+                        PressedFill: =ColorFade(Self.Fill, - 30%)
+                        RadiusBottomLeft: =
+                        RadiusBottomRight: =
+                        RadiusTopLeft: =40
+                        RadiusTopRight: =40
+                        Size: =TABCHANGE.FirstButTextSize
+                        Text: =TABCHANGE.FirstButText
+                        Width: =Parent.Width / 2.1
+                  - btnLeft_2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        AlignInContainer: =
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderThickness: =0
+                        Color: =RGBA(0, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledFill: =Self.Fill
+                        Fill: =TABCHANGE.SecondButFill
+                        FocusedBorderThickness: =0
+                        Font: =Font.'Lato Black'
+                        Height: =Parent.Height
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(Self.Fill, -20%)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: =TABCHANGE.SBOnSelect()
+                        PressedBorderColor: =Self.Fill
+                        PressedFill: =ColorFade(Self.Fill, - 30%)
+                        RadiusBottomLeft: =
+                        RadiusBottomRight: =
+                        RadiusTopLeft: =40
+                        RadiusTopRight: =40
+                        Size: =TABCHANGE.SecondButTextSize
+                        Text: =TABCHANGE.SecondButText
+                        Width: =Parent.Width / 2.1
+                        X: =

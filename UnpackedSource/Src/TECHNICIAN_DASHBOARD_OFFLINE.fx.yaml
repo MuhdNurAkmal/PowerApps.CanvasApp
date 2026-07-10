@@ -1,0 +1,583 @@
+TECHNICIAN_DASHBOARD_OFFLINE As screen:
+
+    "'Main-Container_4' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_OFFLINE_1 As HEADER_OFFLINE:
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            Visible: =true
+
+        Content_4 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =3
+
+            NAVBAR_5 As NAVBAR_ENGINEER:
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                CurrentPage: ="DASHBOARD"
+                EnableChildFocus: =true
+                ExitButton: ="Text"
+                Fill: =RGBA(0,0,0,0)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                TaskListScreen: =TASK_LIST
+                Visible: =true
+
+            "'Dashboard-Content_3' As groupContainer.horizontalAutoLayoutContainer":
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                DropShadow: =DropShadow.None
+                FillPortions: =8
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGap: =10
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                ZIndex: =3
+
+                "'Title-Container_4' As groupContainer.manualLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    FillPortions: =0
+                    Height: =50
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =0
+                    LayoutMinWidth: =250
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =4
+
+                    txtTitle_dashboard_2 As Text:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =false
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(47, 53, 66, 1)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =42
+                        Size: =30
+                        TabIndex: =0
+                        Text: ="Dashboard"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =500
+                        Wrap: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =5
+
+                "'Progress-Container_1' As groupContainer.horizontalAutoLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FillPortions: =0
+                    LayoutAlignItems: =LayoutAlignItems.Center
+                    LayoutGap: =20
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutJustifyContent: =LayoutJustifyContent.Center
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =6
+
+                    CARDSTAT_TWO_COL_NewNotification_1 As CARDSTAT_TWO_COL:
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        IconSVG: |-
+                            ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M18.7491 9V9.7041C18.7491 10.5491 18.9903 11.3752 19.4422 12.0782L20.5496 13.8012C21.5612 15.3749 20.789 17.5139 19.0296 18.0116C14.4273 19.3134 9.57274 19.3134 4.97036 18.0116C3.21105 17.5139 2.43882 15.3749 3.45036 13.8012L4.5578 12.0782C5.00972 11.3752 5.25087 10.5491 5.25087 9.7041V9C5.25087 5.13401 8.27256 2 12 2C15.7274 2 18.7491 5.13401 18.7491 9Z"" fill=""#ffffff""></path> <path d=""M7.24316 18.5454C7.8941 20.5506 9.77767 22.0002 11.9998 22.0002C14.222 22.0002 16.1055 20.5506 16.7565 18.5454C13.611 19.1357 10.3886 19.1357 7.24316 18.5454Z"" fill=""#ffffff""></path> </g></svg>"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =640
+                        LayoutMinWidth: =640
+                        NavigateColor1: =RGBA(255, 255, 255, 1)
+                        NavigateColor2: =RGBA(255, 255, 255, 1)
+                        NavigateCount1: ="0"
+                        NavigateCount2: ="1"
+                        NavigateTitle1: ="PM"
+                        NavigateTitle2: ="CM"
+                        Title: ="New Task"
+                        TitleColor: =RGBA(255, 255, 255, 1)
+                        Width: =380
+
+                    CARDSTAT_TWO_COL_3 As CARDSTAT_TWO_COL:
+                        BgColor: =RGBA(243, 156, 18, 1)
+                        IconSVG: |-
+                            ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M16.1569 3.80211L16.8431 4.20846C18.8718 5.40987 19.8862 6.01057 20.4431 7C21 7.98943 21 9.19084 21 11.5937V12.4063C21 14.8092 21 16.0106 20.4431 17C19.8862 17.9894 18.8718 18.5901 16.8431 19.7915L16.1569 20.1979C14.1282 21.3993 13.1138 22 12 22C10.8862 22 9.8718 21.3993 7.84308 20.1979L7.15692 19.7915C5.1282 18.5901 4.11384 17.9894 3.55692 17C3 16.0106 3 14.8092 3 12.4063V11.5937C3 9.19084 3 7.98943 3.55692 7C4.11384 6.01057 5.1282 5.40987 7.15692 4.20846L7.84308 3.80211C9.8718 2.6007 10.8862 2 12 2C13.1138 2 14.1282 2.6007 16.1569 3.80211Z"" fill=""#ffffff""></path> <path d=""M12 6.25C12.4142 6.25 12.75 6.58579 12.75 7V13C12.75 13.4142 12.4142 13.75 12 13.75C11.5858 13.75 11.25 13.4142 11.25 13V7C11.25 6.58579 11.5858 6.25 12 6.25Z"" fill=""#ffffff""></path> <path d=""M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z"" fill=""#ffffff""></path> </g></svg>"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =640
+                        LayoutMinWidth: =640
+                        NavigateColor1: =RGBA(255, 255, 255, 1)
+                        NavigateColor2: =RGBA(255, 255, 255, 1)
+                        NavigateCount1: ="1"
+                        NavigateCount2: ="2"
+                        NavigateTitle1: ="CM"
+                        NavigateTitle2: ="PM"
+                        Title: ="Pending Task"
+                        TitleColor: =RGBA(255, 255, 255, 1)
+                        Width: =380
+                        ZIndex: =2
+
+                    CARDSTAT_TWO_COL_4 As CARDSTAT_TWO_COL:
+                        BgColor: =RGBA(39, 174, 96, 1)
+                        IconSVG: |-
+                            ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path fill-rule=""evenodd"" clip-rule=""evenodd"" d=""M2.54497 8.73005C2 9.79961 2 11.1997 2 14C2 16.8003 2 18.2004 2.54497 19.27C3.02433 20.2108 3.78924 20.9757 4.73005 21.455C5.79961 22 7.19974 22 10 22H14C16.8003 22 18.2004 22 19.27 21.455C20.2108 20.9757 20.9757 20.2108 21.455 19.27C22 18.2004 22 16.8003 22 14C22 11.1997 22 9.79961 21.455 8.73005C20.9757 7.78924 20.2108 7.02433 19.27 6.54497C18.2004 6 16.8003 6 14 6H10C7.19974 6 5.79961 6 4.73005 6.54497C3.78924 7.02433 3.02433 7.78924 2.54497 8.73005ZM15.0595 12.4995C15.3353 12.1905 15.3085 11.7164 14.9995 11.4406C14.6905 11.1647 14.2164 11.1915 13.9406 11.5005L10.9286 14.8739L10.0595 13.9005C9.78359 13.5915 9.30947 13.5647 9.0005 13.8406C8.69152 14.1164 8.66468 14.5905 8.94055 14.8995L10.3691 16.4995C10.5114 16.6589 10.7149 16.75 10.9286 16.75C11.1422 16.75 11.3457 16.6589 11.488 16.4995L15.0595 12.4995Z"" fill=""#ffffff""></path> <path opacity=""0.5"" d=""M11.9993 2C16.7133 2 19.0704 2 20.5348 3.46447C21.2923 4.22195 21.658 5.21824 21.8345 6.65598V10H2.16406V6.65598C2.3406 5.21824 2.70628 4.22195 3.46377 3.46447C4.92823 2 7.28525 2 11.9993 2Z"" fill=""#ffffff""></path> </g></svg>"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =640
+                        LayoutMinWidth: =640
+                        NavigateColor1: =RGBA(255, 255, 255, 1)
+                        NavigateColor2: =RGBA(255, 255, 255, 1)
+                        NavigateCount1: =5
+                        NavigateCount2: =5
+                        NavigateTitle1: ="CM"
+                        NavigateTitle2: ="PM"
+                        Title: ="Completed Work Order"
+                        TitleColor: =RGBA(255, 255, 255, 1)
+                        Width: =380
+                        ZIndex: =3
+
+                "'Task-Container_3' As groupContainer.manualLayoutContainer":
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    X: =40
+                    Y: =40
+                    ZIndex: =7
+
+                    "'HeaderCard-Container_1' As groupContainer.manualLayoutContainer":
+                        DropShadow: =DropShadow.None
+                        Height: =45
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =490
+                        X: =10
+                        Y: =10
+                        ZIndex: =8
+
+                        txtTaskList_1 As Text:
+                            Align: ='TextCanvas.Align'.Start
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =RGBA(47, 53, 66, 1)
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =42
+                            Size: =30
+                            TabIndex: =0
+                            Text: ="Pending Task"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Weight: ="Regular"
+                            Width: =539
+                            Wrap: =true
+                            X: =24
+                            Y: =3
+                            ZIndex: =9
+
+                        btnViewAll_1 As Button:
+                            AcceptsFocus: =true
+                            AccessibleLabel: =""
+                            Align: =Align.Center
+                            Appearance: ='ButtonCanvas.Appearance'.Primary
+                            BasePaletteColor: =RGBA(249, 83, 109, 1)
+                            BorderColor: =
+                            BorderRadius: =35
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =Font.'Lato Black'
+                            FontColor: =RGBA(255, 255, 255, 1)
+                            FontItalic: =false
+                            FontSize: =0
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =42
+                            Icon: ="ArrowRight"
+                            IconRotation: =0
+                            IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                            Layout: ='ButtonCanvas.Layout'.IconAfter
+                            OnSelect: =Navigate(TASK_LIST,ScreenTransition.Fade)
+                            TabIndex: =0
+                            Text: ="View All"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Width: =116
+                            X: =1082
+                            Y: =3
+                            ZIndex: =10
+
+                    "'Task-List_3' As gallery.'BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
+                        BorderColor: =App.Theme.Colors.Darker10
+                        DelayItemLoading: =true
+                        Height: =303
+                        Items: |-
+                            =Table(
+                                {ID:1,NotificationNo:"1202340",WorkOrderNo:"400686167",DateNew:"06/06/2023",Description:"Crane Button Unserviceable",Supervisor:"Kamarul",Status:"NEW",DelayHour:"",Color:RGBA(0,0,0,1),PackageType:"CM",Target:"07/06/2023",WorkCentre:"TNM1",Priority:"3-Medium",AssignedTo:"10022155 MUHAMAD EZUAN AMERUDIN BIN ABU BAKAR",WorkOrderType:"RAIL - Corrective Maintenance Order",Location:"TNM Track Network Department",FunctionalLocation:"PRAL-MRL-TN-DPT Brickfields Depot",WorkDescription:"NA"},
+                            
+                                {ID:2,NotificationNo:"1202330",WorkOrderNo:"400686150",DateNew:"5/06/2023",Description:"TPSS Weekly Station",Supervisor:"Kamarul",Status:"ACK",DelayHour:"8H",Color:RGBA(255,170,0,1),PackageType:"PM",Target:"07/06/2023",WorkCentre:"TNM1",Priority:"3-Medium",AssignedTo:"10022155 MUHAMAD EZUAN AMERUDIN BIN ABU BAKAR",WorkOrderType:"RAIL - Preventive Maintenance Order",Location:"TNM Track Network Department",FunctionalLocation:"PRAL-MRL-TN-DPT Brickfields Depot",WorkDescription:"NA"},
+                            
+                                {ID:3,NotificationNo:"1202329",WorkOrderNo:"400686149",DateNew:"5/06/2023",Description:"TPSS Weekly Station",Supervisor:"Kamarul",Status:"ACK",DelayHour:">12H",Color:RGBA(255,0,0,1),PackageType:"PM",Target:"07/06/2023",WorkCentre:"TNM1",Priority:"3-Medium",AssignedTo:"10022155 MUHAMAD EZUAN AMERUDIN BIN ABU BAKAR",WorkOrderType:"RAIL - Preventive Maintenance Order",Location:"TNM Track Network Department",FunctionalLocation:"PRAL-MRL-TN-DPT Brickfields Depot",WorkDescription:"NA"}
+                                )
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =120
+                        Width: =1207
+                        X: =24
+                        Y: =55
+                        ZIndex: =11
+
+                        Rectangle3_3 As rectangle:
+                            BorderColor: =App.Theme.Colors.Darker40
+                            Fill: =RGBA(255, 0, 0, 1)
+                            Height: =Parent.TemplateHeight - Separator3_3.Height
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =6
+                            ZIndex: =12
+
+                        Title2_4 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Font: =Font.Lato
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =27
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.NotificationNo
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =197
+                            X: =295
+                            Y: =33
+                            ZIndex: =13
+
+                        Button2_4 As button:
+                            BorderColor: =RGBA(52, 31, 151, 1)
+                            Fill: =RGBA(52, 31, 151, 1)
+                            Font: =Font.Lato
+                            FontWeight: =FontWeight.Normal
+                            Height: =50
+                            OnSelect: |-
+                                =Set(varSelectedTask, ThisItem);
+                                Navigate(TECHNICIAN_VIEWTASK_OFFLINE, ScreenTransition.Fade);
+                            RadiusBottomLeft: =50
+                            RadiusBottomRight: =50
+                            RadiusTopLeft: =50
+                            RadiusTopRight: =50
+                            Size: =20
+                            Text: ="➔"
+                            Width: =50
+                            X: =1108
+                            Y: =29
+                            ZIndex: =14
+
+                        BadgeCanvas2_2 As Badge:
+                            AccessibleLabel: =""
+                            Align: =""
+                            Appearance: ='BadgeCanvas.Appearance'.Outline
+                            BasePaletteColor: =
+                            Content: |-
+                                =If(
+                                    ThisItem.WorkOrderType = "RAIL - Corrective Maintenance Order",
+                                    "CM",
+                                    "PM"
+                                )
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontSize: =16
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =35
+                            Shape: ='BadgeCanvas.Shape'.Circular
+                            TabIndex: =0
+                            ThemeColor: |+
+                                =If(
+                                    ThisItem.WorkOrderType = "RAIL - Corrective Maintenance Order",
+                                    'BadgeCanvas.ThemeColor'.Severe,
+                                    'BadgeCanvas.ThemeColor'.Success
+                                )
+                                
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Width: =76
+                            X: =27
+                            Y: =33
+                            ZIndex: =15
+
+                        Subtitle3_3 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =Font.Lato
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.DateNew
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Title2_4.Width
+                            X: =295
+                            Y: =69
+                            ZIndex: =16
+
+                        Body1_3 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =18
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.Location
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =418
+                            X: =653
+                            Y: =38
+                            ZIndex: =17
+
+                        Separator3_3 As rectangle:
+                            BorderColor: =App.Theme.Colors.Darker40
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =8
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =19
+
+                        TextCanvas6 As Text:
+                            AutoHeight: =false
+                            BorderColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            Height: =27
+                            Size: =18
+                            Text: |-
+                                ="Work Order No      :"
+                            Width: =176
+                            X: =119
+                            Y: =34
+                            ZIndex: =20
+
+                        TextCanvas6_1 As Text:
+                            Align: ="Start"
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =25
+                            Size: =18
+                            TabIndex: =0
+                            Text: |-
+                                ="Work Order Date  :"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Weight: ="Regular"
+                            Width: =176
+                            Wrap: =true
+                            X: =119
+                            Y: =69
+                            ZIndex: =21
+
+                        TextCanvas6_2 As Text:
+                            Align: ="Start"
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =27
+                            Size: =18
+                            TabIndex: =0
+                            Text: |-
+                                ="Location             :"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Weight: ="Regular"
+                            Width: =144
+                            Wrap: =true
+                            X: =509
+                            Y: =34
+                            ZIndex: =22
+
+                        TextCanvas6_3 As Text:
+                            Align: ="Start"
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =27
+                            Size: =18
+                            TabIndex: =0
+                            Text: |-
+                                ="Description      :"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Weight: ="Regular"
+                            Width: =144
+                            Wrap: =true
+                            X: =509
+                            Y: =66
+                            ZIndex: =23
+
+                        Body1_4 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =19
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.Description
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =438
+                            X: =653
+                            Y: =68
+                            ZIndex: =24
+

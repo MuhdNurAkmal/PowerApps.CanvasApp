@@ -1,0 +1,53 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  CUSTOMBUTTON:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      BgColor:
+        PropertyKind: Input
+        DisplayName: BgColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      IconColor:
+        PropertyKind: Input
+        DisplayName: IconColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      IconSVG:
+        PropertyKind: Input
+        DisplayName: IconSVG
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+    Children:
+      - Card:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =CUSTOMBUTTON.BgColor
+            RadiusBottomLeft: =50
+            RadiusBottomRight: =50
+            RadiusTopLeft: =50
+            RadiusTopRight: =50
+            Width: =233
+            X: =168
+            Y: =270
+          Children:
+            - SVG_13:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Fill: =CUSTOMBUTTON.IconColor
+                  Height: =200
+                  Image: ="data:image/svg+xml;utf8," & EncodeUrl(CUSTOMBUTTON.IconSVG)
+                  Width: =160
+                  X: =36

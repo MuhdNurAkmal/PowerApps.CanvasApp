@@ -1,0 +1,212 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  POPUP:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      LBFill:
+        PropertyKind: Input
+        DisplayName: LB Fill
+        Description: A custom property
+        DataType: Color
+        Default: =Color.LightGray
+      LBOnSelect1:
+        PropertyKind: Event
+        DisplayName: LB OnSelect1
+        Description: A custom property
+        ReturnType: Text
+        Default: =""
+      LBText:
+        PropertyKind: Input
+        DisplayName: LB Text
+        Description: A custom property
+        DataType: Text
+        Default: ="Cancel"
+      LBTextSize:
+        PropertyKind: Input
+        DisplayName: LB Text Size
+        Description: A custom property
+        DataType: Number
+        Default: =15
+      Message:
+        PropertyKind: Input
+        DisplayName: Message
+        Description: A custom property
+        DataType: Text
+        Default: ="Are you sure? Tanak pikir2 dulu"
+      MessageTextColor:
+        PropertyKind: Input
+        DisplayName: Message Text Color
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      MessageTextSize:
+        PropertyKind: Input
+        DisplayName: Message Text Size
+        Description: A custom property
+        DataType: Number
+        Default: =15
+      PopupFill:
+        PropertyKind: Input
+        DisplayName: Popup Fill
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(255, 255, 255, 1)
+      PopupHeight:
+        PropertyKind: Input
+        DisplayName: Popup Height
+        Description: A custom property
+        DataType: Number
+        Default: =300
+      PopupWidth:
+        PropertyKind: Input
+        DisplayName: Popup Width
+        Description: A custom property
+        DataType: Number
+        Default: =500
+      RBFill:
+        PropertyKind: Input
+        DisplayName: RB Fill
+        Description: A custom property
+        DataType: Color
+        Default: =Color.DarkSlateGray
+      RBOnSelect:
+        PropertyKind: Event
+        DisplayName: RB OnSelect
+        Description: A custom property
+        ReturnType: Text
+        Default: =""
+      RBText:
+        PropertyKind: Input
+        DisplayName: RB Text
+        Description: A custom property
+        DataType: Text
+        Default: ="Submit"
+      RBTextSize:
+        PropertyKind: Input
+        DisplayName: RB Text Size
+        Description: A custom property
+        DataType: Number
+        Default: =15
+    Children:
+      - conMain:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(0, 0, 0, 0.25)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - conPopup:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.Center
+                  DropShadow: =DropShadow.Bold
+                  Fill: =POPUP.PopupFill
+                  FillPortions: =0
+                  Height: =Min(POPUP.PopupHeight, POPUP.Height * 80%)
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =10
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Width: =Min(POPUP.PopupWidth, POPUP.Width * 80%)
+                Children:
+                  - lblMessage:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =POPUP.MessageTextColor
+                        Font: =Font.'Lato Black'
+                        Height: =Parent.Height * 30%
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Size: =POPUP.MessageTextSize
+                        Text: =POPUP.Message
+                        Width: =Parent.Width * 80%
+                  - conButtons:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Center
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height * 20%
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =Parent.Width * 80%
+                      Children:
+                        - btnLeft:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              BorderThickness: =0
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              DisabledFill: =Self.Fill
+                              Fill: =POPUP.LBFill
+                              FocusedBorderThickness: =0
+                              Font: =Font.'Lato Black'
+                              Height: =Parent.Height
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(Self.Fill, -20%)
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              OnSelect: =POPUP.LBOnSelect1()
+                              PressedBorderColor: =Self.Fill
+                              PressedFill: =ColorFade(Self.Fill, - 30%)
+                              Size: =POPUP.LBTextSize
+                              Text: =POPUP.LBText
+                              Width: =Parent.Width / 2.1
+                        - btnRight:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              BorderThickness: =0
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              DisabledFill: =Self.Fill
+                              Fill: =POPUP.RBFill
+                              FocusedBorderThickness: =0
+                              Font: =Font.'Lato Black'
+                              Height: =Parent.Height
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(Self.Fill, - 20%)
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              OnSelect: =POPUP.RBOnSelect()
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =ColorFade(Self.Fill, - 30%)
+                              Text: =POPUP.RBText
+                              Width: =Parent.Width / 2.1

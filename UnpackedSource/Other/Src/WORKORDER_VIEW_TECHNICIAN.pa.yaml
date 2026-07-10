@@ -1,0 +1,528 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  WORKORDER_VIEW_TECHNICIAN:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: =true
+    Children:
+      - Main-Container_12:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =768
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_12:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =false
+                  varUserDepartment: =varUserRecord.department.Value
+                  varUserRole: =varUserRecord.role.Value
+            - ContentBody_3:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_NOTIFICATION_VIEW_1:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =App.ActiveScreen
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: =DASHBOARD_MAIN
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: =NOTIFICATION_LIST
+                        ParentScreen: =NOTIFICATION_LIST
+                        ParentScreen2: =App.ActiveScreen
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =TEAM_LIST
+                        UserMenu: =USER_LIST
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =App.ActiveScreen
+                        dataMenu: =colMenu
+                  - ContainerMain_3:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(245, 245, 245, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                      Children:
+                        - TitleContainer_5:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              Height: =50
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =1234
+                            Children:
+                              - txtTitle_dashboard_12:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(47, 53, 66, 1)
+                                    Height: =49
+                                    Size: =30
+                                    Text: ="View Work Order"
+                                    Width: =526
+                                    X: =12
+                                    Y: =1
+                        - Container7_7:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              ContentLanguage: =
+                              DropShadow: =DropShadow.Semilight
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =526
+                              RadiusBottomLeft: =30
+                              RadiusBottomRight: =30
+                              RadiusTopLeft: =30
+                              RadiusTopRight: =30
+                              Width: =1234
+                              Y: =50
+                            Children:
+                              - BadgeCanvas2_6:
+                                  Control: Badge@0.0.24
+                                  Properties:
+                                    Appearance: ='BadgeCanvas.Appearance'.Filled
+                                    Content: |-
+                                      =If(
+                                          varSelectedNotification.notification_type.Value = "M7",
+                                          "PM",
+                                          "CM"
+                                      )
+                                    Font: =Font.'Lato Black'
+                                    FontSize: =16
+                                    Height: =35
+                                    Shape: ='BadgeCanvas.Shape'.Circular
+                                    ThemeColor: |+
+                                      =If(
+                                          varSelectedNotification.notification_type.Value = "M7",
+                                          'BadgeCanvas.ThemeColor'.Brand,
+                                          'BadgeCanvas.ThemeColor'.Important
+                                      )
+
+                                    Width: =76
+                                    X: =25
+                                    Y: =44
+                              - Label3_52:
+                                  Control: Label@2.5.1
+                                  Group: Group2_95
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Work Order No"
+                                    Width: =161
+                                    X: =128
+                                    Y: =44
+                              - Label4_52:
+                                  Control: Label@2.5.1
+                                  Group: Group2_95
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.Lato
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.workorder_no
+                                    Width: =160
+                                    X: =289
+                                    Y: =44
+                              - Label3_53:
+                                  Control: Label@2.5.1
+                                  Group: Group1_4
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Work Order Type"
+                                    Width: =232
+                                    X: =457
+                                    Y: =44
+                              - Label4_53:
+                                  Control: Label@2.5.1
+                                  Group: Group1_4
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.Lato
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.work_order_type.Value
+                                    Width: =317
+                                    X: =685
+                                    Y: =44
+                              - Label3_54:
+                                  Control: Label@2.5.1
+                                  Group: Group2_49
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Date Opened"
+                                    Width: =161
+                                    X: =128
+                                    Y: =75
+                              - Label4_54:
+                                  Control: Label@2.5.1
+                                  Group: Group2_49
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.date_opened
+                                    Width: =160
+                                    X: =289
+                                    Y: =75
+                              - Label3_55:
+                                  Control: Label@2.5.1
+                                  Group: Group2_50
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Target Date"
+                                    Width: =161
+                                    X: =457
+                                    Y: =75
+                              - Label4_55:
+                                  Control: Label@2.5.1
+                                  Group: Group2_50
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.Lato
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.target_date
+                                    Width: =160
+                                    X: =685
+                                    Y: =75
+                              - Label3_56:
+                                  Control: Label@2.5.1
+                                  Group: Group2_48
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Status"
+                                    Width: =161
+                                    X: =128
+                                    Y: =106
+                              - Label4_56:
+                                  Control: Label@2.5.1
+                                  Group: Group2_48
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.status.Value
+                                    Width: =160
+                                    X: =289
+                                    Y: =106
+                              - Label3_57:
+                                  Control: Label@2.5.1
+                                  Group: Group2_51
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Maint. Act. Type "
+                                    Width: =161
+                                    X: =457
+                                    Y: =106
+                              - Label4_57:
+                                  Control: Label@2.5.1
+                                  Group: Group2_51
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.Lato
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.maint_act_type.Value
+                                    Width: =160
+                                    X: =685
+                                    Y: =106
+                              - Label3_58:
+                                  Control: Label@2.5.1
+                                  Group: Group2_90
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Priority"
+                                    Width: =161
+                                    X: =128
+                                    Y: =137
+                              - Label4_58:
+                                  Control: Label@2.5.1
+                                  Group: Group2_90
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.priority.Value
+                                    Width: =160
+                                    X: =289
+                                    Y: =137
+                              - Label3_61:
+                                  Control: Label@2.5.1
+                                  Group: Group2_52
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Cost Centre "
+                                    Width: =232
+                                    X: =457
+                                    Y: =137
+                              - Label4_61:
+                                  Control: Label@2.5.1
+                                  Group: Group2_52
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.Lato
+                                    Height: =31
+                                    Text: |-
+                                      = ":   " & varSelectedWorkOrder.cost_centre
+                                    Width: =160
+                                    X: =685
+                                    Y: =137
+                              - Label3_86:
+                                  Control: Label@2.5.1
+                                  Group: Group2_91
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Work Centre :"
+                                    Width: =161
+                                    X: =128
+                                    Y: =168
+                              - Label4_86:
+                                  Control: Label@2.5.1
+                                  Group: Group2_91
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.work_centre.Value
+                                    Width: =160
+                                    X: =289
+                                    Y: =168
+                              - Label3_87:
+                                  Control: Label@2.5.1
+                                  Group: Group2_53
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Assigned to "
+                                    Width: =232
+                                    X: =457
+                                    Y: =168
+                              - Label4_87:
+                                  Control: Label@2.5.1
+                                  Group: Group2_53
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.Lato
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.assigned_to.Value
+                                    Width: =162
+                                    X: =685
+                                    Y: =168
+                              - Label3_88:
+                                  Control: Label@2.5.1
+                                  Group: Group2_56
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Maintenance Plant "
+                                    Width: =193
+                                    X: =129
+                                    Y: =252
+                              - Label4_88:
+                                  Control: Label@2.5.1
+                                  Group: Group2_56
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.maintenance_plant.Value
+                                    Width: =332
+                                    X: =329
+                                    Y: =252
+                              - Label3_89:
+                                  Control: Label@2.5.1
+                                  Group: Group2_92
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Functional Location "
+                                    Width: =193
+                                    X: =128
+                                    Y: =283
+                              - Label4_89:
+                                  Control: Label@2.5.1
+                                  Group: Group2_92
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.functional_location
+                                    Width: =329
+                                    X: =329
+                                    Y: =283
+                              - Label3_91:
+                                  Control: Label@2.5.1
+                                  Group: Group2_94
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =31
+                                    Text: ="Equipment"
+                                    Width: =193
+                                    X: =128
+                                    Y: =313
+                              - Label4_91:
+                                  Control: Label@2.5.1
+                                  Group: Group2_94
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    Text: |-
+                                      =":   " & varSelectedWorkOrder.equipment
+                                    Width: =331
+                                    X: =329
+                                    Y: =313
+                        - ContainerAction_5:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =65
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =1234
+                              Y: =576
+                            Children:
+                              - Button2_10:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =RGBA(52, 31, 151, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(52, 31, 151, 1)
+                                    Font: =Font.Lato
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =50
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Navigate(NOTIFICATION_LIST,ScreenTransition.Fade)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    RadiusBottomLeft: =50
+                                    RadiusBottomRight: =50
+                                    RadiusTopLeft: =50
+                                    RadiusTopRight: =50
+                                    Size: =20
+                                    Text: ="❮"
+                                    Width: =50
+                                    X: =3
+                                    Y: =10
+                              - btnViewChecklist_6:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Center
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =RGBA(249, 83, 109, 1)
+                                    BorderRadius: =35
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(255, 255, 255, 1)
+                                    Height: =42
+                                    Icon: ="ArrowRight"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    Layout: ='ButtonCanvas.Layout'.TextOnly
+                                    OnSelect: |-
+                                      =Set(previousScreen,WORKORDER_VIEW_TECHNICIAN);
+                                      Navigate(TASK_CHECKLIST_PM,ScreenTransition.Fade)
+                                    Text: ="View Checklist"
+                                    Width: =148
+                                    X: =1086
+                                    Y: =13

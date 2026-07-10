@@ -1,0 +1,1066 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  USER_LIST_1:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: =UpdateContext({isPopupAdmin:false})
+      OnVisible: |-
+        =// 1. Start the loading state
+        UpdateContext({varIsLoading: true});
+
+        // 2. Perform the Refresh
+        Refresh(tbl_mrl_users);
+        Refresh(ref_status);
+
+        // 3. End the loading state
+        UpdateContext({varIsLoading: false});
+    Children:
+      - Main-Container_29:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =768
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_30:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =false
+                  varUserDepartment: =varUserRecord.department.Value
+                  varUserRole: =varUserRecord.role.Value
+            - ContentBody_16:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_AUDITTRAIL_LIST_7:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =AUDITTRAIL_LIST
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: |+
+                          =DASHBOARD
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: =NOTIFICATION_LIST
+                        ParentScreen: =
+                        ParentScreen2: =
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =TEAM_LIST
+                        UserMenu: =USER_LIST_1
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =App.ActiveScreen
+                        dataMenu: =colMenu
+                  - Dashboard-Content_10:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =DropShadow.None
+                        FillPortions: =8
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Title-Container_18:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =60
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =0
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =Parent.Width
+                            Children:
+                              - txtTitle_dashboard_32:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    AutoHeight: =true
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(47, 53, 66, 1)
+                                    Height: =49
+                                    Size: =30
+                                    Text: ="List User"
+                                    Width: =139
+                                    X: =8
+                              - ButtonCanvas4_3:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Right
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =RGBA(110, 110, 225, 1)
+                                    BorderRadius: =35
+                                    BorderStyle: =BorderStyle.None
+                                    BorderThickness: =0
+                                    Font: =Font.Lato
+                                    FontSize: =18
+                                    Height: =48
+                                    Icon: ="Add"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    OnSelect: =UpdateContext({isPopupNewUser:true})
+                                    Text: ="New User"
+                                    Width: =140
+                                    X: =1091
+                                    Y: =5
+                              - icoRefresh_13:
+                                  Control: Classic/Icon@2.5.0
+                                  Group: loading & spinner_2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =RGBA(166, 166, 166, 1)
+                                    DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                                    Height: =30
+                                    Icon: =Icon.Reload
+                                    OnSelect: |-
+                                      =// 1. Start the loading state
+                                      UpdateContext({varIsLoading: true});
+
+                                      // 2. Perform the Refresh
+                                      Refresh(tbl_mrl_users);
+                                      Refresh(ref_status);
+
+                                      // 3. End the loading state
+                                      UpdateContext({varIsLoading: false});
+
+                                      Notify("Data Refreshed", NotificationType.Success)
+                                    Rotation: =
+                                    Tooltip: ="Refresh Data"
+                                    Visible: =If (!varIsLoading, true, false)
+                                    Width: =30
+                                    X: =1050
+                                    Y: =15
+                              - Spinner1_2:
+                                  Control: Spinner@1.4.6
+                                  Group: loading & spinner_2
+                                  Properties:
+                                    Height: =30
+                                    Visible: =If (!varIsLoading, false, true)
+                                    Width: =30
+                                    X: =1050
+                                    Y: =15
+                              - txtTittleConfigureTeam_23:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Font: =Font.Lato
+                                    FontColor: =RGBA(0, 0, 0, 0.6)
+                                    Height: =27
+                                    Size: =16
+                                    Text: ="Manage user profiles, department assignments, and security roles for all registered personnel."
+                                    Weight: ='TextCanvas.Weight'.Regular
+                                    Width: =876
+                                    X: =8
+                                    Y: =33
+                        - User-Container_9:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =10
+                              PaddingRight: =10
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              X: =40
+                              Y: =40
+                            Children:
+                              - SearchContainer_10:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    BorderColor: =RGBA(245, 245, 245, 1)
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =48
+                                    RadiusBottomLeft: =35
+                                    RadiusBottomRight: =35
+                                    RadiusTopLeft: =35
+                                    RadiusTopRight: =35
+                                    Width: =706
+                                    X: =528
+                                    Y: =9
+                                  Children:
+                                    - TextCanvas2_139:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          Font: =Font.Lato
+                                          Size: =20
+                                          Text: ="Status :"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Medium
+                                          Width: =79
+                                          X: =14
+                                          Y: =6
+                                    - ddStatusSort_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(166, 166, 166, 1)
+                                          BorderThickness: =3
+                                          ChevronBackground: =RGBA(166, 166, 166, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =RGBA(122, 138, 143, 1)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: ="ALL"
+                                          Font: =Font.Lato
+                                          Height: =32
+                                          HoverFill: =RGBA(255, 255, 255, 1)
+                                          Items: |-
+                                            =SortByColumns(
+                                                ref_workorder_status,
+                                                "ID",
+                                                SortOrder.Ascending
+                                            )
+                                          Items.Value: =code_name
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(255, 255, 255, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(166, 166, 166, 1)
+                                          Width: =100
+                                          X: =92
+                                          Y: =7
+                                    - ddSortOrder_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(166, 166, 166, 1)
+                                          BorderThickness: =3
+                                          ChevronBackground: =RGBA(166, 166, 166, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =RGBA(166, 166, 166, 1)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =
+                                          Font: =Font.Lato
+                                          Height: =32
+                                          HoverFill: =RGBA(255, 255, 255, 1)
+                                          Items: =["DESC","ASC"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(166, 166, 166, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(166, 166, 166, 1)
+                                          Width: =100
+                                          X: =263
+                                          Y: =7
+                                    - txtWorkOrderListSearch_5:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(166, 166, 166, 1)
+                                          BorderThickness: =3
+                                          Default: =""
+                                          Font: =Font.Lato
+                                          Height: =32
+                                          HintText: ="Enter your search here"
+                                          HoverBorderColor: =RGBA(166, 166, 166, 1)
+                                          HoverFill: =RGBA(255, 255, 255, 1)
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =308
+                                          X: =380
+                                          Y: =7
+                                    - TextCanvas2_140:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          Font: =Font.Lato
+                                          Height: =31
+                                          Size: =20
+                                          Text: ="Sort :"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Medium
+                                          Width: =66
+                                          X: =197
+                                          Y: =8
+                                    - Dismiss_7:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          BorderRadius: =35
+                                          FontColor: =RGBA(0, 0, 0, 1)
+                                          Height: =30
+                                          Icon: ="Dismiss"
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          OnSelect: =Reset(txtWorkOrderListSearch_5); Set(varSearchTerm, "")
+                                          Text: =
+                                          Visible: '=!IsBlank(txtWorkOrderListSearch_5.Text)	'
+                                          Width: =30
+                                          X: =442
+                                          Y: =8
+                              - Container21_6:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    BorderColor: =RGBA(247, 246, 246, 1)
+                                    BorderThickness: =1
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(247, 246, 246, 1)
+                                    Height: =49
+                                    RadiusBottomLeft: =20
+                                    RadiusBottomRight: =20
+                                    RadiusTopLeft: =20
+                                    RadiusTopRight: =20
+                                    Width: =1195
+                                    X: =19
+                                    Y: =61
+                                  Children:
+                                    - TextCanvas2_141:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          Font: =Font.'Lato Black'
+                                          Size: =20
+                                          Text: ="#"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =57
+                                          Y: =10
+                                    - TextCanvas2_142:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Start
+                                          Font: =Font.'Lato Black'
+                                          Size: =20
+                                          Text: ="Name / Email /Department"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =363
+                                          X: =76
+                                          Y: =10
+                                    - TextCanvas2_143:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Start
+                                          Font: =Font.'Lato Black'
+                                          Size: =20
+                                          Text: ="Roles"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =55
+                                          X: =779
+                                          Y: =10
+                                    - TextCanvas2_144:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          Font: =Font.'Lato Black'
+                                          Size: =20
+                                          Text: ="Status"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =131
+                                          X: =906
+                                          Y: =10
+                                    - TextCanvas2_145:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          Font: =Font.'Lato Black'
+                                          Size: =20
+                                          Text: ="View"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =118
+                                          X: =1063
+                                          Y: =10
+                              - galUsers_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =App.Theme.Colors.Darker10
+                                    Height: =439
+                                    Items: =Filter(tbl_mrl_users, department.Value = varUserRecord.department.Value && email <> Blank())
+                                    ShowNavigation: =true
+                                    TemplateSize: =85
+                                    Width: =1230
+                                    X: =4
+                                    Y: =110
+                                  Children:
+                                    - Rectangle3_14:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(255, 0, 0, 1)
+                                          Fill: =RGBA(255, 0, 0, 1)
+                                          Height: =72
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =8
+                                    - Body1_9:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =26
+                                          LineHeight: =1
+                                          OnSelect: =Select(Parent)
+                                          Overflow: =Overflow.Scroll
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          TabIndex: =0
+                                          Text: |
+                                            =//Upper(Left(Office365Users.UserProfileV2(ThisItem.email).givenName, 1))
+
+                                            //Lower(Mid(Office365Users.UserProfileV2(ThisItem.email).givenName, 2, Len(Office365Users.UserProfileV2(ThisItem.email).givenName) - 1))
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =409
+                                          X: =107
+                                          Y: =3
+                                    - btnUserView_1:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =RGBA(52, 31, 151, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(52, 31, 151, 1)
+                                          Font: =Font.Lato
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =50
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =Set(varSelectedUser,ThisItem);
+                                            Navigate(USER_VIEW,ScreenTransition.Fade)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          RadiusBottomLeft: =50
+                                          RadiusBottomRight: =50
+                                          RadiusTopLeft: =50
+                                          RadiusTopRight: =50
+                                          Size: =20
+                                          Text: ="➔"
+                                          Width: =50
+                                          X: =1114
+                                          Y: =9
+                                    - Title9_30:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(50, 49, 48, 1)
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =24
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: |-
+                                            =With(
+                                                { 
+                                                    // Get the email from your users table
+                                                    TargetEmail: LookUp(tbl_mrl_users, email = ThisItem.email).email 
+                                                },
+                                                If(
+                                                    !IsBlank(TargetEmail) && IsMatch(TargetEmail, Match.Email),
+                                                    Proper(Office365Users.UserProfileV2(TargetEmail).displayName),
+                                                    // Fallback if the email is missing or API fails
+                                                    Blank() 
+                                                )
+                                            )
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =405
+                                          X: =152
+                                          Y: =12
+                                    - Body1_27:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          FontWeight: =
+                                          Height: =39
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =ThisItem.role.Value
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =131
+                                          X: =756
+                                          Y: =16
+                                    - Body1_29:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: |
+                                            =Switch(
+                                                ThisItem.status.Value,
+                                                "Active", Color.Green,
+                                                "Deactivate", Color.Tomato,
+                                                Color.Black
+                                            )
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =39
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =ThisItem.status.Value
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =131
+                                          X: =924
+                                          Y: =16
+                                    - User-Image_13:
+                                        Control: Avatar@1.0.40
+                                        Properties:
+                                          Appearance: ='Avatar.Appearance'.Brand
+                                          Badge: ='Avatar.Badge'.None
+                                          Height: =54
+                                          Image: =Office365Users.UserPhotoV2(ThisItem.email)
+                                          Name: =
+                                          Width: =54
+                                          X: =84
+                                          Y: =18
+                                    - TextCanvas7_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.'Lato Black'
+                                          Size: =16
+                                          Text: =ThisItem.ID
+                                          Weight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Width: =21
+                                          X: =32
+                                          Y: =24
+                                    - Body1_30:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =20
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          Text: =ThisItem.email
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =405
+                                          X: =152
+                                          Y: =29
+                                    - Body1_31:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =21
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          Text: =ThisItem.department.Value
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =113
+                                          X: =152
+                                          Y: =48
+                                    - Separator3_14:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(52, 31, 151, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =1
+                                          OnSelect: =Select(Parent)
+                                          Visible: =false
+                                          Width: =Parent.TemplateWidth
+                                          Y: =75
+      - popupNewUser_1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.7)
+            Height: =768
+            Visible: =If(isPopupNewUser, true, false)
+            Width: =1366
+          Children:
+            - Container31_2:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(52, 31, 151, 1)
+                  Height: =532
+                  RadiusBottomLeft: =35
+                  RadiusBottomRight: =35
+                  RadiusTopLeft: =35
+                  RadiusTopRight: =35
+                  Width: =1097
+                  X: =145
+                  Y: =117
+                Children:
+                  - icoClosePopup_4:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                          =UpdateContext({isPopupNewUser: false})
+                        Width: =32
+                        X: =1046
+                        Y: =4
+                  - TextCanvas11_4:
+                      Control: Text@0.0.51
+                      Properties:
+                        AutoHeight: =true
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =61
+                        Size: =30
+                        Text: ="New User"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =208
+                        X: =89
+                        Y: =7
+                  - Icon9_4:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        Height: =40
+                        Icon: =Icon.AddUser
+                        Width: =50
+                        X: =21
+                        Y: =19
+                  - txtTittleConfigureTeam_24:
+                      Control: Text@0.0.51
+                      Properties:
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =27
+                        Size: =16
+                        Text: ="Initialize a new user profile by providing personal details, assigning departmental roles, and setting system access levels"
+                        Weight: ='TextCanvas.Weight'.Regular
+                        Width: =876
+                        X: =88
+                        Y: =41
+                  - TextCanvas12_10:
+                      Control: Text@0.0.51
+                      Properties:
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =41
+                        Size: =20
+                        Text: ="Email *"
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =77
+                        X: =197
+                        Y: =96
+                  - txtEmail_1:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        FontSize: =16
+                        Height: =38
+                        Width: =650
+                        X: =289
+                        Y: =99
+                  - ButtonCanvas4_4:
+                      Control: Button@0.0.45
+                      Properties:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(8, 222, 8, 1)
+                        BorderRadius: =35
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =0
+                        FontSize: =18
+                        Height: =38
+                        Icon: ="Search"
+                        OnSelect: "=// Check Exist Record\nIf(\n    !IsBlank(LookUp(tbl_mrl_users, email = txtEmail_1.Value)),\n    // If Exist\n    Notify(\"This email '\" & txtEmail_1.Value & \"' already associated with an account \",NotificationType.Error),\n  \n    // If Not Exist;\n\n    // Check Exist in Microsoft 365\n    IfError(\n        Office365Users.UserProfileV2(txtEmail_1.Value).displayName,\n\n        Notify(\"This email '\" & txtEmail_1.Value & \"' is not associated with a Microsoft Account.\",NotificationType.Error),\n\n        UpdateContext({\n            varTempuserName:  Office365Users.UserProfileV2(txtEmail_1.Value).displayName\n        });      \n    )\n    \n)"
+                        Text: ="Search"
+                        Width: =110
+                        X: =971
+                        Y: =99
+                  - txtName_1:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        DisplayMode: =DisplayMode.View
+                        FontSize: =16
+                        Height: =38
+                        Value: =varTempuserName
+                        Width: =648
+                        X: =289
+                        Y: =203
+                  - TextCanvas12_14:
+                      Control: Text@0.0.51
+                      Properties:
+                        AutoHeight: =true
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =55
+                        Size: =20
+                        Text: ="Name"
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =64
+                        X: =197
+                        Y: =206
+                  - txtStaffID_1:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        FontSize: =16
+                        Height: =38
+                        Width: =648
+                        X: =289
+                        Y: =263
+                  - TextCanvas12_15:
+                      Control: Text@0.0.51
+                      Properties:
+                        AutoHeight: =true
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =55
+                        Size: =20
+                        Text: ="Consign ID / SAP ID"
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =189
+                        X: =78
+                        Y: =268
+                  - ddRoles_1:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        AllowEmptySelection: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =RGBA(188, 30, 69, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(188,30,69,1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        Default: =Blank()
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =ColorFade(RGBA(188,30,69,1), -15%)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =ref_roles
+                        Items.Value: =field_1
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(188, 30, 69, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =450
+                        X: =289
+                        Y: =323
+                  - icoRefresh_14:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(171, 182, 196, 1)
+                        DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                        Height: =30
+                        Icon: =Icon.Reload
+                        OnSelect: =Reset(ddRoles_1)
+                        Rotation: =
+                        Tooltip: ="Refresh Data"
+                        Visible: =If (!varIsLoading, true, false)
+                        Width: =30
+                        X: =756
+                        Y: =328
+                  - TextCanvas12_16:
+                      Control: Text@0.0.51
+                      Properties:
+                        AutoHeight: =true
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =55
+                        Size: =20
+                        Text: ="Role*"
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =62
+                        X: =199
+                        Y: =330
+                  - ddDepartments_1:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        AllowEmptySelection: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =RGBA(188, 30, 69, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(188,30,69,1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        Default: =Blank()
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =ColorFade(RGBA(188,30,69,1), 15%)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: |-
+                          =AddColumns(
+                              ref_mrl_departments,
+                              DisplayLabel,
+                              Department_Code & " - " & Department_Name
+                          )
+                        Items.Value: =DisplayLabel
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(188, 30, 69, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =450
+                        X: =288
+                        Y: =385
+                  - icoRefresh_15:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(171, 182, 196, 1)
+                        DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                        Height: =30
+                        Icon: =Icon.Reload
+                        OnSelect: =Reset(ddRoles_1)
+                        Rotation: =
+                        Tooltip: ="Refresh Data"
+                        Visible: =If (!varIsLoading, true, false)
+                        Width: =30
+                        X: =756
+                        Y: =391
+                  - TextCanvas12_17:
+                      Control: Text@0.0.51
+                      Properties:
+                        AutoHeight: =true
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =46
+                        Size: =20
+                        Text: ="Department *"
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =133
+                        X: =130
+                        Y: =392
+                  - ButtonCanvas2_32:
+                      Control: Button@0.0.45
+                      Properties:
+                        Appearance: ='ButtonCanvas.Appearance'.Primary
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderRadius: =35
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        FontSize: =18
+                        Height: =50
+                        Icon: =
+                        OnSelect: |-
+                          =Reset(txtEmail_1);
+                          Reset(txtName_1);
+                          Reset(txtStaffID_1);
+                          Reset(ddRoles_1);
+                          Reset(ddDepartments_1);
+
+                          UpdateContext({
+                              isPopupNewUser: false,
+                              varTempuserName : Blank()
+                          })
+                        Text: ="Cancel"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =128
+                        X: =707
+                        Y: =471
+                  - ButtonCanvas2_33:
+                      Control: Button@0.0.45
+                      Properties:
+                        Appearance: ='ButtonCanvas.Appearance'.Primary
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        BorderRadius: =35
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        FontSize: =18
+                        Height: =50
+                        Icon: =
+                        OnSelect: |-
+                          =  UpdateContext({
+                              isPopupConfirm: true
+                              //varIsLoading: false
+                          })
+                        Text: ="Save"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =237
+                        X: =849
+                        Y: =471
+      - popupConfirm_1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.7)
+            Height: =768
+            Visible: =If(isPopupConfirm, true , false)
+            Width: =1366
+          Children:
+            - Rectangle11_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(59, 53, 176, 1)
+                  Height: =380
+                  Width: =682
+                  X: =363
+                  Y: =175
+            - Icon2_12:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Height: =38
+                  Icon: =Icon.Cancel
+                  OnSelect: |
+                    =UpdateContext({
+                        isPopupConfirm: false
+                    })
+                  Width: =45
+                  X: =988
+                  Y: =192
+            - Icon6_14:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Height: =80
+                  Icon: =Icon.Warning
+                  Width: =80
+                  X: =662
+                  Y: =216
+            - TextCanvas15_3:
+                Control: Text@0.0.51
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Font: =Font.'Lato Black'
+                  FontColor: =RGBA(255, 255, 255, 1)
+                  Height: =54
+                  Size: =30
+                  Text: ="Confirmation ?"
+                  Width: =280
+                  X: =564
+                  Y: =305
+            - TextCanvas15_33:
+                Control: Text@0.0.51
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Font: =Font.Lato
+                  FontColor: =RGBA(255, 255, 255, 1)
+                  Height: =76
+                  Size: =18
+                  Text: ="Are you sure you want to register this user?"
+                  Width: =466
+                  X: =475
+                  Y: =366
+            - ButtonCanvas2_34:
+                Control: Button@0.0.45
+                Properties:
+                  Appearance: ='ButtonCanvas.Appearance'.Primary
+                  BasePaletteColor: =RGBA(189, 178, 176, 1)
+                  BorderRadius: =10
+                  BorderStyle: =BorderStyle.Solid
+                  BorderThickness: =2
+                  FontSize: =18
+                  Height: =50
+                  Icon: =
+                  OnSelect: |+
+                    =UpdateContext({
+                        isPopupConfirm: false
+                    })
+
+
+                  Text: ="Cancel"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =210
+                  X: =475
+                  Y: =458
+            - ButtonCanvas2_35:
+                Control: Button@0.0.45
+                Properties:
+                  BasePaletteColor: =RGBA(8, 222, 8, 1)
+                  BorderRadius: =10
+                  BorderStyle: =BorderStyle.Solid
+                  BorderThickness: =2
+                  DisplayMode: |-
+                    =//DisplayMode.Edit
+
+                    If(varSelectedTask.status.Value = "Submitted" || varSelectedTask.status.Value = "Closed", DisplayMode.Disabled, DisplayMode.Edit)
+                  FontColor: =RGBA(255, 255, 255, 1)
+                  FontSize: =18
+                  Height: =50
+                  Icon: =
+                  IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                  OnSelect: "=// 1. Check if mandatory fields are filled\nIf(\n    IsBlank(txtEmail_1.Value) || IsBlank(ddRoles_1.Selected) || IsBlank(ddDepartments_1.Selected),\n    \n    // IF INVALID: Show warning\n    Notify(\"Please fill in all mandatory fields (Email, Role, and Department).\", NotificationType.Warning);\n    UpdateContext({isPopupConfirm: false});,\n\n    // IF VALID: Proceed with Patch\n    UpdateContext({ varIsLoading: true }); // Optional: trigger your spinning icon\n    \n    IfError(\n        Patch(\n            tbl_mrl_users,\n            Defaults(tbl_mrl_users),\n            {\n                email: Trim(txtEmail_1.Value),\n                // Staff ID is patched only if not blank, otherwise sends blank\n                mrl_employee_id: If(!IsBlank(txtStaffID_1.Value), Trim(txtStaffID_1.Value), Blank()),\n                role: { \n                    Id: ddRoles_1.Selected.ID, \n                    Value: ddRoles_1.Selected.role_name \n                },\n                department: { \n                    Id: ddDepartments_1.Selected.ID, \n                    Value: ddDepartments_1.Selected.Department_Code \n                },\n                status: { \n                    Id: 1, \n                    Value: \"Active\" \n                }\n            }\n        ),\n        \n        // Error Handling\n        Notify(\"Error: Could not create user. The email might already exist.\", NotificationType.Error),\n        \n        // Success Actions\n        Notify(\"User account '\" & varTempuserName & \"' created successfully.\", NotificationType.Success);\n        \n        // Clean up UI\n        Reset(txtEmail_1);\n        Reset(txtName_1);\n        Reset(txtStaffID_1);\n        Reset(ddRoles_1);\n        Reset(ddDepartments_1);\n\n        UpdateContext({\n            isPopupNewUser: false,\n            isPopupConfirm: false,\n            varTempuserName: Blank(),\n            varIsLoading: false\n        })\n    )\n)"
+                  Text: ="Register"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =210
+                  X: =731
+                  Y: =458

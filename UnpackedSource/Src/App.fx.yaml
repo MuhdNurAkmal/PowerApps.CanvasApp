@@ -1,0 +1,517 @@
+App As appinfo:
+    BackEnabled: =true
+    ConfirmExit: =true
+    ConfirmExitMessage: ="Are you sure you want to exit?"
+    Formulas: |-
+        =// =====================================================
+        // Helper: sync one queued status update
+        // =====================================================
+        FlushStatusItem(
+            pAssignId: Number,
+            pMoNo: Number,
+            pNewStatus: Text,
+            pStartDate: DateTime,
+            pEmail: Text,
+            pRole: Text,
+            pDept: Text,
+            pLon: Number,
+            pLat: Number
+        ):Void = {
+            With(
+                { rec: LookUp(tbl_mrl_workorder_assign, ID = pAssignId) },
+                If(
+                    !IsBlank(rec) && IsBlank(rec.start_date),
+                    IfError(
+                        Patch(
+                            tbl_mrl_workorder_assign,
+                            rec,
+                            {
+                                status: { Id: 4, Value: pNewStatus },
+                                start_date: pStartDate
+                            }
+                        );
+                        Patch(
+                            tbl_mrl_workorder_assign_log,
+                            Coalesce(
+                                LookUp(
+                                    tbl_mrl_workorder_assign_log,
+                                    workorder_assign_id = pAssignId &&
+                                    maintenanceorder_status = pNewStatus
+                                ),
+                                Defaults(tbl_mrl_workorder_assign_log)
+                            ),
+                            {
+                                workorder_assign_id: pAssignId,
+                                maintenanceorder_no: pMoNo,
+                                maintenanceorder_status: pNewStatus,
+                                user_email: pEmail,
+                                user_role: pRole,
+                                user_department: pDept,
+                                location_longitude: pLon,
+                                location_latitude: pLat
+                            }
+                        );
+                        Blank(),
+        
+                        Collect(
+                            colFailedStatusSync,
+                            {
+                                queue_id: GUID(),
+                                queued_at: Now(),
+                                workorder_assign_id: pAssignId,
+                                maintenanceorder_no: pMoNo,
+                                new_status: pNewStatus,
+                                start_date: pStartDate,
+                                user_email: pEmail,
+                                user_role: pRole,
+                                user_department: pDept,
+                                location_longitude: pLon,
+                                location_latitude: pLat
+                            }
+                        );
+                        Notify("FLUSH PATCH FAIL: " & FirstError.Message, NotificationType.Error);
+                        Blank()
+                    )
+                )
+            );
+        };
+        
+        // =====================================================
+        // Helper: sync one queued CM submission
+        // =====================================================
+        FlushSubmissionItem(
+            pMoNo: Number,
+            pStationId: Number, pStationVal: Text,
+            pSystemId: Number, pSystemVal: Text,
+            pSubsystemId: Number, pSubsystemVal: Text,
+            pSubSubsystemId: Number, pSubSubsystemVal: Text,
+            pRootCauseId: Number, pRootCauseVal: Text,
+            pPlanStart: DateTime,
+            pPlanEnd: DateTime,
+            pRemarks: Text,
+            pIsRsdm: Boolean,
+            pTrainNoId: Number, pTrainNoVal: Text,
+            pCarPosId: Number, pCarPosVal: Text,
+            pAssignId: Number,
+            pAssignMoNo: Number,
+            pEmail: Text,
+            pRole: Text,
+            pDept: Text,
+            pSubmittedAt: DateTime,
+            pLon: Number,
+            pLat: Number
+        ):Void = {
+            IfError(
+                Patch(tbl_response_cm, Defaults(tbl_response_cm), {
+                    maintenanceorder_no: pMoNo,
+                    station_name: { Id: pStationId, Value: pStationVal },
+                    system: { Id: pSystemId, Value: pSystemVal },
+                    subsystem: { Id: pSubsystemId, Value: pSubsystemVal },
+                    sub_subsystem: { Id: pSubSubsystemId, Value: pSubSubsystemVal },
+                    root_cause: { Id: pRootCauseId, Value: pRootCauseVal },
+                    plan_start_date: pPlanStart,
+                    plan_end_date: pPlanEnd,
+                    remarks: pRemarks,
+                    train_no: If(pIsRsdm, { Id: pTrainNoId, Value: pTrainNoVal }, Blank()),
+                    car_position: If(pIsRsdm, { Value: pCarPosVal }, Blank())
+                });
+        
+                Patch(tbl_mrl_workorder_assign,
+                    LookUp(tbl_mrl_workorder_assign, ID = pAssignId),
+                    { status: { Id: 5, Value: "Submitted" }, end_date: pSubmittedAt }
+                );
+        
+                Patch(tbl_mrl_workorder_assign_log, Defaults(tbl_mrl_workorder_assign_log), {
+                    workorder_assign_id: pAssignId,
+                    maintenanceorder_no: pAssignMoNo,
+                    maintenanceorder_status: "Submitted",
+                    user_email: pEmail,
+                    user_role: pRole,
+                    user_department: pDept,
+                    location_longitude: pLon,
+                    location_latitude: pLat
+                });
+        
+                Patch(tbl_maintenance_order,
+                    LookUp(tbl_maintenance_order, maintenanceorder_no = pAssignMoNo),
+                    { remarks: pRemarks }
+                );
+                Blank(),
+        
+                Collect(
+                    colFailedSubmissionSync,
+                    {
+                        maintenanceorder_no: pMoNo,
+                        station_id: pStationId, station_value: pStationVal,
+                        system_id: pSystemId, system_value: pSystemVal,
+                        subsystem_id: pSubsystemId, subsystem_value: pSubsystemVal,
+                        sub_subsystem_id: pSubSubsystemId, sub_subsystem_value: pSubSubsystemVal,
+                        root_cause_id: pRootCauseId, root_cause_value: pRootCauseVal,
+                        plan_start_date: pPlanStart,
+                        plan_end_date: pPlanEnd,
+                        remarks: pRemarks,
+                        is_rsdm: pIsRsdm,
+                        train_no_id: pTrainNoId, train_no_value: pTrainNoVal,
+                        car_position_id: pCarPosId, car_position_value: pCarPosVal,
+                        assign_id: pAssignId,
+                        assign_mo_no: pAssignMoNo,
+                        user_email: pEmail,
+                        user_role: pRole,
+                        user_department: pDept,
+                        submitted_at: pSubmittedAt,
+                        location_longitude: pLon,
+                        location_latitude: pLat
+                    }
+                );
+                Notify("SUBMIT FLUSH FAIL: " & FirstError.Message, NotificationType.Error);
+                Blank()
+            );
+        };
+        
+        // =====================================================
+        // Helper: merge ALL technicians' response JSONs for an MO
+        // into tbl_maintenance_order.completed_responses
+        // (delegation warning safe: filter is per-MO, always < row limit)
+        // =====================================================
+        MergeResponsesToMO(pMoNo: Number):Void = {
+            ClearCollect(
+                colRawResponses,
+                Filter(tbl_mrl_workorder_assign, maintenanceorder_no = pMoNo && !IsBlank(response))
+            );
+        
+            ClearCollect(
+                colAllPairs,
+                ForAll(
+                    Split(
+                        Concat(
+                            colRawResponses,
+                            Substitute(Substitute(Substitute(Substitute(response, "{", ""), "}", ""), "\", ""), """", ""),
+                            ","
+                        ),
+                        ","
+                    ) As item,
+                    {
+                        Key: Trim(First(Split(item.Value, ":")).Value),
+                        Val: Trim(Last(Split(item.Value, ":")).Value)
+                    }
+                )
+            );
+        
+            ClearCollect(
+                colFinalMerged,
+                ForAll(
+                    Distinct(Filter(colAllPairs, !IsBlank(Key)), Key) As k,
+                    Last(Filter(colAllPairs, Key = k.Value))
+                )
+            );
+        
+            Patch(
+                tbl_maintenance_order,
+                LookUp(tbl_maintenance_order, maintenanceorder_no = pMoNo),
+                {
+                    completed_responses: JSON(
+                        "{" & Concat(colFinalMerged, $"""{Key}"":{Val}", ",") & "}",
+                        JSONFormat.IgnoreBinaryData
+                    )
+                }
+            );
+        };
+        
+        // =====================================================
+        // Helper: sync one queued PM submission
+        // =====================================================
+        FlushSubmissionItemPM(
+            pAssignId: Number,
+            pMoNo: Number,
+            pResponseJson: Text,
+            pEmail: Text,
+            pRole: Text,
+            pDept: Text,
+            pSubmittedAt: DateTime,
+            pLon: Number,
+            pLat: Number
+        ):Void = {
+            IfError(
+                // a. assign row → response + Submitted (before merge)
+                Patch(tbl_mrl_workorder_assign,
+                    LookUp(tbl_mrl_workorder_assign, ID = pAssignId),
+                    {
+                        response: pResponseJson,
+                        status: { Id: 5, Value: "Submitted" },
+                        end_date: pSubmittedAt
+                    }
+                );
+        
+                // b. log entry
+                Patch(tbl_mrl_workorder_assign_log, Defaults(tbl_mrl_workorder_assign_log), {
+                    workorder_assign_id: pAssignId,
+                    maintenanceorder_no: pMoNo,
+                    maintenanceorder_status: "Submitted",
+                    user_email: pEmail,
+                    user_role: pRole,
+                    user_department: pDept,
+                    location_longitude: pLon,
+                    location_latitude: pLat
+                });
+        
+                // c. merge into MO master
+                MergeResponsesToMO(pMoNo);
+                Blank(),
+        
+                Collect(
+                    colFailedSubmissionPMSync,
+                    {
+                        assign_id: pAssignId,
+                        maintenanceorder_no: pMoNo,
+                        response_json: pResponseJson,
+                        user_email: pEmail,
+                        user_role: pRole,
+                        user_department: pDept,
+                        submitted_at: pSubmittedAt,
+                        location_longitude: pLon,
+                        location_latitude: pLat
+                    }
+                );
+                Notify("PM FLUSH FAIL: " & FirstError.Message, NotificationType.Error);
+                Blank()
+            );
+        };
+        
+        // =====================================================
+        // Main sync tick
+        // =====================================================
+        SyncTick():Void = {
+            If(
+                Connection.Connected,
+        
+                // ---------- ONLINE ----------
+                Set(varOfflineChecks, 0);
+                If(
+                    varIsOffline && !varSyncing,
+        
+                    // PROBE: verify the connector actually works before flushing.
+                    // Covers Studio false signals and the reconnect window where
+                    // network is up but connectors haven't re-authenticated yet.
+                    Set(
+                        varProbeOk,
+                        !IsBlank(IfError(First(tbl_mrl_users).ID, Blank()))
+                    );
+                    If(
+                        varProbeOk,
+                        Set(varSyncing, true);
+        
+                        // ===== 1. FLUSH STATUS UPDATE QUEUE =====
+                        If(
+                            CountRows(colPendingStatusUpdates) > 0,
+                            Notify(
+                                "Syncing " & CountRows(colPendingStatusUpdates) & " status update(s)...",
+                                NotificationType.Information
+                            )
+                        );
+                        ForAll(
+                            colPendingStatusUpdates As q,
+                            FlushStatusItem(
+                                q.workorder_assign_id,
+                                q.maintenanceorder_no,
+                                q.new_status,
+                                q.start_date,
+                                q.user_email,
+                                q.user_role,
+                                q.user_department,
+                                q.location_longitude,
+                                q.location_latitude
+                            )
+                        );
+                        Clear(colPendingStatusUpdates);
+                        IfError(SaveData(colPendingStatusUpdates, "colPendingStatusUpdatesCache"), Blank());
+        
+                        // ===== 2. FLUSH CM SUBMISSION QUEUE =====
+                        If(
+                            CountRows(colPendingSubmissions) > 0,
+                            Notify(
+                                "Syncing " & CountRows(colPendingSubmissions) & " CM submission(s)...",
+                                NotificationType.Information
+                            )
+                        );
+                        ForAll(
+                            colPendingSubmissions As q,
+                            FlushSubmissionItem(
+                                q.maintenanceorder_no,
+                                q.station_id, q.station_value,
+                                q.system_id, q.system_value,
+                                q.subsystem_id, q.subsystem_value,
+                                q.sub_subsystem_id, q.sub_subsystem_value,
+                                q.root_cause_id, q.root_cause_value,
+                                q.plan_start_date,
+                                q.plan_end_date,
+                                q.remarks,
+                                q.is_rsdm,
+                                q.train_no_id, q.train_no_value,
+                                q.car_position_id, q.car_position_value,
+                                q.assign_id,
+                                q.assign_mo_no,
+                                q.user_email,
+                                q.user_role,
+                                q.user_department,
+                                q.submitted_at,
+                                q.location_longitude,
+                                q.location_latitude
+                            )
+                        );
+                        Clear(colPendingSubmissions);
+                        IfError(SaveData(colPendingSubmissions, "colPendingSubmissionsCache"), Blank());
+        
+                        // ===== 2-PM. FLUSH PM SUBMISSION QUEUE =====
+                        If(
+                            CountRows(colPendingSubmissionsPM) > 0,
+                            Notify(
+                                "Syncing " & CountRows(colPendingSubmissionsPM) & " PM submission(s)...",
+                                NotificationType.Information
+                            )
+                        );
+                        ForAll(
+                            colPendingSubmissionsPM As q,
+                            FlushSubmissionItemPM(
+                                q.assign_id,
+                                q.maintenanceorder_no,
+                                q.response_json,
+                                q.user_email,
+                                q.user_role,
+                                q.user_department,
+                                q.submitted_at,
+                                q.location_longitude,
+                                q.location_latitude
+                            )
+                        );
+                        Clear(colPendingSubmissionsPM);
+                        IfError(SaveData(colPendingSubmissionsPM, "colPendingSubmissionsPMCache"), Blank());
+        
+                        // ===== 3. REFRESH + RE-CACHE =====
+                        Refresh(tbl_mrl_workorder_assign);
+                        Refresh(tbl_maintenance_order);
+        
+                        ClearCollect(
+                            colTblMrlWorkorderAssign,
+                            Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                        );
+        
+                        Clear(colTblMaintenanceOrder);
+                        ForAll(
+                            Distinct(colTblMrlWorkorderAssign, maintenanceorder_no) As mo,
+                            Collect(
+                                colTblMaintenanceOrder,
+                                LookUp(tbl_maintenance_order, maintenanceorder_no = mo.Value)
+                            )
+                        );
+                        RemoveIf(colTblMaintenanceOrder, IsBlank(maintenanceorder_no));
+        
+                        ClearCollect(
+                            colRefTemplate,
+                            Filter(ref_template, Department.Value = varUserRecord.department.Value)
+                        );
+        
+                        IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
+                        IfError(SaveData(colTblMaintenanceOrder, "colTblMaintenanceOrderCache"), Blank());
+                        IfError(SaveData(colRefTemplate, "colRefTemplateCache"), Blank());
+        
+                        // ===== 4. DONE =====
+                        Set(varIsOffline, false);
+                        Set(varSyncing, false);
+                        If(
+                            CountRows(colFailedStatusSync) + CountRows(colFailedSubmissionSync) + CountRows(colFailedSubmissionPMSync) > 0,
+                            Notify(
+                                "Back online — synced with " &
+                                (CountRows(colFailedStatusSync) + CountRows(colFailedSubmissionSync) + CountRows(colFailedSubmissionPMSync)) &
+                                " failed item(s)",
+                                NotificationType.Warning
+                            ),
+                            Notify("Back online — data synced", NotificationType.Success)
+                        );
+                    );
+                );
+                ,
+        
+                // ---------- OFFLINE (per Connection.Connected — verify before committing) ----------
+                Set(varOfflineChecks, varOfflineChecks + 1);
+                If(
+                    varOfflineChecks >= 3 && !varIsOffline,
+        
+                    // PROBE: Connection.Connected is unreliable in Studio/browser.
+                    // If the connector actually responds, we are NOT offline.
+                    Set(
+                        varProbeOk,
+                        !IsBlank(IfError(First(tbl_mrl_users).ID, Blank()))
+                    );
+                    If(
+                        varProbeOk,
+        
+                        // false alarm — connector works, stay online
+                        Set(varOfflineChecks, 0),
+        
+                        // genuinely offline — switch to cached data
+                        Set(varIsOffline, true);
+        
+                        // Load from cache ONLY if the collection is empty (cold start).
+                        // Mid-session drop keeps live in-memory data. No Clear().
+                        If(
+                            CountRows(colTblMrlWorkorderAssign) = 0,
+                            IfError(LoadData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache", true), Blank())
+                        );
+                        If(
+                            CountRows(colTblMaintenanceOrder) = 0,
+                            IfError(LoadData(colTblMaintenanceOrder, "colTblMaintenanceOrderCache", true), Blank())
+                        );
+                        If(
+                            CountRows(colRefTemplate) = 0,
+                            IfError(LoadData(colRefTemplate, "colRefTemplateCache", true), Blank())
+                        );
+                        If(
+                            CountRows(colPendingStatusUpdates) = 0,
+                            IfError(LoadData(colPendingStatusUpdates, "colPendingStatusUpdatesCache", true), Blank())
+                        );
+                        If(
+                            CountRows(colPendingSubmissions) = 0,
+                            IfError(LoadData(colPendingSubmissions, "colPendingSubmissionsCache", true), Blank())
+                        );
+                        If(
+                            CountRows(colPendingSubmissionsPM) = 0,
+                            IfError(LoadData(colPendingSubmissionsPM, "colPendingSubmissionsPMCache", true), Blank())
+                        );
+        
+                        Notify("Connection lost — using cached data", NotificationType.Warning);
+                    );
+                );
+            );
+        };
+    OnStart: |+
+        =// Create a JSON string that maps your "Keywords" to the actual Image Data
+        Set(varImageMap, 
+            JSON(
+                {
+                    IMG_TRAIN_AIR_BAG: '1-air-bag-train',
+                    IMG_TRAIN_WITHOUT_WINDOW: '2-train-without-window',
+                    IMG_TRAIN_WITHOUT_WINDOW_2: '2-train-without-window-2',
+                    IMG_TRAIN_WITHOUT_WINDOW_3: '2-train-without-window-3',
+                    IMG_TRAIN_CURRENT_COLLECTOR: '3-current-collector',
+                    IMG_TRAIN_CURRENT_COLLECTOR_HEIGHT: '3-current-collector-height',
+                    IMG_LEGEND_PM_TYRE_WEAR : 'IMG_LEGEND_PM_TYRE_WEAR',
+                    IMG_LEGEND_PM_CCEB : 'IMG_LEGEND_PM_CCEB',
+                    IMG_LEGEND_PM_CARDAN_SHAFT : 'IMG_LEGEND_PM_CARDAN_SHAFT',
+                    IMG_LEGEND_PM_CARDAN_SHAFT_GREASE : 'IMG_LEGEND_PM_CARDAN_SHAFT_GREAS',
+                    IMG_LEGEND_PM_WINDOW : 'IMG_LEGEND_PM_WINDOW',
+                    IMG_LEGEND_PM_DOOR_MEASURE : 'IMG_LEGEND_PM_DOOR_MEASURE'
+                }, 
+                JSONFormat.IncludeBinaryData
+            )
+        );
+        
+    StartScreen: =STARTUP
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+

@@ -1,0 +1,1249 @@
+TASK_VIEW As screen:
+    OnHidden: |-
+        =UpdateContext({isPopupChecklist: false});
+    OnVisible: |
+        =If(
+            !varIsOffline,
+            // ONLINE: load live + cache
+            ClearCollect(
+                colTblMrlWorkorderAssign,
+                Filter(
+                    tbl_mrl_workorder_assign,
+                    technician_id = varUserRecord.ID
+                )
+            );
+            IfError(
+                SaveData(
+                    colTblMrlWorkorderAssign,
+                    "colTblMrlWorkorderAssignCache"
+                ),
+                Blank()
+            );
+            UpdateContext({isPopupChecklist: false});
+            ,
+            // OFFLINE: load from cache (Clear first — LoadData appends!)
+            Clear(colTblMrlWorkorderAssign);
+            IfError(
+                LoadData(
+                    colTblMrlWorkorderAssign,
+                    "colTblMrlWorkorderAssignCache",
+                    true
+                ),
+                Blank()
+            )
+        );
+
+    "'Main-Container_2' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =768
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_3 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            varIsOffline: =varIsOffline
+            varUserDepartment: =varUserRecord.department.Value
+            varUserRole: =varUserRecord.role.Value
+            Visible: =true
+
+        ContentBody As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =2
+
+            NAVBAR_VIEWTASK As NAVBAR:
+                AuditMenu: =AUDITTRAIL_LIST
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                DashboardMenu: =DASHBOARD
+                dataMenu: =colMenu
+                EnableChildFocus: =true
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                NotificationMenu: =NOTIFICATION_LIST
+                ParentScreen: =TASK_LIST
+                ParentScreen2: =
+                SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                TaskMenu: =TASK_LIST
+                TeamMenu: =TEAM_LIST
+                UserMenu: =USER_LIST
+                Visible: =true
+                WorkOrderMenu: =WORKORDER_LIST
+
+            ContainerMain As groupContainer.manualLayoutContainer:
+                DropShadow: =DropShadow.None
+                Fill: =RGBA(245, 245, 245, 1)
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+                ContainerAction As groupContainer.manualLayoutContainer:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Height: =65
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Width: =1234
+                    Y: =576
+                    ZIndex: =1
+
+                    Button2_5 As button:
+                        BorderColor: =RGBA(52, 31, 151, 1)
+                        Fill: =RGBA(52, 31, 151, 1)
+                        Font: =Font.Lato
+                        FontWeight: =FontWeight.Normal
+                        Height: =50
+                        OnSelect: =Navigate(TASK_LIST,ScreenTransition.Fade)
+                        RadiusBottomLeft: =50
+                        RadiusBottomRight: =50
+                        RadiusTopLeft: =50
+                        RadiusTopRight: =50
+                        Size: =20
+                        Text: ="❮"
+                        Width: =50
+                        X: =3
+                        Y: =10
+                        ZIndex: =4
+
+                    btnSelectTeam_5 As modernButton:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderStyle: =""
+                        Color: =RGBA(255, 255, 255, 1)
+                        Font: =Font.Lato
+                        FontWeight: =""
+                        Height: =50
+                        Icon: ="AppsList"
+                        IconStyle: =IconStyle.Filled
+                        OnSelect: |+
+                            =UpdateContext({ isPopupLogTech: true });
+                            
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =16
+                        Text: ="Log"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =100
+                        X: =883
+                        Y: =10
+                        ZIndex: =6
+
+                    btnSelectTeam_9 As modernButton:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        BorderStyle: =""
+                        Color: =RGBA(255, 255, 255, 1)
+                        Font: =Font.Lato
+                        FontWeight: =""
+                        Height: =50
+                        Icon: ="Wrench"
+                        IconStyle: =IconStyle.Filled
+                        OnSelect: |-
+                            =UpdateContext({ isPopupChecklist: true})
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =16
+                        Text: ="Maintenance Checklist"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =238
+                        X: =995
+                        Y: =10
+                        ZIndex: =37
+
+                Container7 As groupContainer.manualLayoutContainer:
+                    ContentLanguage: =
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =372
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =1234
+                    Y: =70
+                    ZIndex: =3
+
+                    FORM_8 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,date_created)
+                        EnableChildFocus: =true
+                        Height: =47
+                        Label: ="Date Opened"
+                        Visible: =true
+                        Width: =330
+                        X: =23
+                        Y: =96
+
+                    FORM_13 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,target_date)
+                        EnableChildFocus: =true
+                        Height: =47
+                        Label: ="Target"
+                        Visible: =true
+                        X: =483
+                        Y: =96
+
+                    FORM_9 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,user_status.Value)
+                        EnableChildFocus: =true
+                        Height: =47
+                        Label: ="System Status"
+                        Visible: =true
+                        X: =23
+                        Y: =133
+
+                    FORM_14 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =varSelectedTask.status.Value
+                        EnableChildFocus: =true
+                        Height: =47
+                        Label: ="Task Status"
+                        Visible: =true
+                        X: =483
+                        Y: =133
+
+                    FORM_10 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,operation_workcenter.Value)
+                        EnableChildFocus: =true
+                        Height: =47
+                        Label: ="Work Centre"
+                        Visible: =true
+                        X: =23
+                        Y: =168
+
+                    FORM_11 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,maintenance_plant.Value)
+                        EnableChildFocus: =true
+                        Height: =47
+                        Label: ="Maint. Plan"
+                        Visible: =true
+                        X: =23
+                        Y: =211
+
+                    FORM_12 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,functional_location)
+                        EnableChildFocus: =true
+                        Height: =65
+                        Label: ="Functional Location"
+                        Visible: =true
+                        X: =23
+                        Y: =253
+
+                    FORM_15 As FORM:
+                        ChildTabPriority: =true
+                        ContentLanguage: =""
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,operation_shorttext)
+                        EnableChildFocus: =true
+                        Height: =36
+                        Label: ="Operation"
+                        Visible: =true
+                        X: =23
+                        Y: =318
+
+                    Group2_15 As group:
+                        Height: =5
+                        minimumHeight: =5
+                        minimumWidth: =5
+                        Visible: =true
+                        Width: =5
+                        X: =20
+                        Y: =20
+
+                        Label3_16 As label:
+                            FontWeight: =FontWeight.Bold
+                            Height: =53
+                            Text: |-
+                                ="Remarks Revise :"
+                            Visible: =If (varSelectedTask.status.Value = "Revise" , true, false)
+                            Width: =182
+                            X: =120
+                            Y: =301
+                            ZIndex: =35
+
+                        Label4_16 As label:
+                            Height: =53
+                            Text: =varSelectedTask.revise_remarks
+                            Visible: =If (varSelectedTask.status.Value = "Revise" , true, false)
+                            Width: =887
+                            X: =302
+                            Y: =301
+                            ZIndex: =36
+
+                    BadgeCanvas2_3 As Badge:
+                        AccessibleLabel: =""
+                        Align: =""
+                        Appearance: ='BadgeCanvas.Appearance'.Filled
+                        BasePaletteColor: =
+                        Content: |
+                            =Switch(
+                                LookUp(
+                                    colTblMaintenanceOrder,
+                                    maintenanceorder_no = varSelectedTask.maintenanceorder_no
+                                ).maintenance_type.Value,
+                                "YPM1", "PM",
+                                "YCM1", "CM",
+                                "N/A" // Fallback in case it's blank or something else
+                            )
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Font: =Font.'Lato Black'
+                        FontColor: =
+                        FontItalic: =false
+                        FontSize: =16
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        FontWeight: =""
+                        Height: =35
+                        Shape: ='BadgeCanvas.Shape'.Circular
+                        TabIndex: =0
+                        ThemeColor: |+
+                            =Switch(
+                                LookUp(
+                                    colTblMaintenanceOrder,
+                                    maintenanceorder_no = varSelectedTask.maintenanceorder_no
+                                ).maintenance_type.Value,
+                                "YPM1", 'BadgeCanvas.ThemeColor'.Brand,
+                                "YCM1", 'BadgeCanvas.ThemeColor'.Important,
+                                'BadgeCanvas.ThemeColor'.Subtle 
+                            )
+                            
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Width: =76
+                        X: =1142
+                        Y: =16
+                        ZIndex: =29
+
+                    FORM_7 As FORM:
+                        Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,maintenanceorder_no)
+                        Height: =47
+                        Label: ="Work Order No"
+                        X: =23
+                        Y: =61
+                        ZIndex: =37
+
+                    TITLE_3 As TITLE:
+                        Height: =55
+                        Title: ="Task Information"
+                        Width: =352
+                        X: =12
+                        ZIndex: =38
+
+                TitleContainer As groupContainer.manualLayoutContainer:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Height: =58
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =1234
+                    ZIndex: =4
+
+                    txtTitle_dashboard_4 As modernText:
+                        AutoHeight: =true
+                        BorderStyle: =""
+                        Color: =RGBA(47, 53, 66, 1)
+                        Font: =Font.'Lato Black'
+                        Height: =49
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =30
+                        Text: ="View Task"
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =526
+                        X: =12
+                        ZIndex: =1
+
+                    txtTittleConfigureTeam_6 As modernText:
+                        BorderStyle: =""
+                        Color: =RGBA(0, 0, 0, 0.6)
+                        Font: =Font.Lato
+                        Height: =26
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =16
+                        Text: ="Detailed breakdown of task requirements, technician assignments, and historical activity logs."
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =980
+                        X: =16
+                        Y: =32
+                        ZIndex: =2
+
+                Container25 As groupContainer.manualLayoutContainer:
+                    BorderColor: =RGBA(255, 255, 255, 1)
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =84
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =1234
+                    Y: =459
+                    ZIndex: =5
+
+                    Group2_13 As group:
+                        Height: =5
+                        minimumHeight: =5
+                        minimumWidth: =5
+                        Visible: =true
+                        Width: =5
+                        X: =0
+                        Y: =0
+
+                        Label3_14 As label:
+                            AutoHeight: =true
+                            FontWeight: =FontWeight.Bold
+                            Height: =26
+                            Text: |-
+                                ="Date Time Start:"
+                            Width: =180
+                            X: =16
+                            Y: =28
+                            ZIndex: =30
+
+                        Label4_14 As label:
+                            AutoHeight: =true
+                            Height: =31
+                            Text: |-
+                                =Coalesce(
+                                    Text(varSelectedTask.start_date, "dd/mm/yyyy hh:mm AM/PM"), 
+                                    "Not Started Yet"
+                                )
+                            Width: =306
+                            X: =188
+                            Y: =28
+                            ZIndex: =31
+
+                    Group2_14 As group:
+                        Height: =5
+                        minimumHeight: =5
+                        minimumWidth: =5
+                        Visible: =true
+                        Width: =5
+                        X: =20
+                        Y: =20
+
+                        Label3_15 As label:
+                            AutoHeight: =true
+                            FontWeight: =FontWeight.Bold
+                            Height: =26
+                            Text: |-
+                                ="Date Time Finish:"
+                            Width: =180
+                            X: =495
+                            Y: =28
+                            ZIndex: =32
+
+                        Label4_15 As label:
+                            Height: =31
+                            Text: |-
+                                =If(
+                                    IsBlank(varSelectedTask.start_date),
+                                    "Awaiting Start", 
+                                    If(
+                                        IsBlank(varSelectedTask.end_date),
+                                        "In Progress...",
+                                        Text(varSelectedTask.end_date, "dd/mm/yyyy hh:mm AM/PM")
+                                    )
+                                )
+                            Width: =306
+                            X: =675
+                            Y: =28
+                            ZIndex: =33
+
+    popUpConfirmation As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isPopupChecklist, true, false)
+        Width: =1366
+        ZIndex: =2
+
+        Container27 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(59, 53, 176, 1)
+            Height: =381
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =35
+            RadiusBottomRight: =35
+            RadiusTopLeft: =35
+            RadiusTopRight: =35
+            Width: =535
+            X: =387
+            Y: =168
+            ZIndex: =8
+
+            TextCanvas15_11 As Text:
+                Align: ='TextCanvas.Align'.Center
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.'Lato Black'
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =54
+                Size: =30
+                TabIndex: =0
+                Text: ="Confirmation ?"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ="Regular"
+                Width: =280
+                Wrap: =true
+                X: =129
+                Y: =146
+                ZIndex: =1
+
+            TextCanvas15_12 As Text:
+                Align: ='TextCanvas.Align'.Center
+                AutoHeight: =false
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =98
+                Size: =18
+                TabIndex: =0
+                Text: ="Would you like to begin this maintenance task now, or simply review the checklist? Starting the task will automatically record your current timestamp as the Start Date"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ="Regular"
+                Width: =496
+                Wrap: =true
+                X: =21
+                Y: =204
+                ZIndex: =2
+
+            ButtonCanvas2_10 As modernButton:
+                Align: =Align.Center
+                BasePaletteColor: =RGBA(189, 178, 176, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                Font: =""
+                FontWeight: =""
+                Height: =50
+                OnSelect: |+
+                    =Set(varViewPMOnly, false);
+                    Set(previousScreen,TASK_VIEW);
+                    
+                    UpdateContext({isPopupChecklist:false});
+                    
+                    Switch(
+                        LookUp(
+                            tbl_maintenance_order,
+                            maintenanceorder_no = varSelectedTask.maintenanceorder_no,
+                            maintenance_type.Value
+                        ),
+                        "YPM1", Navigate(TASK_CHECKLIST_PM, ScreenTransition.Fade),
+                        "YCM1", Navigate(TASK_CHECKLIST_CM, ScreenTransition.Fade)
+                    )
+                    
+                    
+                    
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =12
+                PaddingTop: =5
+                RadiusBottomLeft: =35
+                RadiusBottomRight: =35
+                RadiusTopLeft: =35
+                RadiusTopRight: =35
+                Size: =18
+                Text: ="View Checklist"
+                VerticalAlign: =VerticalAlign.Middle
+                Width: =175
+                X: =12
+                Y: =321
+                ZIndex: =3
+
+            btnStartMaintain As modernButton:
+                Align: =Align.Center
+                BasePaletteColor: =RGBA(110, 110, 225, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                Color: =RGBA(255, 255, 255, 1)
+                DisplayMode: |-
+                    =//DisplayMode.Edit
+                    
+                    If(varSelectedTask.status.Value = "Submitted" || varSelectedTask.status.Value = "Closed", DisplayMode.Disabled, DisplayMode.Edit)
+                Font: =""
+                FontWeight: =""
+                Height: =50
+                Icon: ="ArrowRight"
+                IconStyle: =IconStyle.Filled
+                Layout: =ButtonLayout.IconAfter
+                OnSelect: |-
+                    =Set(varViewPMOnly, true);
+                    Set(varIsNewEntry, true);
+                    Set(previousScreen,TASK_VIEW);
+                    
+                    /* stable code 08/07/2026
+                    // Change status new to processing
+                    Patch(
+                        tbl_mrl_workorder_assign,
+                        LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID && start_date = Blank()),
+                        {
+                            status: {
+                                Id: 4,
+                                Value: "Processing"
+                            },
+                            start_date: Now()
+                        }
+                    );
+                    
+                    
+                    // log tbl_mrl_workorder_assign_log status Processing
+                    Patch(
+                        tbl_mrl_workorder_assign_log,
+                        // 1. Try to find an existing record with these two values
+                        Coalesce(
+                            LookUp(
+                                tbl_mrl_workorder_assign_log, workorder_assign_id = varSelectedTask.ID && maintenanceorder_status = "Processing"
+                            ),
+                            // 2. If LookUp is blank, create a new record instead
+                            Defaults(tbl_mrl_workorder_assign_log)
+                        ),
+                        {
+                            workorder_assign_id: varSelectedTask.ID,
+                            maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                            maintenanceorder_status: "Processing",
+                            user_email: varUserRecord.email,
+                            user_role: varUserRecord.role.Value,
+                            user_department: varUserRecord.department.Value,
+                            location_longitude: Location.Longitude,
+                            location_latitude: Location.Latitude
+                        }
+                    );
+                    
+                    
+                    Switch(
+                        LookUp(
+                            tbl_maintenance_order,
+                            maintenanceorder_no = varSelectedTask.maintenanceorder_no,
+                            maintenance_type.Value
+                        ),
+                        "YPM1", Navigate(TASK_CHECKLIST_PM, ScreenTransition.Fade),
+                        "YCM1", Navigate(TASK_CHECKLIST_CM, ScreenTransition.Fade)
+                    );
+                    stable code 08/07/2026 */
+                    
+                    If(
+                        !varIsOffline,
+                    
+                        // ================= ONLINE =================
+                        With(
+                            { rec: LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID) },
+                            If(
+                                !IsBlank(rec) && IsBlank(rec.start_date),
+                                Patch(
+                                    tbl_mrl_workorder_assign,
+                                    rec,
+                                    {
+                                        status: { Id: 4, Value: "Processing" },
+                                        start_date: Now()
+                                    }
+                                );
+                                Patch(
+                                    tbl_mrl_workorder_assign_log,
+                                    Coalesce(
+                                        LookUp(
+                                            tbl_mrl_workorder_assign_log,
+                                            workorder_assign_id = varSelectedTask.ID && maintenanceorder_status = "Processing"
+                                        ),
+                                        Defaults(tbl_mrl_workorder_assign_log)
+                                    ),
+                                    {
+                                        workorder_assign_id: varSelectedTask.ID,
+                                        maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                                        maintenanceorder_status: "Processing",
+                                        user_email: varUserRecord.email,
+                                        user_role: varUserRecord.role.Value,
+                                        user_department: varUserRecord.department.Value,
+                                        location_longitude: Location.Longitude,
+                                        location_latitude: Location.Latitude
+                                    }
+                                )
+                            )
+                        );
+                    
+                        // keep local collection in step so UI is consistent
+                        Patch(
+                            colTblMrlWorkorderAssign,
+                            LookUp(colTblMrlWorkorderAssign, ID = varSelectedTask.ID),
+                            {
+                                status: { Id: 4, Value: "Processing" },
+                                start_date: Now()
+                            }
+                        )
+                        ,
+                    
+                        // ================= OFFLINE =================
+                        Collect(
+                            colPendingStatusUpdates,
+                            {
+                                queue_id: GUID(),
+                                queued_at: Now(),
+                                workorder_assign_id: varSelectedTask.ID,
+                                maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                                new_status: "Processing",
+                                start_date: Now(),
+                                user_email: varUserRecord.email,
+                                user_role: varUserRecord.role.Value,
+                                user_department: varUserRecord.department.Value,
+                                location_longitude: Location.Longitude,
+                                location_latitude: Location.Latitude
+                            }
+                        );
+                        IfError(SaveData(colPendingStatusUpdates, "colPendingStatusUpdatesCache"), Blank());
+                    
+                        Patch(
+                            colTblMrlWorkorderAssign,
+                            LookUp(colTblMrlWorkorderAssign, ID = varSelectedTask.ID),
+                            {
+                                status: { Id: 4, Value: "Processing" },
+                                start_date: Now()
+                            }
+                        );
+                        IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank())
+                    );
+                    
+                    // navigate using CACHED parent list — works both modes
+                    Switch(
+                        LookUp(
+                            colTblMaintenanceOrder,
+                            maintenanceorder_no = varSelectedTask.maintenanceorder_no,
+                            maintenance_type.Value
+                        ),
+                        "YPM1", Navigate(TASK_CHECKLIST_PM, ScreenTransition.Fade),
+                        "YCM1", Navigate(TASK_CHECKLIST_CM, ScreenTransition.Fade)
+                    );
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =12
+                PaddingTop: =5
+                RadiusBottomLeft: =35
+                RadiusBottomRight: =35
+                RadiusTopLeft: =35
+                RadiusTopRight: =35
+                Size: =18
+                Text: =If (varSelectedTask.status.Value = "Processing", "Continue Maintenance", "Start Maintenance")
+                VerticalAlign: =VerticalAlign.Middle
+                Width: =325
+                X: =197
+                Y: =321
+                ZIndex: =4
+
+            Icon2 As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =38
+                Icon: =Icon.Cancel
+                OnSelect: |
+                    =UpdateContext({isPopupChecklist:false});
+                Width: =45
+                X: =474
+                Y: =18
+                ZIndex: =5
+
+            Icon6 As icon.Warning:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =80
+                Icon: =Icon.Warning
+                Width: =80
+                X: =229
+                Y: =42
+                ZIndex: =6
+
+    popupLogTech As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isPopupLogTech,true, false)
+        Width: =1366
+        ZIndex: =3
+
+        conPopupLog_1 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(52, 31, 151, 1)
+            Height: =581
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =795
+            X: =284
+            Y: =96
+            ZIndex: =1
+
+            txtTittleConfigureTeam_7 As Text:
+                Align: ="Start"
+                AutoHeight: =false
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.'Lato Black'
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =49
+                Size: =30
+                TabIndex: =0
+                Text: ="Task Log"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =333
+                Wrap: =true
+                X: =81
+                Y: =10
+                ZIndex: =1
+
+            btnPopupClose_2 As icon:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =32
+                Icon: =Icon.Cancel
+                OnSelect: |-
+                    =UpdateContext({ isPopupLogTech:false });
+                Width: =32
+                X: =740
+                Y: =20
+                ZIndex: =2
+
+            Icon10_2 As icon:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =40
+                Icon: =Icon.OptionsList
+                Width: =40
+                X: =23
+                Y: =19
+                ZIndex: =4
+
+            txtTittleConfigureTeam_8 As Text:
+                Align: ="Start"
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =49
+                Size: =16
+                TabIndex: =0
+                Text: ="Chronological log of all status changes and assignments."
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Regular
+                Width: =500
+                Wrap: =true
+                X: =81
+                Y: =52
+                ZIndex: =5
+
+            "Gallery7_1 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                DelayItemLoading: =true
+                Fill: =RGBA(250, 250, 250, 1)
+                Height: =408
+                Items: |-
+                    =Sort(
+                        Filter(
+                            tbl_mrl_workorder_assign_log, 
+                            workorder_assign_id = varSelectedTask.ID
+                        ),
+                        Created,
+                        SortOrder.Ascending
+                    )
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                TemplatePadding: =0
+                TemplateSize: =87
+                Width: =750
+                X: =23
+                Y: =153
+                ZIndex: =6
+
+                Title5_1 As label:
+                    Align: =Align.Center
+                    AutoHeight: =true
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =23
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =14
+                    Text: =ThisItem.maintenanceorder_status
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =100
+                    X: =634
+                    Y: =28
+                    ZIndex: =1
+
+                Subtitle7_3 As label:
+                    AutoHeight: =true
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =Self.Size * 1.8
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =12
+                    Text: |-
+                        =Text(ThisItem.Created, "dd/mm/yyyy hh:mm AM/PM")
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =Title5_1.Width
+                    X: =40
+                    Y: =20
+                    ZIndex: =2
+
+                Separator11_1 As rectangle:
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =8
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =3
+
+                Rectangle7_1 As rectangle:
+                    Fill: =RGBA(0, 18, 107, 1)
+                    Height: =Parent.TemplateHeight - Separator11_1.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =4
+
+                Subtitle7_4 As label:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =20
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =12
+                    Text: =ThisItem.user_email
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =413
+                    X: =201
+                    Y: =41
+                    ZIndex: =5
+
+                Subtitle7_5 As label:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =21
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =12
+                    Text: |-
+                        =If(
+                            !IsBlank(ThisItem.user_email) && Len(Text(ThisItem.user_email)) > 5,
+                            Proper(
+                                Office365Users.UserProfileV2(ThisItem.user_email).displayName
+                            ),
+                            "-"
+                        )
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =389
+                    X: =201
+                    Y: =20
+                    ZIndex: =6
+
+                Subtitle7_6 As label:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =20
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =12
+                    Text: =ThisItem.user_role
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =413
+                    X: =201
+                    Y: =61
+                    ZIndex: =34
+
+            conHeader_2 As groupContainer.manualLayoutContainer:
+                BorderColor: =RGBA(247, 246, 246, 1)
+                BorderThickness: =1
+                DropShadow: =DropShadow.None
+                Fill: =RGBA(247, 246, 246, 1)
+                Height: =49
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Width: =750
+                X: =24
+                Y: =92
+                ZIndex: =7
+
+                TextCanvas2_117 As Text:
+                    Align: ='TextCanvas.Align'.Start
+                    AutoHeight: =false
+                    BorderColor: =
+                    BorderStyle: =""
+                    ContentLanguage: =""
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =
+                    Font: =Font.'Lato Black'
+                    FontColor: =
+                    FontItalic: =false
+                    FontStrikethrough: =false
+                    FontUnderline: =false
+                    Height: =32
+                    Size: =20
+                    TabIndex: =0
+                    Text: ="Date Time"
+                    Tooltip: =""
+                    VerticalAlign: =VerticalAlign.Middle
+                    Visible: =true
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =165
+                    Wrap: =true
+                    X: =34
+                    Y: =10
+                    ZIndex: =1
+
+                TextCanvas2_124 As Text:
+                    Align: ='TextCanvas.Align'.Start
+                    AutoHeight: =false
+                    BorderColor: =
+                    BorderStyle: =""
+                    ContentLanguage: =""
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =
+                    Font: =Font.'Lato Black'
+                    FontColor: =
+                    FontItalic: =false
+                    FontStrikethrough: =false
+                    FontUnderline: =false
+                    Height: =32
+                    Size: =20
+                    TabIndex: =0
+                    Text: ="User"
+                    Tooltip: =""
+                    VerticalAlign: =VerticalAlign.Middle
+                    Visible: =true
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =200
+                    Wrap: =true
+                    X: =199
+                    Y: =10
+                    ZIndex: =2
+
+                TextCanvas2_125 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    AutoHeight: =false
+                    BorderColor: =
+                    BorderStyle: =""
+                    ContentLanguage: =""
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =
+                    Font: =Font.'Lato Black'
+                    FontColor: =
+                    FontItalic: =false
+                    FontStrikethrough: =false
+                    FontUnderline: =false
+                    Height: =32
+                    Size: =20
+                    TabIndex: =0
+                    Text: ="Status"
+                    Tooltip: =""
+                    VerticalAlign: =VerticalAlign.Middle
+                    Visible: =true
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =100
+                    Wrap: =true
+                    X: =640
+                    Y: =9
+                    ZIndex: =3
+
+    timerOfflineTaskView As timer:
+        AutoStart: =true
+        Duration: =5000
+        OnTimerEnd: |-
+            =/*If(
+                Connection.Connected,
+                // any successful check resets the counter
+                Set(varOfflineChecks, 0);
+                If(
+                    varIsOffline,
+                    Set(varIsOffline, false);
+                    ClearCollect(colTblMrlWorkorderAssign, Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID));
+                    IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
+                    Notify("Back online — data refreshed", NotificationType.Success)
+                ),
+            
+                // not connected — count before committing
+                Set(varOfflineChecks, varOfflineChecks + 1);
+                If(
+                    varOfflineChecks >= 3 && !varIsOffline,
+                    Set(varIsOffline, true);
+                    IfError(
+                        LoadData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache", true),
+                        Blank()
+                    );
+                    Notify("Connection lost — switched to cached data", NotificationType.Warning)
+                )
+            )*/
+            
+            SyncTick()
+        Repeat: =true
+        Visible: =false
+        X: =200
+        Y: =35
+        ZIndex: =4
+

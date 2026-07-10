@@ -1,0 +1,264 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  NAVBAR:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      AccentColor:
+        PropertyKind: Input
+        DisplayName: AccentColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(255, 0, 0, 1)
+      AuditMenu:
+        PropertyKind: Input
+        DisplayName: AuditMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      BgColor:
+        PropertyKind: Input
+        DisplayName: BgColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(52, 31, 151, 1)
+      DashboardMenu:
+        PropertyKind: Input
+        DisplayName: DashboardMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      NotificationMenu:
+        PropertyKind: Input
+        DisplayName: NotificationMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      ParentScreen:
+        PropertyKind: Input
+        DisplayName: ParentScreen
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      ParentScreen2:
+        PropertyKind: Input
+        DisplayName: ParentScreen2
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      ReportAnalysis:
+        PropertyKind: Input
+        DisplayName: ReportAnalysis
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      ReportAnalysisHOU:
+        PropertyKind: Input
+        DisplayName: ReportAnalysisHOU
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      SystemConfigurationMenu:
+        PropertyKind: Input
+        DisplayName: SystemConfigurationMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      TaskMenu:
+        PropertyKind: Input
+        DisplayName: TaskMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      TeamMenu:
+        PropertyKind: Input
+        DisplayName: TeamMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      UserMenu:
+        PropertyKind: Input
+        DisplayName: UserMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      WorkOrderMenu:
+        PropertyKind: Input
+        DisplayName: WorkOrderMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      WorkOrderSvMenu:
+        PropertyKind: Input
+        DisplayName: WorkOrderSvMenu
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      dataMenu:
+        PropertyKind: Input
+        DisplayName: dataMenu
+        Description: A custom property
+        DataType: Table
+        Default: =Table({ID:1,label:"Dashboard",icon:"Home",order:1,roles:Table({Value:"Admin"}),isVisible:true,targetScreen:"DASHBOARD"})
+    Properties:
+      Width: =80
+    Children:
+      - Navbar-Links_3:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Fill: =NAVBAR.BgColor
+            Height: =640
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =15
+            PaddingTop: =40
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =80
+          Children:
+            - navbar-gallery:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =615
+                  Items: |
+                    =NAVBAR.dataMenu
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =80
+                  OnSelect: |
+                    =
+                  TemplateSize: =70
+                  Transition: =Transition.Pop
+                  Width: =80
+                  X: =40
+                Children:
+                  - navbar_icon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(220, 220, 220, 1)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =0
+                        Height: =50
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverColor: =ColorFade(NAVBAR.AccentColor, -10%)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Icon: |-
+                          =Switch(
+                              ThisItem.icon,
+                              "Home", Icon.Home,
+                              "Document", Icon.Document,
+                              "Settings", Icon.Settings,
+                              "Search", Icon.Search,
+                              "Add", Icon.Add,
+                              "Edit", Icon.Edit,
+                              "Save", Icon.Save,
+                              "Cancel", Icon.Cancel,
+                              "Download", Icon.Download,
+                              "Mail", Icon.Mail,
+                              "User", Icon.People,
+                              "Warning", Icon.Warning,
+                              "Help", Icon.Help,
+                              "ListWatchlistRemind", Icon.ListWatchlistRemind,
+                              "ListScrollWatchlist", Icon.ListScrollWatchlist,
+                              "ToolsWrench", Icon.ToolsWrench,
+                              "AddUser", Icon.AddUser,
+                              "People", Icon.People,
+                              "Trending", Icon.Trending
+                          )
+                        OnSelect: |-
+                          =Switch(
+                              ThisItem.targetScreen,
+                              "DASHBOARD", Navigate(NAVBAR.DashboardMenu, ScreenTransition.Fade),
+                              "NOTIFICATION_LIST", Navigate(NAVBAR.NotificationMenu, ScreenTransition.Fade),
+                              "WORKORDER_LIST", Navigate(NAVBAR.WorkOrderMenu, ScreenTransition.Fade),
+                              "WORKORDER_LIST_SV", Navigate(NAVBAR.WorkOrderSvMenu, ScreenTransition.Fade),
+                              "TASK_LIST", Navigate(NAVBAR.TaskMenu, ScreenTransition.Fade),
+                              "SYSTEMCONFIGURATION_LIST", Navigate(NAVBAR.SystemConfigurationMenu, ScreenTransition.Fade),
+                              "USER_LIST", Navigate(NAVBAR.UserMenu, ScreenTransition.Fade),
+                              "AUDITTRAIL_LIST", Navigate(NAVBAR.AuditMenu, ScreenTransition.Fade),
+                              "TEAM_LIST", Navigate(NAVBAR.TeamMenu, ScreenTransition.Fade),
+                              "REPORT_ANALYSIS", Navigate(NAVBAR.ReportAnalysis, ScreenTransition.Fade),
+                              "REPORT_ANALYSIS_HOU", Navigate(NAVBAR.ReportAnalysisHOU, ScreenTransition.Fade)
+                          )
+                        PaddingBottom: =10
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        Width: =50
+                        X: =15
+                        Y: =10
+                  - Rectangle1_10:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: "=If(\n    ThisItem.targetScreen = App.ActiveScreen.Name || \n    ThisItem.targetScreen = NAVBAR.ParentScreen.Name || \n    ThisItem.targetScreen = NAVBAR.ParentScreen2.Name,\n    \n    NAVBAR.AccentColor,\n    NAVBAR.BgColor\n)"
+                        FocusedBorderThickness: =4
+                        Height: =50
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Width: =10
+                        Y: =10
+            - Exit_3:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  DropShadow: =DropShadow.None
+                  Height: =50
+                  LayoutAlignItems: =LayoutAlignItems.End
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =90
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =90
+                  LayoutMinWidth: =70
+                  PaddingBottom: =30
+                  X: =40
+                  Y: =40
+                Children:
+                  - navbar_icon_1:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(220, 220, 220, 1)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =0
+                        Height: =50
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverColor: =ColorFade(NAVBAR.AccentColor, -10%)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Icon: =Icon.Leave
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: =Exit()
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingTop: =5
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        Width: =78
+                        X: =15
+                        Y: =10

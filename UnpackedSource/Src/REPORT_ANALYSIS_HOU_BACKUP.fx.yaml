@@ -1,0 +1,500 @@
+REPORT_ANALYSIS_HOU_BACKUP As screen:
+    OnVisible: =
+
+    "'Main-Container_39' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =768
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_40 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            varUserDepartment: =varUserRecord.department.Value
+            varUserRole: =varUserRecord.role.Value
+            Visible: =true
+
+        ContentBody_25 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =2
+
+            NAVBAR_AUDITTRAIL_LIST_17 As NAVBAR:
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                DashboardMenu: =DASHBOARD
+                dataMenu: =colMenu
+                EnableChildFocus: =true
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                NotificationMenu: =NOTIFICATION_LIST
+                ParentScreen: =
+                ParentScreen2: =
+                SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                TaskMenu: =TASK_LIST
+                TeamMenu: =TEAM_LIST
+                UserMenu: =USER_LIST
+                Visible: =true
+                WorkOrderMenu: =WORKORDER_LIST
+                ZIndex: =2
+
+            ctnbd_RA_DB_RSDM_1 As groupContainer.manualLayoutContainer:
+                DropShadow: =DropShadow.None
+                Fill: =RGBA(245, 245, 245, 1)
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Visible: =varUserRecord.department.Value = "RSDM"
+                ZIndex: =3
+
+                Container7_26 As groupContainer.manualLayoutContainer:
+                    ContentLanguage: =
+                    DropShadow: =DropShadow.Semilight
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =564
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =30
+                    RadiusBottomRight: =30
+                    RadiusTopLeft: =30
+                    RadiusTopRight: =30
+                    Width: =1234
+                    Y: =60
+                    ZIndex: =4
+
+                    RA_HOU_RSDM As groupContainer.manualLayoutContainer:
+                        DropShadow: =DropShadow.Regular
+                        Height: =177
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Width: =518
+                        X: =42
+                        Y: =48
+                        ZIndex: =9
+
+                        DeptName_24 As modernText:
+                            BorderStyle: =""
+                            Color: =RGBA(6, 50, 194, 1)
+                            Font: =Font.'Lato Black'
+                            Height: =48
+                            Size: =22
+                            Text: ="RSDM"
+                            Width: =79
+                            X: =78
+                            Y: =15
+                            ZIndex: =1
+
+                        Image1_8 As image:
+                            Height: =39
+                            Image: |-
+                                ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                    "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path d='M5 11H19M9 18L6 21M15 18L18 21M12 11V4M8 15H8.01M16 15H16.01M8.2 18H15.8C16.9201 18 17.4802 18 17.908 17.782C18.2843 17.5903 18.5903 17.2843 18.782 16.908C19 16.4802 19 15.9201 19 14.8V6.2C19 5.0799 19 4.51984 18.782 4.09202C18.5903 3.71569 18.2843 3.40973 17.908 3.21799C17.4802 3 16.9201 3 15.8 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.07989 5 6.2V14.8C5 15.9201 5 16.4802 5.21799 16.908C5.40973 17.2843 5.71569 17.5903 6.09202 17.782C6.51984 18 7.07989 18 8.2 18Z' stroke='#0632c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>"
+                                )
+                            Width: =42
+                            X: =32
+                            Y: =19
+                            ZIndex: =7
+
+                        ButtonCanvas1_12 As Button:
+                            AcceptsFocus: =true
+                            AccessibleLabel: =""
+                            Align: =""
+                            Appearance: ='ButtonCanvas.Appearance'.Transparent
+                            BasePaletteColor: =RGBA(6, 50, 194, 1)
+                            BorderColor: =
+                            BorderRadius: =10
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =""
+                            FontColor: =
+                            FontItalic: =false
+                            FontSize: =18
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =177
+                            Icon: =
+                            IconRotation: =0
+                            IconStyle: ="Outline"
+                            Layout: ="Icon before"
+                            OnSelect: =//Navigate(
+                            PaddingBottom: =5
+                            PaddingLeft: =10
+                            PaddingRight: =10
+                            PaddingTop: =20
+                            TabIndex: =0
+                            Text: ="Rolling Stock Analytic Dashboard"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Width: =518
+                            X: =0
+                            Y: =0
+                            ZIndex: =8
+
+                    RA_HOU_TNMD As groupContainer.manualLayoutContainer:
+                        DropShadow: =DropShadow.Regular
+                        Height: =177
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Width: =518
+                        X: =641
+                        Y: =48
+                        ZIndex: =10
+
+                        DeptName_25 As modernText:
+                            BorderStyle: =""
+                            Color: =RGBA(6, 50, 194, 1)
+                            Font: =Font.'Lato Black'
+                            Height: =48
+                            Size: =22
+                            Text: ="TNMD"
+                            Width: =79
+                            X: =78
+                            Y: =15
+                            ZIndex: =1
+
+                        Image1_9 As image:
+                            Height: =39
+                            Image: |-
+                                ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                    "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path d='M6 4H18M4 11H20M3 18L21 18M9.0002 3.00005L4.00009 21M20 21L15 3' stroke='#0632c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>"
+                                )
+                            Width: =42
+                            X: =32
+                            Y: =19
+                            ZIndex: =2
+
+                        ButtonCanvas1_13 As Button:
+                            AcceptsFocus: =true
+                            AccessibleLabel: =""
+                            Align: =""
+                            Appearance: ='ButtonCanvas.Appearance'.Transparent
+                            BasePaletteColor: =RGBA(6, 50, 194, 1)
+                            BorderColor: =
+                            BorderRadius: =10
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =""
+                            FontColor: =
+                            FontItalic: =false
+                            FontSize: =18
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =177
+                            Icon: =
+                            IconRotation: =0
+                            IconStyle: ="Outline"
+                            Layout: ="Icon before"
+                            OnSelect: =//Navigate(
+                            PaddingBottom: =5
+                            PaddingLeft: =10
+                            PaddingRight: =10
+                            PaddingTop: =20
+                            TabIndex: =0
+                            Text: ="Track & Network Analytic Dashboard"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Width: =518
+                            X: =0
+                            Y: =0
+                            ZIndex: =3
+
+                    RA_HOU_PSD As groupContainer.manualLayoutContainer:
+                        DropShadow: =DropShadow.Regular
+                        Height: =177
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Width: =518
+                        X: =646
+                        Y: =278
+                        ZIndex: =11
+
+                        DeptName_26 As modernText:
+                            BorderStyle: =""
+                            Color: =RGBA(6, 50, 194, 1)
+                            Font: =Font.'Lato Black'
+                            Height: =48
+                            Size: =22
+                            Text: ="PSD"
+                            Width: =79
+                            X: =78
+                            Y: =15
+                            ZIndex: =1
+
+                        Image1_10 As image:
+                            Height: =39
+                            Image: |-
+                                ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                    "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path d='M5.5 8C6.88071 8 8 6.88071 8 5.5C8 4.11929 6.88071 3 5.5 3C4.11929 3 3 4.11929 3 5.5C3 6.88071 4.11929 8 5.5 8ZM5.5 8V16M5.5 16C4.11929 16 3 17.1193 3 18.5C3 19.8807 4.11929 21 5.5 21C6.88071 21 8 19.8807 8 18.5C8 17.1193 6.88071 16 5.5 16ZM18.5 8C19.8807 8 21 6.88071 21 5.5C21 4.11929 19.8807 3 18.5 3C17.1193 3 16 4.11929 16 5.5C16 6.88071 17.1193 8 18.5 8ZM18.5 8C18.5 8.92997 18.5 9.39496 18.3978 9.77646C18.1204 10.8117 17.3117 11.6204 16.2765 11.8978C15.895 12 15.43 12 14.5 12H8.5C6.84315 12 5.5 13.3431 5.5 15' stroke='#0632c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>"
+                                )
+                            Width: =42
+                            X: =32
+                            Y: =19
+                            ZIndex: =2
+
+                        ButtonCanvas1_14 As Button:
+                            AcceptsFocus: =true
+                            AccessibleLabel: =""
+                            Align: =""
+                            Appearance: ='ButtonCanvas.Appearance'.Transparent
+                            BasePaletteColor: =RGBA(6, 50, 194, 1)
+                            BorderColor: =
+                            BorderRadius: =10
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =""
+                            FontColor: =
+                            FontItalic: =false
+                            FontSize: =18
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =177
+                            Icon: =
+                            IconRotation: =0
+                            IconStyle: ="Outline"
+                            Layout: ="Icon before"
+                            OnSelect: =//Navigate(
+                            PaddingBottom: =5
+                            PaddingLeft: =10
+                            PaddingRight: =10
+                            PaddingTop: =20
+                            TabIndex: =0
+                            Text: ="Power System Analytic Dashboard"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Width: =518
+                            X: =0
+                            Y: =0
+                            ZIndex: =3
+
+                    RA_HOU_SNC As groupContainer.manualLayoutContainer:
+                        DropShadow: =DropShadow.Regular
+                        Height: =177
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Width: =518
+                        X: =42
+                        Y: =278
+                        ZIndex: =13
+
+                        DeptName_27 As modernText:
+                            BorderStyle: =""
+                            Color: =RGBA(6, 50, 194, 1)
+                            Font: =Font.'Lato Black'
+                            Height: =48
+                            Size: =22
+                            Text: ="SNC"
+                            Width: =79
+                            X: =78
+                            Y: =15
+                            ZIndex: =1
+
+                        Image1_11 As image:
+                            Height: =39
+                            Image: |-
+                                ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                    "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path d='M3.23047 15.6021V19.6021M3.23047 17.6021H6.10979C6.51355 17.6021 6.71543 17.6021 6.88849 17.5357C7.04136 17.477 7.17748 17.3816 7.28489 17.258C7.40648 17.1181 7.47547 16.9283 7.61345 16.5489L9.23047 12.1021M16.2305 14.1021L17.9671 14.9704C18.4144 15.1941 18.638 15.3059 18.8584 15.3124C19.0525 15.3182 19.2441 15.2673 19.4098 15.166C19.5979 15.051 19.7366 14.843 20.014 14.4269L20.2251 14.1102C20.5726 13.589 20.7463 13.3284 20.7669 13.0693C20.785 12.8418 20.7248 12.615 20.5962 12.4265C20.4497 12.2117 20.1696 12.0717 19.6094 11.7916L19.2305 11.6021M4.09035 7.62803L5.96145 4.42043C6.23184 3.9569 6.36703 3.72514 6.56088 3.59657C6.73149 3.48341 6.93273 3.42534 7.13741 3.43022C7.36995 3.43575 7.60783 3.55986 8.0836 3.80809L15.9789 7.92736C16.7263 8.31731 17.1 8.51229 17.2454 8.78849C17.3725 9.02974 17.3955 9.31242 17.3092 9.57107C17.2104 9.86717 16.8732 10.1201 16.1988 10.6259L13.0216 13.0088C12.7344 13.2242 12.5908 13.3319 12.4312 13.3832C12.2901 13.4286 12.1407 13.4421 11.9938 13.4227C11.8276 13.4007 11.6671 13.3204 11.346 13.1599L4.75685 9.8653C4.22599 9.59987 3.96056 9.46716 3.81581 9.26293C3.6886 9.08344 3.62413 8.86702 3.63238 8.64718C3.64176 8.39703 3.79129 8.1407 4.09035 7.62803Z' stroke='#0632c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>"
+                                )
+                            Width: =42
+                            X: =32
+                            Y: =19
+                            ZIndex: =2
+
+                        ButtonCanvas1_15 As Button:
+                            AcceptsFocus: =true
+                            AccessibleLabel: =""
+                            Align: =""
+                            Appearance: ='ButtonCanvas.Appearance'.Transparent
+                            BasePaletteColor: =RGBA(6, 50, 194, 1)
+                            BorderColor: =
+                            BorderRadius: =10
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =""
+                            FontColor: =
+                            FontItalic: =false
+                            FontSize: =18
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =177
+                            Icon: =
+                            IconRotation: =0
+                            IconStyle: ="Outline"
+                            Layout: ="Icon before"
+                            OnSelect: =//Navigate(
+                            PaddingBottom: =5
+                            PaddingLeft: =10
+                            PaddingRight: =10
+                            PaddingTop: =20
+                            TabIndex: =0
+                            Text: ="Signalling & Communication Analytic Dashboard"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Width: =518
+                            X: =0
+                            Y: =0
+                            ZIndex: =3
+
+                "'Title-Container_23' As groupContainer.manualLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Height: =60
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =12
+
+                    txtTitle_dashboard_35 As Text:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =true
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(47, 53, 66, 1)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =49
+                        Size: =30
+                        TabIndex: =0
+                        Text: ="Report Analysis"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =520
+                        Wrap: =true
+                        X: =10
+                        Y: =0
+                        ZIndex: =1
+
+                    icoRefresh_18 As icon:
+                        Color: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                        Height: =30
+                        Icon: =Icon.Reload
+                        OnSelect: |-
+                            =// 1. Start the loading state
+                            UpdateContext({varIsLoading: true});
+                            
+                            // 2. Perform the Refresh
+                            Refresh(tbl_maintenance_order);
+                            
+                            // 3. End the loading state
+                            UpdateContext({varIsLoading: false});
+                            
+                            Notify("Data Refreshed", NotificationType.Success)
+                        Width: =30
+                        X: =1180
+                        Y: =12
+                        ZIndex: =2
+
+                    txtTittleConfigureTeam_17 As modernText:
+                        AutoHeight: =true
+                        BorderStyle: =""
+                        Color: =RGBA(0, 0, 0, 0.6)
+                        Font: =Font.Lato
+                        Height: =23
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =16
+                        Text: ="Overview of all analysis report for each respective department in Monorail Line."
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =754
+                        X: =10
+                        Y: =37
+                        ZIndex: =3
+

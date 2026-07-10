@@ -1,0 +1,844 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TASK_CHECKLIST_PM:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |-
+        =UpdateContext({
+            varSelectedTemplate: Blank(),
+            varWorkOrder: Blank(),
+            varCurrentRecord: Blank(),
+            varChecklistPMDialog: false,
+            varIsDataReady: false
+        });
+
+        UpdateContext({ isPopUpTechConfirmClose : false });
+        UpdateContext({ isPopUpEngConfirmClose : false });
+      OnVisible: "=/* Stable code on 9/7/2026\n// Reset state first\nUpdateContext({\n    varSelectedTemplate: Blank(),\n    varCurrentRecord: Blank(),\n    varWorkOrder: Blank(),\n    varData: Blank()\n});\n\nUpdateContext({ varIsDataReady: false });\n\n///////////////////////////////////////////////\n// Init - based on user role\n\nSwitch(\n    varUserRecord.role.Value,\n    \"Technician\", \n    \n        ////////////////////////////////////\n        // If Technician\n\n        // get workorder\n        UpdateContext({\n            varWorkOrder: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedTask.maintenanceorder_no)\n        });\n\n        // get template \n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varWorkOrder.form_template.Id)\n        });\n\n        // Validate template existence\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            // TEMPLATE MISSING\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n        // set response to collection\n        Set(\n            varChecklistOutput,\n            If(\n                IsBlank(LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID, response)),\n                Blank(),\n                LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID, response)\n            )\n        );,\n\n\n    \"Engineer\", \n        ////////////////////////////////////\n        // If Engineer\n\n        // get template\n        UpdateContext({\n            varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)\n        });\n\n        // get template \n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)\n        });\n    \n        // Validate template existence\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            // TEMPLATE MISSING\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n\n        \n        If(\n            !IsBlank(workorderAssignId),\n            // workorderAssignId is not blank\n            Set(\n                varChecklistOutput,\n                If(\n                    IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),\n                    Blank(),\n                    LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)\n                )\n            );,\n\n            // workorderAssignId blank\n            // set response to collection\n            Set(\n                varChecklistOutput,\n                If(\n                    IsBlank(varData.completed_responses),\n                    Blank(),\n                    varData.completed_responses\n                )\n            );\n        );,\n\n    \"Maintainer Scheduler\", \n        ////////////////////////////////////\n        // If Maintainer Scheduler\n\n        // get template\n        UpdateContext({\n            varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no)\n        });\n\n        // get template \n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)\n        });\n    \n        // Validate template existence\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            // TEMPLATE MISSING\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n        \n        If(\n            !IsBlank(workorderAssignId),\n            // workorderAssignId is not blank\n            Set(\n                varChecklistOutput,\n                If(\n                    IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),\n                    Blank(),\n                    LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)\n                )\n            );,\n\n            // workorderAssignId blank\n            // set response to collection\n            Set(\n                varChecklistOutput,\n                If(\n                    IsBlank(varData.completed_responses),\n                    Blank(),\n                    varData.completed_responses\n                )\n            );\n        );,\n\n\n    \"Supervisor\",\n        ////////////////////////////////////\n        // If Supervisor\n\n        // get template\n        UpdateContext({\n            varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no)\n        });\n\n        // get template \n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)\n        });\n    \n        // Validate template existence\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            // TEMPLATE MISSING\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n\n        \n        If(\n            !IsBlank(workorderAssignId),\n            // workorderAssignId is not blank\n            Set(\n                varChecklistOutput,\n                If(\n                    IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),\n                    Blank(),\n                    LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)\n                )\n            );,\n\n            // workorderAssignId blank\n            // set response to collection\n            Set(\n                varChecklistOutput,\n                If(\n                    IsBlank(varData.completed_responses),\n                    Blank(),\n                    varData.completed_responses\n                )\n            );\n        );,\n    \"\"            \n);\n\n\nUpdateContext({ varIsDataReady: true });\n\nend of stable code 9/7/2026 */\n\n// Reset state first\n\n\nUpdateContext({\n    varSelectedTemplate: Blank(),\n    varCurrentRecord: Blank(),\n    varWorkOrder: Blank(),\n    varData: Blank()\n});\n\nUpdateContext({ varIsDataReady: false });\n\n///////////////////////////////////////////////\n// Init - based on user role\n\nSwitch(\n    varUserRecord.role.Value,\n    \"Technician\",\n\n        ////////////////////////////////////\n        // If Technician — offline-capable: reads from cached collections\n\n        // get workorder (cached — works both modes)\n        UpdateContext({\n            varWorkOrder: LookUp(colTblMaintenanceOrder, maintenanceorder_no = varSelectedTask.maintenanceorder_no)\n        });\n\n        // get template (cached — works both modes)\n        UpdateContext({\n            varCurrentRecord: LookUp(colRefTemplate, ID = varWorkOrder.form_template.Id)\n        });\n\n        // Validate template existence\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            // TEMPLATE MISSING\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n        // set response — from local collection (has any offline-submitted response too)\n        Set(\n            varChecklistOutput,\n            LookUp(colTblMrlWorkorderAssign, ID = varSelectedTask.ID, response)\n        );,\n\n\n    \"Engineer\",\n        ////////////////////////////////////\n        // If Engineer (online-only role — connector reads unchanged)\n\n        UpdateContext({\n            varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)\n        });\n\n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)\n        });\n\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n        If(\n            !IsBlank(workorderAssignId),\n            Set(\n                varChecklistOutput,\n                LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)\n            );,\n            Set(\n                varChecklistOutput,\n                varData.completed_responses\n            );\n        );,\n\n    \"Maintainer Scheduler\",\n        ////////////////////////////////////\n        // If Maintainer Scheduler (online-only role)\n\n        UpdateContext({\n            varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no)\n        });\n\n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)\n        });\n\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n        If(\n            !IsBlank(workorderAssignId),\n            Set(\n                varChecklistOutput,\n                LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)\n            );,\n            Set(\n                varChecklistOutput,\n                varData.completed_responses\n            );\n        );,\n\n\n    \"Supervisor\",\n        ////////////////////////////////////\n        // If Supervisor (online-only role)\n\n        UpdateContext({\n            varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no)\n        });\n\n        UpdateContext({\n            varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)\n        });\n\n        If(\n            IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),\n            Notify(\"Template missing or Template JSON is empty for this Work Order.\", NotificationType.Error),\n            UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});\n        );\n\n        If(\n            !IsBlank(workorderAssignId),\n            Set(\n                varChecklistOutput,\n                LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)\n            );,\n            Set(\n                varChecklistOutput,\n                varData.completed_responses\n            );\n        );,\n    \"\"\n);\n\n\nUpdateContext({ varIsDataReady: true });"
+    Children:
+      - Main-Container_6:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =768
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_6:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =varIsOffline
+                  varUserDepartment: =varUserRecord.department.Value
+                  varUserRole: =varUserRecord.role.Value
+            - ContentBody_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_CHECKLIST:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =AUDITTRAIL_LIST
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: =DASHBOARD
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: =NOTIFICATION_LIST
+                        ParentScreen: =TASK_LIST
+                        ParentScreen2: =NOTIFICATION_LIST
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =TEAM_LIST
+                        UserMenu: =USER_LIST
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =App.ActiveScreen
+                        dataMenu: =colMenu
+                  - conBody:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(245, 245, 245, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                      Children:
+                        - TitleContainer_2:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              Height: =50
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =1234
+                            Children:
+                              - txtTitle_dashboard_6:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =RGBA(47, 53, 66, 1)
+                                    Font: =Font.'Lato Black'
+                                    Height: =49
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Size: =30
+                                    Text: |-
+                                      ="Checklist Form - Preventive Maintenance
+                                      "
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =694
+                                    X: =12
+                                    Y: =1
+                        - Container7_3:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              ContentLanguage: =
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =526
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =1234
+                              Y: =50
+                            Children:
+                              - SimpleDynamicForm2:
+                                  Control: CodeComponent
+                                  ComponentName: custom_DynamicFormPCF.SimpleDynamicForm
+                                  Properties:
+                                    ChecklistOutput: =Coalesce(ParseJSON(varChecklistOutput), ParseJSON(Blank()))
+                                    Height: =498
+                                    ImageData: =varImageMap
+                                    OnChange: |-
+                                      =Set(varChecklistOutput, 
+                                          JSON(
+                                              Self.ChecklistOutput, 
+                                              JSONFormat.IgnoreBinaryData
+                                          )
+                                      );
+                                    TemplateJSON: =varSelectedTemplate
+                                    Visible: =varIsDataReady
+                                    Width: =1200
+                                    X: =18
+                                    Y: =15
+                        - conFooter:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =65
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =1234
+                              Y: =576
+                            Children:
+                              - btnBackArrow:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =RGBA(52, 31, 151, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(52, 31, 151, 1)
+                                    Font: =Font.Lato
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =50
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |+
+                                      =
+                                      Set(isPopupChecklist, false);
+
+                                      Switch(
+                                          varUserRecord.role.Value,
+                                          "Engineer", Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN,ScreenTransition.Fade),
+                                          "Technician", Navigate(TASK_VIEW,ScreenTransition.Fade),
+                                          "Maintainer Scheduler", Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS,ScreenTransition.Fade),
+                                          "Supervisor", Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV,ScreenTransition.Fade)
+                                      );
+
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    RadiusBottomLeft: =50
+                                    RadiusBottomRight: =50
+                                    RadiusTopLeft: =50
+                                    RadiusTopRight: =50
+                                    Size: =20
+                                    Text: ="❮"
+                                    Width: =50
+                                    X: =3
+                                    Y: =10
+                              - btnEngSubmit:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Center
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =RGBA(110, 110, 225, 1)
+                                    BorderRadius: =35
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(255, 255, 255, 1)
+                                    FontSize: =17
+                                    Height: =50
+                                    Icon: ="Checkmark"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    Layout: ='ButtonCanvas.Layout'.IconBefore
+                                    OnSelect: |-
+                                      =UpdateContext({ isPopUpEngConfirmClose : true });
+                                    Text: ="Verify"
+                                    Visible: |-
+                                      =/*If(
+                                          varUserRecord.role.Value = "Engineer",
+
+
+                                          If(
+                                              previousScreen = WORKORDER_VIEW_ASSIGNED_TECHNICIAN && varSelectedWorkOrder.status_workorder_dmp.Value <> "CLS",
+                                              true,
+                                              false
+                                          ),
+                                          false
+                                      )*/ 
+                                      false
+                                    Width: =116
+                                    X: =1118
+                                    Y: =10
+                              - btnTechSubmit:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Center
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =RGBA(110, 110, 225, 1)
+                                    BorderRadius: =35
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(255, 255, 255, 1)
+                                    FontSize: =18
+                                    Height: =50
+                                    Icon: ="Checkmark"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    Layout: ='ButtonCanvas.Layout'.IconBefore
+                                    OnSelect: |-
+                                      =UpdateContext({isPopUpTechConfirmClose : true});
+                                    Text: ="Submit"
+                                    Visible: |-
+                                      =If( varViewPMOnly && varUserRecord.role.Value = "Technician" , true, false)
+                                      // true
+                                    Width: =200
+                                    X: =1034
+                                    Y: =10
+                              - btnTechSave:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Align: =Align.Center
+                                    BasePaletteColor: =RGBA(189, 178, 176, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontWeight: =""
+                                    Height: =50
+                                    Icon: ="Save"
+                                    IconStyle: =IconStyle.Filled
+                                    OnSelect: |-
+                                      =// update response json to sharepoint
+                                      Patch(
+                                          tbl_mrl_workorder_assign,
+                                          LookUp( tbl_mrl_workorder_assign, ID = varSelectedTask.ID ),
+                                          {
+                                             response: varChecklistOutput
+                                          }
+                                      );
+
+                                      Notify("Checklist Form Successfully Updated!", NotificationType.Success);
+                                    PaddingBottom: =5
+                                    PaddingLeft: =12
+                                    PaddingRight: =12
+                                    PaddingTop: =5
+                                    RadiusBottomLeft: =35
+                                    RadiusBottomRight: =35
+                                    RadiusTopLeft: =35
+                                    RadiusTopRight: =35
+                                    Size: =18
+                                    Text: ="Save"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =If( varViewPMOnly && varUserRecord.role.Value = "Technician" , true, false)
+                                    Width: =120
+                                    X: =903
+                                    Y: =10
+      - popUpEngConfirmClose:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.7)
+            Height: =768
+            Visible: =If(isPopUpEngConfirmClose, true, false)
+            Width: =1366
+          Children:
+            - Container28:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(59, 53, 176, 1)
+                  Height: =346
+                  RadiusBottomLeft: =35
+                  RadiusBottomRight: =35
+                  RadiusTopLeft: =35
+                  RadiusTopRight: =35
+                  Width: =682
+                  X: =363
+                  Y: =184
+                Children:
+                  - btnReview_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderRadius: =35
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        FontSize: =18
+                        Height: =51
+                        Icon: =
+                        OnSelect: |-
+                          =UpdateContext({ isPopUpEngConfirmClose : false });
+                        Text: ="Review Checklist"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =220
+                        X: =18
+                        Y: =280
+                  - btnCloseWorkOrder_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        BorderRadius: =35
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        FontSize: =18
+                        Height: =51
+                        Icon: =
+                        OnSelect: |+
+                          =// Update work order to closed work order
+                          Patch(
+                              tbl_maintenance_order,
+                              LookUp(tbl_maintenance_order,ID = varSelectedWorkOrder.ID),
+                              {
+                                  dmp_status: {
+                                      Id: 5,Value: "CLS"
+                                  },
+                                  remarks: txtChecklistRemarks.Value
+                              }
+                          );
+
+                          // log tbl_mrl_workorder_log status ASG
+                          Patch(
+                              tbl_mrl_workorder_log,
+                              Defaults(tbl_mrl_workorder_log),
+                              {
+                                  maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
+                                  maintenanceorder_status: "CLS",
+                                  user_email: varUserRecord.email ,
+                                  user_role: varUserRecord.role.Value,
+                                  user_department: varUserRecord.department.Value,
+                                  location_longitude: Location.Longitude,
+                                  location_latitude: Location.Latitude
+                              }
+                          );
+
+                          /*
+                          // Update work order assign to closed
+                          ForAll(
+                              Filter(tbl_mrl_workorder_assign, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no),
+                              Patch(
+                                  tbl_mrl_workorder_assign,
+                                  ThisRecord,
+                                  {
+                                      status: { Id: 6 , Value: "Closed" }
+                                  }
+                              );
+
+                              // log tbl_mrl_workorder_assign_log status Processing
+                              Patch(
+                                  tbl_mrl_workorder_assign_log,
+                                  Defaults(tbl_mrl_workorder_assign_log),
+                                  {
+                                      workorder_assign_id: ThisRecord.ID,
+                                      maintenanceorder_no: Round(varSelectedWorkOrder.maintenanceorder_no,0),
+                                      workorder_status: "Closed",
+                                      user_email: varUserRecord.email,
+                                      user_role: varUserRecord.role.Value,
+                                      user_department: varUserRecord.department.Value,
+                                      location_long: Location.Longitude,
+                                      location_lat: Location.Latitude
+                                  }
+                              );
+
+                          );*/
+
+                          // Snapshot the rows (breaks same-source dependency)
+                          ClearCollect(
+                              colToClose,
+                              Filter(
+                                  tbl_mrl_workorder_assign,
+                                  maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
+                              )
+                          );
+
+                          // Update work order assign to closed + log each
+                          ForAll(
+                              colToClose As CurrentAssign,
+                              With(
+                                  {
+                                      UpdatedAssign:
+                                      Patch(
+                                          tbl_mrl_workorder_assign,
+                                          CurrentAssign,
+                                          {
+                                              status: { Id: 6, Value: "Closed" }
+                                          }
+                                      )
+                                  },
+                                  Patch(
+                                      tbl_mrl_workorder_assign_log,
+                                      Defaults(tbl_mrl_workorder_assign_log),
+                                      {
+                                          workorder_assign_id: UpdatedAssign.ID,
+                                          maintenanceorder_no: Round(varSelectedWorkOrder.maintenanceorder_no, 0),
+                                          maintenanceorder_status: "Closed",
+                                          user_email: varUserRecord.email,
+                                          user_role: varUserRecord.role.Value,
+                                          user_department: varUserRecord.department.Value,
+                                          location_longitude: Location.Longitude,
+                                          location_latitude: Location.Latitude
+                                      }
+                                  )
+                              )
+                          );
+
+                          UpdateContext({ isPopUpEngConfirmClose: false});
+
+                          Navigate(WORKORDER_LIST,ScreenTransition.Fade);
+
+
+                        Text: ="Close Work Order"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =400
+                        X: =267
+                        Y: =280
+                  - TextCanvas15_13:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Start
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =57
+                        Size: =18
+                        Text: ="Please review if all the require checklist has been fill out before closing this work order."
+                        Width: =466
+                        X: =91
+                        Y: =28
+                  - txtChecklistRemarks:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Height: =125
+                        Mode: ='TextInputCanvas.Mode'.Multiline
+                        Width: =640
+                        X: =26
+                        Y: =137
+                  - TextCanvas15_14:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =true
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =46
+                        Size: =25
+                        Text: ="Remarks"
+                        Width: =171
+                        X: =24
+                        Y: =99
+                  - Icon2_5:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        Height: =38
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                          =UpdateContext({ isPopUpEngConfirmClose : false });
+                        Width: =45
+                        X: =617
+                        Y: =20
+                  - Icon6_5:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        Height: =50
+                        Icon: =Icon.Warning
+                        Width: =57
+                        X: =18
+                        Y: =24
+      - popUpTechConfirmClose:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.7)
+            Height: =768
+            Visible: =If(isPopUpTechConfirmClose, true, false)
+            Width: =1366
+          Children:
+            - Container29:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(59, 53, 176, 1)
+                  Height: =311
+                  RadiusBottomLeft: =35
+                  RadiusBottomRight: =35
+                  RadiusTopLeft: =35
+                  RadiusTopRight: =35
+                  Width: =465
+                  X: =464
+                  Y: =208
+                Children:
+                  - TextCanvas13_2:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =42
+                        Size: =30
+                        Text: ="Confirmation"
+                        Width: =217
+                        X: =129
+                        Y: =114
+                  - TextCanvas14_1:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        Height: =68
+                        Size: =18
+                        Text: ="Do you want to proceed with submission?"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =291
+                        X: =84
+                        Y: =156
+                  - Icon5_1:
+                      Control: Icon@0.0.7
+                      Properties:
+                        Height: =80
+                        Icon: ="Warning"
+                        IconColor: =RGBA(255, 255, 255, 1)
+                        Width: =80
+                        X: =197
+                        Y: =34
+                  - btnSubmitPM:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        FontWeight: =""
+                        Height: =50
+                        OnSelect: |-
+                          =/* stable code on 9/7/2026
+
+                          //////////////////////////////////////////////////////////////////////////////////////////
+                          // Update checklist form (response) and update Technician Status to submitted
+
+                          Patch(
+                              tbl_mrl_workorder_assign,
+                              LookUp( tbl_mrl_workorder_assign, ID = varSelectedTask.ID ),
+                              {
+                                  response: varChecklistOutput,
+                                  status: {
+                                      Id:5, 
+                                      Value:"Submitted"
+                                  },
+                                  end_date: Now()
+                              }
+                          );
+
+                          // log tbl_mrl_workorder_assign_log status Processing
+                          Patch(
+                              tbl_mrl_workorder_assign_log,
+                              Defaults(tbl_mrl_workorder_assign_log),
+                              {
+                                  workorder_assign_id: varSelectedTask.ID,
+                                  maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                                  maintenanceorder_status: "Submitted",
+                                  user_email: varUserRecord.email,
+                                  user_role: varUserRecord.role.Value,
+                                  user_department: varUserRecord.department.Value,
+                                  location_longitude: Location.Longitude,
+                                  location_latitude: Location.Latitude
+                              }
+                          );
+
+
+
+
+
+
+                          //////////////////////////////////////////////////////////////////////////////////////////
+                          // Update response to tbl_mrl_workorder 
+                          // Conflict-Free Merging Logic (Bypasses Table/ParseJSON errors)
+
+                          // 1. Initialize and clear the collection to define schema
+                          ClearCollect(colFinalMerged, {Key: "", Val: ""});
+                          Clear(colFinalMerged);
+
+                          // Load all relevant responses into a local collection to avoid delegation issues
+                          ClearCollect(colRawResponses, 
+                              Filter(tbl_mrl_workorder_assign, maintenanceorder_no = varSelectedTask.maintenanceorder_no && !IsBlank(response))
+                          );
+
+
+                          // 2. Loop through all rows for this specific WorkOrder
+                          ForAll(
+                              colRawResponses,
+                              With({
+                                  // Remove curly braces and escaping backslashes that cause parsing errors
+                                  cleanBody: Substitute(Substitute(Substitute(Substitute(response, "{", ""), "}", ""), "\", ""), """", "")
+                              },
+                              ForAll(
+                                  Split(cleanBody, ","),
+                                  With({
+                                      // Separate Key and Value (e.g., "1.1.a.ECA1:true")
+                                      rawKey: Trim(First(Split(Value, ":")).Value),
+                                      rawVal: Trim(Last(Split(Value, ":")).Value)
+                                  },
+                                  If(!IsBlank(rawKey),
+                                      // Remove existing key to prevent duplicates (Conflict Resolution)
+                                      RemoveIf(colFinalMerged, Key = rawKey);
+                                      Collect(colFinalMerged, { Key: rawKey, Val: rawVal })
+                                  )
+                              ))
+                          ));
+
+
+                          // 4. Create the final clean JSON string
+                          UpdateContext({
+                              varMasterJson: "{" & Concat(colFinalMerged, $"""{Key}"":{Val}", ",") & "}"
+                          });
+
+
+                          // 5. Patch to the Master Table (tbl_mrl_workorder)
+                          Patch(
+                              tbl_maintenance_order,
+                              LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedTask.maintenanceorder_no), 
+                              {
+                                  completed_responses:  JSON(
+                                      varMasterJson, 
+                                      JSONFormat.IgnoreBinaryData
+                                  )
+                              }
+                          );
+
+
+                          UpdateContext({
+                              isPopUpTechConfirmClose : false
+                          });
+                          Notify("Task Successfully Submitted");
+                          Navigate(TASK_LIST);
+
+                          end of stable code on 9/7/2026*/
+
+                          //////////////////////////////////////////////////////////////////////////////////////////
+                          // PM SUBMIT — offline-capable
+                          // Online: patch response + Submitted + log, then merge all technicians'
+                          //         JSONs into tbl_maintenance_order.completed_responses
+                          // Offline: queue payload; assign patch + log + merge replayed at sync
+
+                          // Step 1: capture payload as plain values (before any Reset/Navigate)
+                          Set(varPMPayload, {
+                              assign_id: varSelectedTask.ID,
+                              maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                              response_json: varChecklistOutput,
+                              user_email: varUserRecord.email,
+                              user_role: varUserRecord.role.Value,
+                              user_department: varUserRecord.department.Value,
+                              submitted_at: Now(),
+                              location_longitude: Location.Longitude,
+                              location_latitude: Location.Latitude
+                          });
+
+                          // Step 2: online → patch directly; offline → queue
+                          If(
+                              !varIsOffline && Connection.Connected,
+
+                              // ================= ONLINE =================
+                              // response + Technician status → Submitted
+                              Patch(
+                                  tbl_mrl_workorder_assign,
+                                  LookUp(tbl_mrl_workorder_assign, ID = varPMPayload.assign_id),
+                                  {
+                                      response: varPMPayload.response_json,
+                                      status: { Id: 5, Value: "Submitted" },
+                                      end_date: varPMPayload.submitted_at
+                                  }
+                              );
+
+                              // log Submitted
+                              Patch(
+                                  tbl_mrl_workorder_assign_log,
+                                  Defaults(tbl_mrl_workorder_assign_log),
+                                  {
+                                      workorder_assign_id: varPMPayload.assign_id,
+                                      maintenanceorder_no: varPMPayload.maintenanceorder_no,
+                                      maintenanceorder_status: "Submitted",
+                                      user_email: varPMPayload.user_email,
+                                      user_role: varPMPayload.user_role,
+                                      user_department: varPMPayload.user_department,
+                                      location_longitude: varPMPayload.location_longitude,
+                                      location_latitude: varPMPayload.location_latitude
+                                  }
+                              );
+
+                              // merge all technicians' JSONs → completed_responses
+                              MergeResponsesToMO(varPMPayload.maintenanceorder_no);
+
+                              // keep local collection in step so TASK_LIST shows Submitted
+                              Patch(
+                                  colTblMrlWorkorderAssign,
+                                  LookUp(colTblMrlWorkorderAssign, ID = varPMPayload.assign_id),
+                                  {
+                                      response: varPMPayload.response_json,
+                                      status: { Id: 5, Value: "Submitted" },
+                                      end_date: varPMPayload.submitted_at
+                                  }
+                              )
+                              ,
+
+                              // ================= OFFLINE =================
+                              // queue for sync (flush replays assign patch + log + merge)
+                              Collect(colPendingSubmissionsPM, varPMPayload);
+                              IfError(SaveData(colPendingSubmissionsPM, "colPendingSubmissionsPMCache"), Blank());
+
+                              // optimistic local update — merge deferred to sync
+                              Patch(
+                                  colTblMrlWorkorderAssign,
+                                  LookUp(colTblMrlWorkorderAssign, ID = varPMPayload.assign_id),
+                                  {
+                                      response: varPMPayload.response_json,
+                                      status: { Id: 5, Value: "Submitted" },
+                                      end_date: varPMPayload.submitted_at
+                                  }
+                              );
+                              IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank())
+                          );
+
+                          // ===== Cleanup (shared) =====
+                          UpdateContext({ isPopUpTechConfirmClose: false });
+                          Notify(
+                              If(!varIsOffline && Connection.Connected,
+                                  "Task Successfully Submitted",
+                                  "Saved offline — will sync when connection returns"
+                              ),
+                              If(!varIsOffline && Connection.Connected, NotificationType.Success, NotificationType.Warning)
+                          );
+                          Navigate(TASK_LIST);
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =18
+                        Text: ="Submit & End Maintainenace"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =300
+                        X: =149
+                        Y: =248
+                  - btnClose:
+                      Control: Button@0.0.45
+                      Properties:
+                        Appearance: ='ButtonCanvas.Appearance'.Primary
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderRadius: =35
+                        FontSize: =18
+                        Height: =50
+                        IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                        OnSelect: =UpdateContext({isPopUpTechConfirmClose:false});
+                        Text: ="Cancel"
+                        Width: =120
+                        X: =16
+                        Y: =248
+      - timerOfflinePM:
+          Control: Timer@2.1.0
+          Properties:
+            AutoStart: =true
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =5000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =SyncTick()
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Repeat: =true
+            Visible: =false
+            X: =232
+            Y: =36

@@ -1,0 +1,86 @@
+/* =================================================================
+    📚 VERSION HISTORY:
+    -----------------------------------------------------------------
+    CSS Version: 2.0.1
+    v1.9.9 (Current): Enabled Cell-level and Table-level border overrides.
+    v1.9.8 (Current): Added support for dynamic table border overrides.
+    v1.9.7 : Removed border-bottom from h4 titles. Adjusted  header margins.
+    v1.9.6: Added .nav-container and .page-number-display for pagination UI.
+    v1.9.5: Standardized typography using Fluent UI font sizes (12px-14px).
+    v1.9.2: Initialized .radio-stack-container for vertical radio button alignment.
+----------------------------------------------------------------- */
+/* PCF Dynamic Form - Version 2.3.0 */
+.pcf-dynamic-table {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 13px;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.pcf-dynamic-table th {
+    background-color: #f3f2f1;
+    border: 1px solid #edebe9;
+    padding: 10px;
+}
+.pcf-dynamic-table td {
+    border: 1px solid #f3f2f1;
+    padding: 8px;
+}
+
+.pcf-diagram-container {
+    position: relative;
+    background-size: 100% 100%; /* Important: scales the Web Resource to fit your defined width/height */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+}
+
+.pcf-input-textbox {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #605e5c;
+    border-radius: 2px;
+}
+
+.diagram-overlay-input {
+    border: none !important;
+    border-bottom: 1px solid #000 !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    text-align: center;
+    border-radius: 0 !important;
+}
+
+input[type="datetime-local"] {
+    font-family: inherit;
+    padding: 4px;
+    border: 1px solid #605e5c;
+    border-radius: 2px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* For diagram overlays, make it slightly transparent */
+.diagram-overlay-input[type="datetime-local"] {
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-bottom: 1px solid #000;
+}
+
+input[type="text"],
+input[type="date"], 
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #605e5c;
+    border-radius: 2px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.diagram-overlay-input[type="date"],
+.diagram-overlay-input[type="datetime-local"] {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: none !important;
+    border-bottom: 1px solid #000 !important;
+}

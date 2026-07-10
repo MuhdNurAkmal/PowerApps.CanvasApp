@@ -1,0 +1,140 @@
+POPUP As CanvasComponent:
+    LBOnSelect1():
+        ThisProperty:
+            Default: =""
+    RBOnSelect():
+        ThisProperty:
+            Default: =""
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =640
+    LBFill: =Color.LightGray
+    LBText: ="Cancel"
+    LBTextSize: =15
+    Message: ="Are you sure? Tanak pikir2 dulu"
+    MessageTextColor: =RGBA(0, 0, 0, 1)
+    MessageTextSize: =15
+    PopupFill: =RGBA(255, 255, 255, 1)
+    PopupHeight: =300
+    PopupWidth: =500
+    RBFill: =Color.DarkSlateGray
+    RBText: ="Submit"
+    RBTextSize: =15
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    conMain As groupContainer.verticalAutoLayoutContainer:
+        DropShadow: =DropShadow.None
+        Fill: =RGBA(0, 0, 0, 0.25)
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutJustifyContent: =LayoutJustifyContent.Center
+        LayoutMode: =LayoutMode.Auto
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =Parent.Width
+        ZIndex: =1
+
+        conPopup As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.Center
+            DropShadow: =DropShadow.Bold
+            Fill: =POPUP.PopupFill
+            FillPortions: =0
+            Height: =Min(POPUP.PopupHeight, POPUP.Height * 80%)
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =10
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            RadiusBottomLeft: =10
+            RadiusBottomRight: =10
+            RadiusTopLeft: =10
+            RadiusTopRight: =10
+            Width: =Min(POPUP.PopupWidth, POPUP.Width * 80%)
+            ZIndex: =1
+
+            lblMessage As label:
+                Align: =Align.Center
+                Color: =POPUP.MessageTextColor
+                Font: =Font.'Lato Black'
+                Height: =Parent.Height * 30%
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                Size: =POPUP.MessageTextSize
+                Text: =POPUP.Message
+                Width: =Parent.Width * 80%
+                ZIndex: =1
+
+            conButtons As groupContainer.horizontalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.Center
+                DropShadow: =DropShadow.None
+                FillPortions: =0
+                Height: =Parent.Height * 20%
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Width: =Parent.Width * 80%
+                ZIndex: =2
+
+                btnLeft As button:
+                    BorderThickness: =0
+                    DisabledFill: =Self.Fill
+                    Fill: =POPUP.LBFill
+                    FocusedBorderThickness: =0
+                    Font: =Font.'Lato Black'
+                    Height: =Parent.Height
+                    HoverFill: =ColorFade(Self.Fill, -20%)
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    OnSelect: =POPUP.LBOnSelect1()
+                    PressedColor: =Self.Color
+                    PressedFill: =ColorFade(Self.Fill, - 30%)
+                    Size: =POPUP.LBTextSize
+                    Text: =POPUP.LBText
+                    Width: =Parent.Width / 2.1
+                    ZIndex: =1
+
+                btnRight As button:
+                    BorderThickness: =0
+                    DisabledFill: =Self.Fill
+                    Fill: =POPUP.RBFill
+                    FocusedBorderThickness: =0
+                    Font: =Font.'Lato Black'
+                    Height: =Parent.Height
+                    HoverFill: =ColorFade(Self.Fill, - 20%)
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    OnSelect: =POPUP.RBOnSelect()
+                    PressedFill: =ColorFade(Self.Fill, - 30%)
+                    Text: =POPUP.RBText
+                    Width: =Parent.Width / 2.1
+                    ZIndex: =2
+

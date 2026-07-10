@@ -1,0 +1,1915 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  SYSTEMCONFIGURATION_LIST:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - Main-Container_17:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =768
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_16:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =false
+                  varUserDepartment: =varUserRecord.department.Value
+                  varUserRole: =varUserRecord.role.Value
+            - ContentBody_7:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_AUDITTRAIL_LIST_2:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =AUDITTRAIL_LIST
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: =DASHBOARD
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: =NOTIFICATION_LIST
+                        ParentScreen: =
+                        ParentScreen2: =
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =TEAM_LIST
+                        UserMenu: =USER_LIST
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =App.ActiveScreen
+                        dataMenu: =colMenu
+                  - ContainerMain_7:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(245, 245, 245, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                      Children:
+                        - TitleContainer_9:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              Height: =50
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =1234
+                            Children:
+                              - txtTitle_dashboard_17:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(47, 53, 66, 1)
+                                    Height: =49
+                                    Size: =30
+                                    Text: ="System Configuration"
+                                    Width: =526
+                                    X: =12
+                                    Y: =1
+                              - Spinner1_1:
+                                  Control: Spinner@1.4.6
+                                  Group: loading & spinner_1
+                                  Properties:
+                                    BasePaletteColor: =RGBA(249, 83, 109, 1)
+                                    Height: =30
+                                    Visible: =If (!varIsLoading, false, true)
+                                    Width: =30
+                                    X: =1183
+                                    Y: =10
+                              - icoRefresh_8:
+                                  Control: Classic/Icon@2.5.0
+                                  Group: loading & spinner_1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =RGBA(166, 166, 166, 1)
+                                    DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                                    Height: =30
+                                    Icon: =Icon.Reload
+                                    OnSelect: |-
+                                      =// 1. Start the loading state
+                                      UpdateContext({varIsLoading: true});
+
+                                      // 2. Perform the Refresh
+                                      Refresh(ref_system_config_menu);
+
+                                      // 3. End the loading state
+                                      UpdateContext({varIsLoading: false});
+
+                                      Notify("Data Refreshed", NotificationType.Success)
+                                    Rotation: =
+                                    Tooltip: ="Refresh Data"
+                                    Visible: =If (!varIsLoading, true, false)
+                                    Width: =30
+                                    X: =1183
+                                    Y: =9
+                        - Container16:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =590
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =20
+                              PaddingBottom: =8
+                              PaddingLeft: =8
+                              PaddingRight: =8
+                              PaddingTop: =8
+                              Width: =1234
+                              Y: =50
+                            Children:
+                              - menu:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    LayoutMaxWidth: =250
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    RadiusBottomLeft: =30
+                                    RadiusBottomRight: =30
+                                    RadiusTopLeft: =30
+                                    RadiusTopRight: =30
+                                  Children:
+                                    - galMenuSys:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_TwoTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(255, 255, 255, 1)
+                                          BorderStyle: =BorderStyle.None
+                                          Height: =490
+                                          Items: |-
+                                            =Filter(
+                                                ref_system_config_menu, 
+                                                varUserRecord.department in Department && 
+                                                varUserRecord.role in Role && 
+                                                (
+                                                    IsBlank(txtSearchMenuSys.Value) || 
+                                                    txtSearchMenuSys.Value in Title
+                                                )
+                                            )
+                                          OnSelect: =
+                                          ShowNavigation: =true
+                                          TemplateSize: =65
+                                          Transition: =Transition.Pop
+                                          Width: =225
+                                          X: =12
+                                          Y: =59
+                                        Children:
+                                          - Separator10:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle14:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 0, 0, 1)
+                                                Height: =47
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                                X: =7
+                                                Y: =9
+                                          - TextCanvas2:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                AutoHeight: =true
+                                                Font: =Font.'Lato Black'
+                                                Height: =47
+                                                Size: =18
+                                                Text: =ThisItem.Title
+                                                Width: =175
+                                                X: =27
+                                                Y: =19
+                                    - txtSearchMenuSys:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Appearance: ='TextInputCanvas.Appearance'.FilledDarker
+                                          BasePaletteColor: =RGBA(249, 83, 109, 1)
+                                          BorderRadius: =20
+                                          Height: =33
+                                          OnChange: =Filter(ref_system_config_menu,Title = Self.Value)
+                                          Placeholder: ="Search"
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.Keypress
+                                          Type: ='TextInputCanvas.Type'.Search
+                                          Width: =225
+                                          X: =12
+                                          Y: =10
+                              - body:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    RadiusBottomLeft: =30
+                                    RadiusBottomRight: =30
+                                    RadiusTopLeft: =30
+                                    RadiusTopRight: =30
+                                  Children:
+                                    - galStatus:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_status
+                                          TemplateSize: =70
+                                          Visible: =galMenuSys.Selected.ID = 8
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_29:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =15
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =12
+                                                Text: =ThisItem.status_name
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =200
+                                                X: =108
+                                                Y: =12
+                                          - NextArrow3_7:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7_7:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_7:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_7.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_30:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =50
+                                                X: =15
+                                                Y: =12
+                                    - conStatus:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 8
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_90:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Status Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =128
+                                                X: =113
+                                                Y: =10
+                                          - TextCanvas2_91:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =14
+                                                Y: =10
+                                          - TextCanvas2_92:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                    - galMenu:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_menus
+                                          TemplateSize: =70
+                                          Visible: =galMenuSys.Selected.ID = 7
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_25:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =15
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =12
+                                                Text: =ThisItem.Title
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =200
+                                                X: =115
+                                                Y: =12
+                                          - NextArrow3_6:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7_6:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_6:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_6.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_26:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =50
+                                                X: =15
+                                                Y: =12
+                                          - Title7_27:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =19
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =12
+                                                Text: =ThisItem.targetScreen
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =263
+                                                X: =352
+                                                Y: =12
+                                          - Title7_28:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.isVisible
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =635
+                                                Y: =12
+                                          - Icon8:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                Height: =30
+                                                Icon: |-
+                                                  =Switch(
+                                                      ThisItem.icon,
+                                                      "Home", Icon.Home,
+                                                      "Document", Icon.Document,
+                                                      "Settings", Icon.Settings,
+                                                      "Search", Icon.Search,
+                                                      "Add", Icon.Add,
+                                                      "Edit", Icon.Edit,
+                                                      "Save", Icon.Save,
+                                                      "Cancel", Icon.Cancel,
+                                                      "Download", Icon.Download,
+                                                      "Mail", Icon.Mail,
+                                                      "User", Icon.People,
+                                                      "Warning", Icon.Warning,
+                                                      "Help", Icon.Help,
+                                                      "ListWatchlistRemind", Icon.ListWatchlistRemind,
+                                                      "ListScrollWatchlist", Icon.ListScrollWatchlist,
+                                                      "ToolsWrench", Icon.ToolsWrench,
+                                                      "AddUser", Icon.AddUser
+                                                  )
+                                                OnSelect: =Select(Parent)
+                                                Width: =30
+                                                X: =67
+                                                Y: =6
+                                    - conMenu:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 7
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_85:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Menu Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =128
+                                                X: =120
+                                                Y: =10
+                                          - TextCanvas2_86:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =14
+                                                Y: =10
+                                          - TextCanvas2_87:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_88:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Target Screen"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =150
+                                                X: =356
+                                                Y: =10
+                                          - TextCanvas2_89:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Visbility"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =638
+                                                Y: =10
+                                    - galRoles:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_roles
+                                          TemplateSize: =70
+                                          Visible: =galMenuSys.Selected.ID = 6
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_20:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =15
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.role_name
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =260
+                                                X: =93
+                                                Y: =12
+                                          - NextArrow3_5:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7_5:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_5:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_5.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_22:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =50
+                                                X: =15
+                                                Y: =12
+                                          - Title7_23:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.role_code
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =445
+                                                Y: =12
+                                          - Title7_24:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.status.Value
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =635
+                                                Y: =12
+                                    - conRoles:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 6
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_79:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Role Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =99
+                                                Y: =10
+                                          - TextCanvas2_81:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =14
+                                                Y: =10
+                                          - TextCanvas2_82:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_83:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Description"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =150
+                                                X: =450
+                                                Y: =10
+                                          - TextCanvas2_84:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Status"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =638
+                                                Y: =10
+                                    - galLeaveRemarks:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_leave_remark
+                                          TemplateSize: =70
+                                          Visible: =galMenuSys.Selected.ID = 5
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_17:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =15
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.leave_code
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =260
+                                                X: =100
+                                                Y: =12
+                                          - NextArrow3_4:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7_4:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_4:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_4.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_19:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =64
+                                                X: =29
+                                                Y: =12
+                                          - Title7_21:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.leave_description
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =241
+                                                X: =508
+                                                Y: =12
+                                    - conLeaveRemarks:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 5
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_76:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Leave Remarks"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =150
+                                                X: =99
+                                                Y: =10
+                                          - TextCanvas2_77:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =7
+                                                Y: =10
+                                          - TextCanvas2_78:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_80:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Description"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =150
+                                                X: =513
+                                                Y: =10
+                                    - galWo:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_workorder_status
+                                          TemplateSize: =70
+                                          Visible: =galMenuSys.Selected.ID = 4
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_14:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =15
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =Upper(ThisItem.status_name)
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =260
+                                                X: =93
+                                                Y: =12
+                                          - NextArrow3_3:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7_3:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_3:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_3.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_15:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =64
+                                                X: =29
+                                                Y: =17
+                                          - Title7_16:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.code_name
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =57
+                                                X: =379
+                                                Y: =12
+                                          - Title7_18:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.description
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =241
+                                                X: =508
+                                                Y: =12
+                                    - conWo:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 4
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_71:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =99
+                                                Y: =10
+                                          - TextCanvas2_72:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =7
+                                                Y: =10
+                                          - TextCanvas2_73:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_74:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Code"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =50
+                                                X: =384
+                                                Y: =10
+                                          - TextCanvas2_75:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Description"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =150
+                                                X: =513
+                                                Y: =10
+                                    - galWoAssign:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_workorder_assign_status
+                                          Visible: =galMenuSys.Selected.ID = 3
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_9:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.name
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =119
+                                                X: =93
+                                                Y: =17
+                                          - NextArrow3_2:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7_2:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_2:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_2.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_10:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =64
+                                                X: =29
+                                                Y: =17
+                                          - Title7_11:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.code
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =332
+                                                Y: =12
+                                          - Title7_12:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.code
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =80
+                                                X: =638
+                                                Y: =12
+                                          - Title7_13:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.description
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =241
+                                                X: =550
+                                                Y: =12
+                                    - conWoAssign:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 3
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_66:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =99
+                                                Y: =10
+                                          - TextCanvas2_67:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =7
+                                                Y: =10
+                                          - TextCanvas2_68:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_69:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Code"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =343
+                                                Y: =10
+                                          - TextCanvas2_70:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Description"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =150
+                                                X: =550
+                                                Y: =10
+                                    - galDepartment:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =332
+                                          Items: =ref_mrl_departments
+                                          Visible: =galMenuSys.Selected.ID = 2
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.Department_Name
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =301
+                                                X: =93
+                                                Y: =17
+                                          - NextArrow3:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =Parent.TemplateWidth - Self.Width - 12
+                                                Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                          - Separator7:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_1:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =64
+                                                X: =29
+                                                Y: =17
+                                          - Title7_2:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.Department_Code
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =454
+                                                Y: =17
+                                          - Title7_3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.Status.Value
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =80
+                                                X: =638
+                                                Y: =12
+                                    - conDepartment:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 2
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_55:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Department Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =363
+                                                X: =99
+                                                Y: =10
+                                          - TextCanvas2_56:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =7
+                                                Y: =10
+                                          - TextCanvas2_57:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_58:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Department Code"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =200
+                                                X: =417
+                                                Y: =10
+                                          - TextCanvas2_59:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Status"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =72
+                                                X: =640
+                                                Y: =10
+                                    - galPmChecklist:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =419
+                                          Items: =ref_template
+                                          TemplateSize: =78
+                                          Visible: =galMenuSys.Selected.ID = 1
+                                          Width: =887
+                                          X: =26
+                                          Y: =124
+                                        Children:
+                                          - Title7_4:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =18
+                                                LineHeight: =1
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.Title
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =328
+                                                X: =93
+                                                Y: =14
+                                          - NextArrow3_1:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                AccessibleLabel: =Self.Tooltip
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Height: =50
+                                                Icon: =Icon.ChevronRight
+                                                OnSelect: =Navigate(SYSTEMCONFIGURATION_PM,ScreenTransition.Fade)
+                                                PaddingBottom: =12
+                                                PaddingLeft: =12
+                                                PaddingRight: =12
+                                                PaddingTop: =12
+                                                Tooltip: ="View item details"
+                                                Width: =50
+                                                X: =818
+                                                Y: =1
+                                          - Separator7_1:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =8
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - Self.Height
+                                          - Rectangle13_1:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =RGBA(0, 18, 107, 1)
+                                                Height: =Parent.TemplateHeight - Separator7_1.Height
+                                                OnSelect: =Select(Parent)
+                                                Visible: =ThisItem.IsSelected
+                                                Width: =4
+                                          - Title7_5:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =25
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =ThisItem.ID
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =44
+                                                X: =29
+                                                Y: =14
+                                          - Title7_6:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.Frequency.Value
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =549
+                                                Y: =11
+                                          - Title7_7:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.Status.Value
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =80
+                                                X: =697
+                                                Y: =11
+                                          - Title7_8:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(50, 49, 48, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =55
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =ThisItem.TemplateCode
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =100
+                                                X: =421
+                                                Y: =10
+                                    - conPmChecklist:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          BorderColor: =RGBA(247, 246, 246, 1)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =RGBA(247, 246, 246, 1)
+                                          Height: =49
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Visible: =galMenuSys.Selected.ID = 1
+                                          Width: =908
+                                          X: =22
+                                          Y: =61
+                                        Children:
+                                          - TextCanvas2_60:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Template Name"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =200
+                                                X: =99
+                                                Y: =10
+                                          - TextCanvas2_61:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="#"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =57
+                                                X: =7
+                                                Y: =10
+                                          - TextCanvas2_62:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Font: =Font.'Lato Black'
+                                                Height: =35
+                                                Size: =20
+                                                Text: ="Action"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =75
+                                                X: =805
+                                                Y: =7
+                                          - TextCanvas2_63:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Frequency"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =553
+                                                Y: =10
+                                          - TextCanvas2_64:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Status"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =72
+                                                X: =705
+                                                Y: =10
+                                          - TextCanvas2_65:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Start
+                                                Font: =Font.'Lato Black'
+                                                Size: =20
+                                                Text: ="Code"
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Weight: ='TextCanvas.Weight'.Bold
+                                                Width: =100
+                                                X: =443
+                                                Y: =10
+                                    - txtTitle:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.'Lato Black'
+                                          Size: =20
+                                          Text: =galMenuSys.Selected.Title
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =464
+                                          X: =29
+                                          Y: =17

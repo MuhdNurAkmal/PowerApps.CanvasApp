@@ -1,0 +1,152 @@
+{
+  "a62ae5c0-50cc-487b-9e30-0e3ba0bcfab9": {
+    "appActions": [],
+    "connectionRef": {
+      "displayName": "SharePoint",
+      "iconUri": "https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1769/1.0.1769.4352/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline"
+    },
+    "datasets": {
+      "https://crystalysx.sharepoint.com/sites/Pradigma": {
+        "dataSources": {
+          "ref_car_position": {
+            "tableName": "5bdb2dcd-e9bd-4f03-9ff6-68d7edcb8019"
+          },
+          "ref_leave_remark": {
+            "tableName": "9643cba1-acf1-4dea-b0c2-a44c1dccf711"
+          },
+          "ref_maint_workcentre": {
+            "tableName": "562adbbb-9e0e-4b25-b039-c0033ae47d7e"
+          },
+          "ref_menus": {
+            "tableName": "015c9d7c-862c-442d-8407-2be0746abb4e"
+          },
+          "ref_mrl_departments": {
+            "tableName": "7ff63ce2-35e3-4063-82da-2146c1e6c771"
+          },
+          "ref_roles": {
+            "tableName": "4d7984b5-8bfa-4dfb-9eda-f6963e3c3728"
+          },
+          "ref_root_cause": {
+            "tableName": "26cbf9e2-b82c-4c4e-87bd-26a89ebd7112"
+          },
+          "ref_station": {
+            "tableName": "66c2f5ee-58e5-48d7-b65a-5b1b6f3cf732"
+          },
+          "ref_status": {
+            "tableName": "7951bf18-cd1a-4837-9c5a-aa5dbc15ac6e"
+          },
+          "ref_status_1": {
+            "tableName": "7951bf18-cd1a-4837-9c5a-aa5dbc15ac6e"
+          },
+          "ref_sub_subsystem": {
+            "tableName": "b79cd421-3981-4500-a259-6a1c09b5a2b4"
+          },
+          "ref_subsystem": {
+            "tableName": "81373fbf-a5a3-49a2-9bb8-de28746db1f4"
+          },
+          "ref_system": {
+            "tableName": "126af874-e862-49a4-9b08-43e9cfa4aca8"
+          },
+          "ref_system_config_menu": {
+            "tableName": "3447a394-323d-40f5-b34d-8ae55e9635b3"
+          },
+          "ref_system_hierarchy": {
+            "tableName": "3e95466a-2994-4abf-b16b-09d7f239f255"
+          },
+          "ref_template": {
+            "tableName": "7ad7e7e7-2f1f-46e8-aaf4-ce69fd084369"
+          },
+          "ref_train": {
+            "tableName": "5cd30956-5b84-4753-89d4-d69542cf336e"
+          },
+          "ref_workorder_assign_status": {
+            "tableName": "e02cd9ec-ff31-41a6-8de7-e2f5f5df415f"
+          },
+          "ref_workorder_status": {
+            "tableName": "ebad68c3-98ec-4efe-b4ff-ac253df13be3"
+          },
+          "tbl_log": {
+            "tableName": "d742d1f6-e820-4b73-9c61-fc91508fbd58"
+          },
+          "tbl_maintenance_order": {
+            "tableName": "dd6dd855-f7e6-4cdb-bcbe-e973e93c1569"
+          },
+          "tbl_mrl_notification": {
+            "tableName": "b3f84498-3459-49d3-8287-91e8789a2a63"
+          },
+          "tbl_mrl_users": {
+            "tableName": "93aa06e3-8c59-401e-95a1-5708cca2c956"
+          },
+          "tbl_mrl_workorder_assign": {
+            "tableName": "47767ae9-f9b9-490f-b55c-c717baf91e9c"
+          },
+          "tbl_mrl_workorder_assign_log": {
+            "tableName": "1449bef5-9ab9-4f54-945e-35f3c0d46552"
+          },
+          "tbl_mrl_workorder_log": {
+            "tableName": "32669368-7fb3-4b86-acca-62b075e5575f"
+          },
+          "tbl_response_cm": {
+            "tableName": "0ed35d25-5f26-4b05-9cd7-9625c107e654"
+          },
+          "tbl_team": {
+            "tableName": "57856f6e-d956-47a1-a234-e26960410857"
+          },
+          "tbl_team_member": {
+            "tableName": "00528887-d897-4125-8dee-7fd622151d25"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "ref_menus",
+      "ref_template",
+      "tbl_mrl_notification",
+      "tbl_mrl_users",
+      "tbl_team",
+      "tbl_team_member",
+      "ref_leave_remark",
+      "tbl_mrl_workorder_assign",
+      "ref_maint_workcentre",
+      "ref_workorder_assign_status",
+      "ref_workorder_status",
+      "ref_status",
+      "ref_mrl_departments",
+      "ref_roles",
+      "ref_system_config_menu",
+      "tbl_log",
+      "tbl_mrl_workorder_assign_log",
+      "tbl_mrl_workorder_log",
+      "ref_system",
+      "ref_subsystem",
+      "ref_sub_subsystem",
+      "ref_status_1",
+      "ref_station",
+      "ref_root_cause",
+      "ref_system_hierarchy",
+      "ref_train",
+      "tbl_response_cm",
+      "ref_car_position",
+      "tbl_maintenance_order_cm",
+      "tbl_maintenance_order"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "a62ae5c0-50cc-487b-9e30-0e3ba0bcfab9"
+  },
+  "f3b37c93-7d09-4876-97f5-1a05440c5fb3": {
+    "connectionRef": {
+      "displayName": "Office 365 Users",
+      "iconUri": "https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/releases/v1.0.1788/1.0.1788.4524/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users"
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "f3b37c93-7d09-4876-97f5-1a05440c5fb3"
+  }
+}

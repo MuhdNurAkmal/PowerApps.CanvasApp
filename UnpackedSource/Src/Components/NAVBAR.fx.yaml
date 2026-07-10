@@ -1,0 +1,194 @@
+NAVBAR As CanvasComponent:
+    AccentColor: =RGBA(255, 0, 0, 1)
+    AuditMenu: =App.ActiveScreen
+    BgColor: =RGBA(52, 31, 151, 1)
+    DashboardMenu: =App.ActiveScreen
+    dataMenu: |-
+        =Table({ID:1,label:"Dashboard",icon:"Home",order:1,roles:Table({Value:"Admin"}),isVisible:true,targetScreen:"DASHBOARD"})
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =640
+    NotificationMenu: =App.ActiveScreen
+    ParentScreen: =App.ActiveScreen
+    ParentScreen2: =App.ActiveScreen
+    ReportAnalysis: =App.ActiveScreen
+    ReportAnalysisHOU: =App.ActiveScreen
+    SystemConfigurationMenu: =App.ActiveScreen
+    TaskMenu: =App.ActiveScreen
+    TeamMenu: =App.ActiveScreen
+    UserMenu: =App.ActiveScreen
+    Width: =80
+    WorkOrderMenu: =App.ActiveScreen
+    WorkOrderSvMenu: =App.ActiveScreen
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    "'Navbar-Links_3' As groupContainer.horizontalAutoLayoutContainer":
+        BorderColor: =RGBA(0, 0, 0, 0)
+        Fill: =NAVBAR.BgColor
+        Height: =640
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =15
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingTop: =40
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Width: =80
+        ZIndex: =2
+
+        "'navbar-gallery' As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+            '#CopilotOverlayLabel': ="Filtered"
+            DelayItemLoading: =true
+            Height: =615
+            Items: |
+                =NAVBAR.dataMenu
+            Layout: =Layout.Vertical
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =287
+            LayoutMinWidth: =80
+            LoadingSpinner: =LoadingSpinner.Data
+            OnSelect: |
+                =
+            TemplatePadding: =0
+            TemplateSize: =70
+            Transition: =Transition.Pop
+            Width: =80
+            X: =40
+            ZIndex: =1
+
+            navbar_icon As icon:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(220, 220, 220, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                FocusedBorderThickness: =0
+                Height: =50
+                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                HoverColor: =ColorFade(NAVBAR.AccentColor, -10%)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                Icon: |-
+                    =Switch(
+                        ThisItem.icon,
+                        "Home", Icon.Home,
+                        "Document", Icon.Document,
+                        "Settings", Icon.Settings,
+                        "Search", Icon.Search,
+                        "Add", Icon.Add,
+                        "Edit", Icon.Edit,
+                        "Save", Icon.Save,
+                        "Cancel", Icon.Cancel,
+                        "Download", Icon.Download,
+                        "Mail", Icon.Mail,
+                        "User", Icon.People,
+                        "Warning", Icon.Warning,
+                        "Help", Icon.Help,
+                        "ListWatchlistRemind", Icon.ListWatchlistRemind,
+                        "ListScrollWatchlist", Icon.ListScrollWatchlist,
+                        "ToolsWrench", Icon.ToolsWrench,
+                        "AddUser", Icon.AddUser,
+                        "People", Icon.People,
+                        "Trending", Icon.Trending
+                    )
+                OnSelect: |-
+                    =Switch(
+                        ThisItem.targetScreen,
+                        "DASHBOARD", Navigate(NAVBAR.DashboardMenu, ScreenTransition.Fade),
+                        "NOTIFICATION_LIST", Navigate(NAVBAR.NotificationMenu, ScreenTransition.Fade),
+                        "WORKORDER_LIST", Navigate(NAVBAR.WorkOrderMenu, ScreenTransition.Fade),
+                        "WORKORDER_LIST_SV", Navigate(NAVBAR.WorkOrderSvMenu, ScreenTransition.Fade),
+                        "TASK_LIST", Navigate(NAVBAR.TaskMenu, ScreenTransition.Fade),
+                        "SYSTEMCONFIGURATION_LIST", Navigate(NAVBAR.SystemConfigurationMenu, ScreenTransition.Fade),
+                        "USER_LIST", Navigate(NAVBAR.UserMenu, ScreenTransition.Fade),
+                        "AUDITTRAIL_LIST", Navigate(NAVBAR.AuditMenu, ScreenTransition.Fade),
+                        "TEAM_LIST", Navigate(NAVBAR.TeamMenu, ScreenTransition.Fade),
+                        "REPORT_ANALYSIS", Navigate(NAVBAR.ReportAnalysis, ScreenTransition.Fade),
+                        "REPORT_ANALYSIS_HOU", Navigate(NAVBAR.ReportAnalysisHOU, ScreenTransition.Fade)
+                    )
+                PaddingBottom: =10
+                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Width: =50
+                X: =15
+                Y: =10
+                ZIndex: =2
+
+            Rectangle1_10 As rectangle:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                DisabledFill: =RGBA(166, 166, 166, 1)
+                Fill: |-
+                    =If(
+                        ThisItem.targetScreen = App.ActiveScreen.Name || 
+                        ThisItem.targetScreen = NAVBAR.ParentScreen.Name || 
+                        ThisItem.targetScreen = NAVBAR.ParentScreen2.Name,
+                        
+                        NAVBAR.AccentColor,
+                        NAVBAR.BgColor
+                    )
+                FocusedBorderThickness: =4
+                Height: =50
+                HoverFill: =RGBA(0, 120, 212, 1)
+                PressedFill: =RGBA(0, 120, 212, 1)
+                Width: =10
+                Y: =10
+                ZIndex: =3
+
+        Exit_3 As groupContainer.horizontalAutoLayoutContainer:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DropShadow: =DropShadow.None
+            Height: =50
+            LayoutAlignItems: =LayoutAlignItems.End
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =90
+            LayoutMaxWidth: =
+            LayoutMinHeight: =90
+            LayoutMinWidth: =70
+            LayoutMode: =LayoutMode.Auto
+            PaddingBottom: =30
+            X: =40
+            Y: =40
+            ZIndex: =2
+
+            navbar_icon_1 As icon:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(220, 220, 220, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                FocusedBorderThickness: =0
+                Height: =50
+                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                HoverColor: =ColorFade(NAVBAR.AccentColor, -10%)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                Icon: =Icon.Leave
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                OnSelect: =Exit()
+                PaddingBottom: =10
+                PaddingLeft: =10
+                PaddingTop: =5
+                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Width: =78
+                X: =15
+                Y: =10
+                ZIndex: =3
+

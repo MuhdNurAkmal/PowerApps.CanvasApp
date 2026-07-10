@@ -1,0 +1,770 @@
+ADD_TEAM_MS As screen:
+    BackgroundImage: =
+    OnVisible: =
+
+    "'Main-Container_20' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =5
+        PaddingLeft: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_19 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            Visible: =true
+
+        Content_12 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =0
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =2
+
+            NAVBAR_DASHBOARD_3 As NAVBAR:
+                AuditMenu: =AUDITTRAIL_LIST
+                DashboardMenu: =ADD_TEAM_MS
+                dataMenu: =colMenu
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                NotificationMenu: |
+                    =NOTIFICATION_LIST
+                ParentScreen: =
+                ParentScreen2: =
+                SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                TaskMenu: =TASK_LIST
+                UserMenu: =USER_LIST
+                WorkOrderMenu: =WORKORDER_LIST
+                ZIndex: =2
+
+            "'Dashboard-Content_11' As groupContainer.horizontalAutoLayoutContainer":
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                DropShadow: =DropShadow.None
+                FillPortions: =8
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGap: =10
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =630
+                LayoutMaxWidth: =
+                LayoutMinHeight: =50
+                LayoutMinWidth: =0
+                LayoutMode: =LayoutMode.Auto
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                ZIndex: =3
+
+                "'Title-Container_11' As groupContainer.manualLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    FillPortions: =0
+                    Height: =50
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =0
+                    LayoutMinWidth: =250
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =4
+
+                    txtTitle_dashboard_20 As Text:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =false
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(47, 53, 66, 1)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =true
+                        Height: =42
+                        Size: =30
+                        TabIndex: =0
+                        Text: =" Add Team - MS"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =539
+                        Wrap: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =6
+
+                "'Progress-Container_5' As groupContainer.horizontalAutoLayoutContainer":
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FillPortions: =0
+                    Height: =150
+                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                    LayoutGap: =10
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =1220
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =10
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =5
+                    RadiusBottomRight: =5
+                    RadiusTopLeft: =5
+                    RadiusTopRight: =5
+                    Width: =Parent.Width
+                    ZIndex: =7
+
+                    "'Progress-Container_6' As groupContainer.horizontalAutoLayoutContainer":
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =150
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutGap: =10
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =1220
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =10
+                        LayoutMode: =LayoutMode.Auto
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Width: =Parent.Width
+                        ZIndex: =33
+
+                        Container4_2 As groupContainer.manualLayoutContainer:
+                            AlignInContainer: =AlignInContainer.SetByContainer
+                            DropShadow: =DropShadow.None
+                            LayoutGridColumnMinWidth: =0
+                            LayoutGridColumns: =6
+                            LayoutGridRowMinHeight: =0
+                            LayoutGridRows: =6
+                            LayoutMaxHeight: =0
+                            LayoutMaxWidth: =0
+                            LayoutMinHeight: =16
+                            LayoutMinWidth: =16
+                            PaddingBottom: =5
+                            PaddingLeft: =5
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            ZIndex: =1
+
+                            "txtInsertTeamName As 'Text input'":
+                                AccessibleLabel: =""
+                                Align: =""
+                                Appearance: ="FilledDarker"
+                                BasePaletteColor: =
+                                BorderColor: =
+                                BorderStyle: =""
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =""
+                                FontColor: =
+                                FontItalic: =false
+                                FontSize: =0
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                FontWeight: =""
+                                Height: =44
+                                MaxLength: =-1
+                                Mode: ="SingleLine"
+                                OnChange: =false
+                                Placeholder: ="Insert Team Name"
+                                Required: =false
+                                TabIndex: =0
+                                Tooltip: =""
+                                TriggerOutput: ="FocusOut"
+                                Type: ="Text"
+                                ValidationState: ="None"
+                                Value: =""
+                                Visible: =true
+                                Width: =363
+                                X: =184
+                                Y: =51
+                                ZIndex: =1
+
+                            TextCanvas8_6 As Text:
+                                Align: ="Start"
+                                AutoHeight: =false
+                                BorderColor: =
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =Font.'Lato Black'
+                                FontColor: =
+                                FontItalic: =false
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                Height: =45
+                                Size: =22
+                                TabIndex: =0
+                                Text: =" Team Details "
+                                Tooltip: =""
+                                VerticalAlign: =""
+                                Visible: =true
+                                Weight: ='TextCanvas.Weight'.Bold
+                                Width: =162
+                                Wrap: =true
+                                X: =3
+                                Y: =0
+                                ZIndex: =2
+
+                            ddStatus_2 As dropdown:
+                                ChevronBackground: =RGBA(80, 54, 181, 1)
+                                Default: =1
+                                Items: =["All","Active","Inactive"]
+                                X: =716
+                                Y: =103
+                                ZIndex: =4
+
+                            cbTeamLead_2 As combobox:
+                                InputTextPlaceholder: ="Select Team Lead"
+                                Items: =ComboBoxSample
+                                NoSelectionText: ="Select Team Lead"
+                                SelectMultiple: =false
+                                X: =204
+                                Y: =101
+                                ZIndex: =5
+
+                            TextCanvas8_7 As Text:
+                                Align: ="Start"
+                                AutoHeight: =false
+                                BorderColor: =
+                                BorderStyle: =""
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =Font.Lato
+                                FontColor: =
+                                FontItalic: =false
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                Height: =38
+                                Size: =20
+                                TabIndex: =0
+                                Text: |-
+                                    ="Status:"
+                                Tooltip: =""
+                                VerticalAlign: =""
+                                Visible: =true
+                                Weight: ='TextCanvas.Weight'.Bold
+                                Width: =79
+                                Wrap: =true
+                                X: =625
+                                Y: =103
+                                ZIndex: =6
+
+                            TextCanvas8_8 As Text:
+                                Align: ="Start"
+                                AutoHeight: =false
+                                BorderColor: =
+                                BorderStyle: =""
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =Font.Lato
+                                FontColor: =
+                                FontItalic: =false
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                Height: =38
+                                Size: =20
+                                TabIndex: =0
+                                Text: |-
+                                    ="Team Lead:"
+                                Tooltip: =""
+                                VerticalAlign: =""
+                                Visible: =true
+                                Weight: ='TextCanvas.Weight'.Bold
+                                Width: =119
+                                Wrap: =true
+                                X: =84
+                                Y: =103
+                                ZIndex: =7
+
+                            TextCanvas8_9 As Text:
+                                Align: ="Start"
+                                AutoHeight: =false
+                                BorderColor: =
+                                BorderStyle: =""
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =Font.Lato
+                                FontColor: =
+                                FontItalic: =false
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                Height: =38
+                                Size: =20
+                                TabIndex: =0
+                                Text: |-
+                                    ="Team Name :"
+                                Tooltip: =""
+                                VerticalAlign: =""
+                                Visible: =true
+                                Weight: ='TextCanvas.Weight'.Semibold
+                                Width: =129
+                                Wrap: =true
+                                X: =59
+                                Y: =57
+                                ZIndex: =8
+
+                            "txtDescription As 'Text input'":
+                                AccessibleLabel: =""
+                                Align: =""
+                                Appearance: ="FilledDarker"
+                                BasePaletteColor: =
+                                BorderColor: =
+                                BorderStyle: =""
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =""
+                                FontColor: =
+                                FontItalic: =false
+                                FontSize: =0
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                FontWeight: =""
+                                Height: =44
+                                MaxLength: =-1
+                                Mode: ="SingleLine"
+                                OnChange: =false
+                                Placeholder: ="Insert Description"
+                                Required: =false
+                                TabIndex: =0
+                                Tooltip: =""
+                                TriggerOutput: ="FocusOut"
+                                Type: ="Text"
+                                ValidationState: ="None"
+                                Value: =""
+                                Visible: =true
+                                Width: =363
+                                X: =688
+                                Y: =51
+                                ZIndex: =9
+
+                            TextCanvas8_10 As Text:
+                                Align: ="Start"
+                                AutoHeight: =false
+                                BorderColor: =
+                                BorderStyle: =""
+                                ContentLanguage: =""
+                                DisplayMode: =DisplayMode.Edit
+                                Fill: =
+                                Font: =Font.Lato
+                                FontColor: =
+                                FontItalic: =false
+                                FontStrikethrough: =false
+                                FontUnderline: =false
+                                Height: =38
+                                Size: =20
+                                TabIndex: =0
+                                Text: |-
+                                    ="Description :"
+                                Tooltip: =""
+                                VerticalAlign: =""
+                                Visible: =true
+                                Weight: ='TextCanvas.Weight'.Semibold
+                                Width: =129
+                                Wrap: =true
+                                X: =563
+                                Y: =57
+                                ZIndex: =10
+
+                "'Task-Container_10' As groupContainer.manualLayoutContainer":
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =240
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =355
+                    LayoutMaxWidth: =1220
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =0
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    X: =40
+                    Y: =40
+                    ZIndex: =16
+
+                    "'HeaderCard-Container_5' As groupContainer.manualLayoutContainer":
+                        DropShadow: =DropShadow.None
+                        Height: =37
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =1203
+                        X: =7
+                        ZIndex: =17
+
+                        txtWorkOrder_2 As Text:
+                            Align: ='TextCanvas.Align'.Start
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =RGBA(47, 53, 66, 1)
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =true
+                            Height: =37
+                            Size: =26
+                            TabIndex: =0
+                            Text: ="Assign Team Members"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Weight: ="Regular"
+                            Width: =522
+                            Wrap: =true
+                            X: =19
+                            Y: =0
+                            ZIndex: =18
+
+                    "'Task-List_7' As gallery.'BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
+                        BorderColor: =App.Theme.Colors.Darker10
+                        DelayItemLoading: =true
+                        Height: =180
+                        Items: |
+                            =tasklist
+                            //Filter(
+                            //    Teams,
+                            //     Search by team name
+                            //    IsBlank(txtSearchTeam.Text) ||
+                            //    StartsWith(TeamName, txtSearchTeam.Text),
+                            
+                            //     Filter by status
+                            //   ddStatus.Selected.Value = "All" ||
+                            //   Status.Value = ddStatus.Selected.Value,
+                            
+                            //     Filter by team lead
+                            //   IsBlank(cbTeamLead.Selected.Result) ||
+                            //    TeamLead.DisplayName = cbTeamLead.Selected.Result
+                            //)
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =63
+                        Width: =1203
+                        WrapCount: =0
+                        X: =7
+                        Y: =150
+                        ZIndex: =20
+
+                        Rectangle3_8 As rectangle:
+                            BorderColor: =App.Theme.Colors.Darker40
+                            Fill: =RGBA(109, 49, 162, 1)
+                            Height: =63
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =11
+                            ZIndex: =21
+
+                        lblStaffName As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =22
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: ="Staff Name"
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =318
+                            X: =24
+                            Y: =17
+                            ZIndex: =22
+
+                        btnRemove As button:
+                            BorderColor: =RGBA(212, 28, 28, 1)
+                            Fill: =RGBA(212, 28, 28, 1)
+                            Font: =Font.'Lato Light'
+                            Height: =36
+                            OnSelect: |-
+                                =//Set(varSelectedTask, ThisItem);
+                                Navigate(TASK_VIEW, ScreenTransition.Fade);
+                            RadiusBottomLeft: =50
+                            RadiusBottomRight: =50
+                            RadiusTopLeft: =50
+                            RadiusTopRight: =50
+                            Size: =12
+                            Text: ="Remove"
+                            Width: =92
+                            X: =951
+                            Y: =12
+                            ZIndex: =25
+
+                        Separator3_8 As rectangle:
+                            BorderColor: =App.Theme.Colors.Darker40
+                            Fill: =RGBA(0, 0, 0, 0)
+                            Height: =8
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =32
+
+                        lblRole As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =22
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: ="Role"
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =167
+                            X: =432
+                            Y: =17
+                            ZIndex: =39
+
+                    cbStaffPicker As combobox:
+                        Height: =30
+                        InputTextPlaceholder: |-
+                            ="Search staff name / ID
+                            "
+                        Items: =ComboBoxSample
+                        NoSelectionText: ="Select Team Lead"
+                        SelectMultiple: =false
+                        Width: =312
+                        X: =118
+                        Y: =85
+                        ZIndex: =34
+
+                    ddMemberRole As dropdown:
+                        ChevronBackground: =RGBA(80, 54, 181, 1)
+                        Default: =1
+                        Height: =30
+                        Items: =["Member","Lead","Supervisor"]
+                        X: =473
+                        Y: =85
+                        ZIndex: =35
+
+                    btnAddMember As Button:
+                        AcceptsFocus: =true
+                        AccessibleLabel: =""
+                        Align: =Align.Center
+                        Appearance: ='ButtonCanvas.Appearance'.Primary
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderColor: =
+                        BorderRadius: =50
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        FontItalic: =false
+                        FontSize: =0
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        FontWeight: =""
+                        Height: =46
+                        Icon: ="Add"
+                        IconRotation: =0
+                        IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                        Layout: ='ButtonCanvas.Layout'.IconBefore
+                        OnSelect: =Navigate(TASKLIST_v2,ScreenTransition.Fade)
+                        TabIndex: =0
+                        Text: ="Add Member"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Width: =145
+                        X: =848
+                        Y: =77
+                        ZIndex: =37
+
+                    txtWorkOrder_3 As Text:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =false
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(47, 53, 66, 1)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =34
+                        Size: =22
+                        TabIndex: =0
+                        Text: ="Add Member"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =165
+                        Wrap: =true
+                        X: =39
+                        Y: =50
+                        ZIndex: =38
+
+                    Icon4 As Icon:
+                        DisplayMode: =DisplayMode.Edit
+                        Height: =32
+                        Icon: ="People"
+                        IconColor: =
+                        Width: =32
+                        X: =86
+                        Y: =224
+                        ZIndex: =39
+
+                FooterContainer As groupContainer.verticalAutoLayoutContainer:
+                    LayoutAlignItems: =LayoutAlignItems.Center
+                    LayoutDirection: =LayoutDirection.Vertical
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =60
+                    LayoutMaxWidth: =0
+                    LayoutMinHeight: =16
+                    LayoutMinWidth: =16
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingBottom: =8
+                    PaddingLeft: =8
+                    PaddingRight: =8
+                    PaddingTop: =8
+                    ZIndex: =17
+
+                    Container15 As groupContainer.manualLayoutContainer:
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        LayoutMaxHeight: =0
+                        LayoutMaxWidth: =0
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        ZIndex: =1
+
+                        btnCancel As button:
+                            BorderColor: =RGBA(222, 136, 31, 1)
+                            Fill: =RGBA(222, 136, 31, 1)
+                            Font: =Font.'Lato Light'
+                            Height: =41
+                            OnSelect: |-
+                                =
+                                //Navigate(TASK_VIEW, ScreenTransition.Fade);
+                            RadiusBottomLeft: =50
+                            RadiusBottomRight: =50
+                            RadiusTopLeft: =50
+                            RadiusTopRight: =50
+                            Size: =12
+                            Text: ="Cancel"
+                            Width: =92
+                            X: =391
+                            Y: =3
+                            ZIndex: =40
+
+                        btnSave As button:
+                            BorderColor: =RGBA(52, 152, 47, 1)
+                            Fill: =RGBA(52, 152, 47, 1)
+                            Font: =Font.'Lato Light'
+                            Height: =41
+                            OnSelect: |-
+                                =
+                                //Navigate(TASK_VIEW, ScreenTransition.Fade);
+                            RadiusBottomLeft: =50
+                            RadiusBottomRight: =50
+                            RadiusTopLeft: =50
+                            RadiusTopRight: =50
+                            Size: =12
+                            Text: ="Save"
+                            Width: =92
+                            X: =663
+                            Y: =3
+                            ZIndex: =41
+

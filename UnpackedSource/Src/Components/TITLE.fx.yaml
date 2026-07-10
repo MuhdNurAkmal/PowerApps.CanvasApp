@@ -1,0 +1,48 @@
+TITLE As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =80
+    Title: ="Text"
+    Width: =If(App.Width < 640, App.Width, App.Width * 0.4)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Container23 As groupContainer.manualLayoutContainer:
+        BorderStyle: =BorderStyle.None
+        DropShadow: =DropShadow.None
+        Height: =75
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Width: =TITLE.Width
+        ZIndex: =1
+
+        Rectangle10 As rectangle:
+            BorderColor: =RGBA(255, 0, 0, 1)
+            Fill: =RGBA(255, 0, 0, 1)
+            Height: =6
+            X: =15
+            Y: =52
+            ZIndex: =1
+
+        Triangle1 As triangle:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =22
+            Width: =30
+            X: =148
+            Y: =44
+            ZIndex: =2
+
+        Text4 As modernText:
+            AutoHeight: =true
+            Color: =RGBA(52, 31, 151, 1)
+            Font: =Font.'Lato Black'
+            Height: =37
+            Size: =25
+            Text: =TITLE.Title
+            Width: =522
+            X: =15
+            Y: =12
+            ZIndex: =3
+

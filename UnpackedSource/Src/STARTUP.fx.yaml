@@ -1,0 +1,596 @@
+STARTUP As screen:
+    Fill: =RGBA(245, 245, 245, 1)
+    OnVisible: |-
+        =Set(varStartupDone, false);
+        Set(varStartupAttempts, 0);
+        UpdateContext({varIsLoading: true, varIsError: false, errorMessage: ""})
+
+    timerStartup As timer:
+        AutoStart: =true
+        Duration: =100
+        OnTimerEnd: |-
+            =/*
+            //////////////////////////////////////////////////////////////////
+            // stable version code
+            
+            UpdateContext({errorMessage: ""});
+            UpdateContext({varIsLoading: true});
+            UpdateContext({varIsError: false});
+            Clear(colMenu);
+            
+            // Step 1: Try to find user record
+            Set(
+                varUserRecord,
+                LookUp(tbl_user, employee_email = User().Email);
+            );
+            
+            // Step 2: No record found
+            If(
+                IsBlank(varUserRecord),
+            
+                UpdateContext({varIsLoading: false});
+                UpdateContext({varIsError: true});
+                UpdateContext({errorMessage: "Access denied. No account registered."})
+            );
+            
+            // Step 3: Record found but status ≠ 1
+            If(
+                !IsBlank(varUserRecord) && varUserRecord.status.Id <> 1,
+            
+                UpdateContext({varIsLoading: false});
+                UpdateContext({varIsError: true});
+                UpdateContext({errorMessage: "Your account is not active."})
+            );
+            
+            // Step 4: Record found, status = 1, but no role assigned
+            If(
+                !IsBlank(varUserRecord) && varUserRecord.status.Id = 1 && IsBlank(varUserRecord.role),
+            
+                UpdateContext({varIsLoading: false});
+                UpdateContext({varIsError: true});
+                UpdateContext({errorMessage: "Access denied. No role assigned to your account."})
+            );
+            
+            // Step 5: All good → Navigate
+            If(
+                !IsBlank(varUserRecord) && varUserRecord.status.Id = 1 && !IsBlank(varUserRecord.role),
+            
+                // collect user menu
+                ClearCollect(
+                    colMenu,
+                    Sort(
+                        Filter(ref_menus, varUserRecord.role.Id in roles.Id),
+                        order,
+                        SortOrder.Ascending
+                    )
+                );
+            
+                Set(varIsHOU, varUserRecord.role.Value = "Head of Unit");
+                Set(varIsHOE, varUserRecord.role.Value = "Head of Engineer");
+                Set(varIsAdminDept, varUserRecord.role.Value = "Admin");
+                Set(varIsEngineer, varUserRecord.role.Value = "Engineer");
+                Set(varIsTechnician, varUserRecord.role.Value = "Technician");
+                Set(varIsMaintainerScheduler, varUserRecord.role.Value = "Maintainer Scheduler");
+                Set(varIsPerformanceAnalyst, varUserRecord.role.Value = "Performance Analyst");
+                Set(varIsSuperAdmin, varUserRecord.role.Value = "Super Admin");
+                Set(varIsSupervisor, varUserRecord.role.Value = "Supervisor");
+                //Set(varIsAdminDeptRSD, varUserRecord.role.Value = "Admin" && varUserRecord.department.Value = "RSDM");
+                //Set(varIsAdminDeptTNM, varUserRecord.role.Value = "Admin" && varUserRecord.department.Value = "TNMD");
+                //Set(varIsAdminDeptSNC, varUserRecord.role.Value = "Admin" && varUserRecord.department.Value = "WS20");
+                //Set(varIsAdminDeptPSD, varUserRecord.role.Value = "Admin" && varUserRecord.department.Value = "WS10");
+                //If(varIsAdminDeptRSD || varIsAdminDeptTNM || varIsAdminDeptSNC || varIsAdminDeptPSD, 
+                //true, 
+                //false);
+            
+                
+            
+                UpdateContext({varIsError: false});
+                UpdateContext({varIsLoading: false});
+            
+                Navigate(DASHBOARD)
+            )
+            
+            // end stable version code
+            //////////////////////////////////////////////////////////////////
+            */
+            UpdateContext({errorMessage: ""});
+            UpdateContext({varIsLoading: true});
+            UpdateContext({varIsError: false});
+            Clear(colMenu);
+            
+            // ============================================================
+            // Seed schemas for offline queues (required so LoadData works)
+            // ============================================================
+            
+            // status update queue (New→Processing)
+            ClearCollect(colPendingStatusUpdates, {
+                queue_id: GUID(),
+                queued_at: Now(),
+                workorder_assign_id: 0,
+                maintenanceorder_no: 0,
+                new_status: "",
+                start_date: Now(),
+                user_email: "",
+                user_role: "",
+                user_department: "",
+                location_longitude: 0,
+                location_latitude: 0
+            });
+            Clear(colPendingStatusUpdates);
+            
+            // CM submission queue
+            ClearCollect(colPendingSubmissions, {
+                maintenanceorder_no: 0,
+                station_id: 0, station_value: "",
+                system_id: 0, system_value: "",
+                subsystem_id: 0, subsystem_value: "",
+                sub_subsystem_id: 0, sub_subsystem_value: "",
+                root_cause_id: 0, root_cause_value: "",
+                plan_start_date: Now(), plan_end_date: Now(),
+                remarks: "",
+                is_rsdm: false,
+                train_no_id: 0, train_no_value: "",
+                car_position_id: 0, car_position_value: "",
+                assign_id: 0, assign_mo_no: 0,
+                user_email: "", user_role: "", user_department: "",
+                submitted_at: Now(),
+                location_longitude: 0, location_latitude: 0
+            });
+            Clear(colPendingSubmissions);
+            
+            // PM submission queue
+            ClearCollect(colPendingSubmissionsPM, {
+                assign_id: 0,
+                maintenanceorder_no: 0,
+                response_json: "",
+                user_email: "",
+                user_role: "",
+                user_department: "",
+                submitted_at: Now(),
+                location_longitude: 0,
+                location_latitude: 0
+            });
+            Clear(colPendingSubmissionsPM);
+            
+            // failure holding collections — same schema as their source queues
+            ClearCollect(colFailedStatusSync, {
+                queue_id: GUID(),
+                queued_at: Now(),
+                workorder_assign_id: 0,
+                maintenanceorder_no: 0,
+                new_status: "",
+                start_date: Now(),
+                user_email: "",
+                user_role: "",
+                user_department: "",
+                location_longitude: 0,
+                location_latitude: 0
+            });
+            Clear(colFailedStatusSync);
+            
+            ClearCollect(colFailedSubmissionSync, {
+                maintenanceorder_no: 0,
+                station_id: 0, station_value: "",
+                system_id: 0, system_value: "",
+                subsystem_id: 0, subsystem_value: "",
+                sub_subsystem_id: 0, sub_subsystem_value: "",
+                root_cause_id: 0, root_cause_value: "",
+                plan_start_date: Now(),
+                plan_end_date: Now(),
+                remarks: "",
+                is_rsdm: false,
+                train_no_id: 0, train_no_value: "",
+                car_position_id: 0, car_position_value: "",
+                assign_id: 0,
+                assign_mo_no: 0,
+                user_email: "",
+                user_role: "",
+                user_department: "",
+                submitted_at: Now(),
+                location_longitude: 0,
+                location_latitude: 0
+            });
+            Clear(colFailedSubmissionSync);
+            
+            ClearCollect(colFailedSubmissionPMSync, {
+                assign_id: 0,
+                maintenanceorder_no: 0,
+                response_json: "",
+                user_email: "",
+                user_role: "",
+                user_department: "",
+                submitted_at: Now(),
+                location_longitude: 0,
+                location_latitude: 0
+            });
+            Clear(colFailedSubmissionPMSync);
+            
+            // ============================================================
+            // Step 0+1 combined: get user record.
+            // The real LookUp IS the connectivity test — no separate probe.
+            // ============================================================
+            Set(varIsOffline, !Connection.Connected);
+            Set(varOfflineChecks, 0);
+            Set(varSyncing, false);
+            
+            If(
+                !varIsOffline,
+                Set(
+                    varUserRecord,
+                    IfError(
+                        LookUp(tbl_user, employee_email = User().Email),
+                        // lookup itself failed → treat as offline
+                        Set(varIsOffline, true); Blank()
+                    )
+                )
+            );
+            
+            If(
+                varIsOffline,
+            
+                // OFFLINE: try cached record
+                // (IfError covers web + Studio, where LoadData is unsupported)
+                IfError(LoadData(colUserRecordCache, "UserRecordCache", true), Blank());
+                Set(varUserRecord, First(colUserRecordCache));
+            
+                // RECOVERY: cache empty, but the connector may actually be fine
+                // (covers Studio false-negatives and transient connector errors)
+                If(
+                    IsBlank(varUserRecord),
+                    Set(
+                        varUserRecord,
+                        IfError(LookUp(tbl_user, employee_email = User().Email), Blank())
+                    );
+                    If(!IsBlank(varUserRecord), Set(varIsOffline, false))
+                ),
+            
+                // ONLINE: cache record for future offline use
+                // (SaveData is unsupported on web/Studio — swallow the error there)
+                If(
+                    !IsBlank(varUserRecord),
+                    ClearCollect(colUserRecordCache, varUserRecord);
+                    IfError(SaveData(colUserRecordCache, "UserRecordCache"), Blank())
+                )
+            );
+            
+            // ============================================================
+            // Step 2: No record found
+            // ============================================================
+            If(
+                IsBlank(varUserRecord),
+            
+                UpdateContext({varIsLoading: false});
+                UpdateContext({varIsError: true});
+                UpdateContext({
+                    errorMessage: If(
+                        varIsOffline,
+                        "No internet connection. First-time login requires internet.",
+                        "Access denied. No account registered."
+                    )
+                })
+            );
+            
+            // ============================================================
+            // Step 3: Record found but status ≠ 1
+            // ============================================================
+            If(
+                !IsBlank(varUserRecord) && varUserRecord.status.Id <> 1,
+            
+                UpdateContext({varIsLoading: false});
+                UpdateContext({varIsError: true});
+                UpdateContext({errorMessage: "Your account is not active."})
+            );
+            
+            // ============================================================
+            // Step 4: Record found, status = 1, but no role assigned
+            // ============================================================
+            If(
+                !IsBlank(varUserRecord) && varUserRecord.status.Id = 1 && IsBlank(varUserRecord.role),
+            
+                UpdateContext({varIsLoading: false});
+                UpdateContext({varIsError: true});
+                UpdateContext({errorMessage: "Access denied. No role assigned to your account."})
+            );
+            
+            // ============================================================
+            // Step 5: All good → collect menu + ref tables, set roles, navigate
+            // ============================================================
+            If(
+                !IsBlank(varUserRecord) && varUserRecord.status.Id = 1 && !IsBlank(varUserRecord.role),
+            
+                If(
+                    !varIsOffline,
+            
+                    // ---------- ONLINE: live data + refresh caches ----------
+                    ClearCollect(
+                        colMenu,
+                        Sort(
+                            Filter(ref_menus, varUserRecord.role.Id in roles.Id),
+                            order,
+                            SortOrder.Ascending
+                        )
+                    );
+            
+                    // ref tables for CM form dropdowns / lookups
+                    ClearCollect(colRefSystem,
+                        Filter(ref_system, department.Value = varUserRecord.department.Value)
+                    );
+                    ClearCollect(colRefSubsystem,
+                        Filter(ref_subsystem, department.Value = varUserRecord.department.Value)
+                    );
+                    ClearCollect(colRefSubSubsystem,
+                        Filter(ref_sub_subsystem, department.Value = varUserRecord.department.Value)
+                    );
+                    ClearCollect(colRefRootCause,
+                        Filter(ref_root_cause, department.Value = varUserRecord.department.Value)
+                    );
+                    ClearCollect(colRefSystemHierarchy,
+                        Filter(ref_system_hierarchy, status.Value = "Active" && department.Value = varUserRecord.department.Value)
+                    );
+            
+                    ClearCollect(colRefStation, ref_station);
+                    ClearCollect(colRefTrain, ref_train);
+                    ClearCollect(colRefCarPosition, ref_car_position);
+            
+                    // PM checklist templates (by department, for PCF renderer)
+                    ClearCollect(colRefTemplate,
+                        Filter(ref_template, department.Value = varUserRecord.department.Value)
+                    );
+            
+                    // tbl_maintenance_order -> tbl_workorder_assign
+                    ClearCollect(
+                        colTblMrlWorkorderAssign,
+                        Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
+                    );
+                    Clear(colTblMaintenanceOrder);
+                    ForAll(
+                        Distinct(colTblMrlWorkorderAssign, maintenanceorder_no) As mo,
+                        Collect(
+                            colTblMaintenanceOrder,
+                            LookUp(tbl_maintenance_order, maintenanceorder_no = mo.Value)
+                        )
+                    );
+                    RemoveIf(colTblMaintenanceOrder, IsBlank(maintenanceorder_no));
+            
+                    IfError(SaveData(colMenu, "MenuCache"), Blank());
+                    IfError(SaveData(colRefSystem, "RefSystemCache"), Blank());
+                    IfError(SaveData(colRefSubsystem, "RefSubsystemCache"), Blank());
+                    IfError(SaveData(colRefSubSubsystem, "RefSubSubsystemCache"), Blank());
+                    IfError(SaveData(colRefRootCause, "RefRootCauseCache"), Blank());
+                    IfError(SaveData(colRefStation, "RefStationCache"), Blank());
+                    IfError(SaveData(colRefTrain, "RefTrainCache"), Blank());
+                    IfError(SaveData(colRefCarPosition, "colRefCarPositionCache"), Blank());
+                    IfError(SaveData(colRefSystemHierarchy, "colRefSystemHierarchyCache"), Blank());
+                    IfError(SaveData(colRefTemplate, "colRefTemplateCache"), Blank());
+            
+                    IfError(SaveData(colTblMaintenanceOrder, "colTblMaintenanceOrderCache"), Blank());
+                    IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
+            
+                    // pending queues — restore anything that survived an app restart,
+                    // so the dashboard SyncTick can flush it
+                    IfError(LoadData(colPendingStatusUpdates, "colPendingStatusUpdatesCache", true), Blank());
+                    IfError(LoadData(colPendingSubmissions, "colPendingSubmissionsCache", true), Blank());
+                    IfError(LoadData(colPendingSubmissionsPM, "colPendingSubmissionsPMCache", true), Blank());
+                    If(
+                        CountRows(colPendingStatusUpdates) + CountRows(colPendingSubmissions) + CountRows(colPendingSubmissionsPM) > 0,
+                        Set(varIsOffline, true)   // trick: forces SyncTick's flush on first dashboard tick
+                    )
+                    ,
+            
+                    // ---------- OFFLINE: everything from cache ----------
+                    IfError(LoadData(colMenu, "MenuCache", true), Blank());
+                    IfError(LoadData(colRefSystem, "RefSystemCache", true), Blank());
+                    IfError(LoadData(colRefSubsystem, "RefSubsystemCache", true), Blank());
+                    IfError(LoadData(colRefSubSubsystem, "RefSubSubsystemCache", true), Blank());
+                    IfError(LoadData(colRefRootCause, "RefRootCauseCache", true), Blank());
+                    IfError(LoadData(colRefStation, "RefStationCache", true), Blank());
+                    IfError(LoadData(colRefTrain, "RefTrainCache", true), Blank());
+                    IfError(LoadData(colRefCarPosition, "colRefCarPositionCache", true), Blank());
+                    IfError(LoadData(colRefSystemHierarchy, "colRefSystemHierarchyCache", true), Blank());
+                    IfError(LoadData(colRefTemplate, "colRefTemplateCache", true), Blank());
+            
+                    IfError(LoadData(colTblMaintenanceOrder, "colTblMaintenanceOrderCache", true), Blank());
+                    IfError(LoadData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache", true), Blank());
+            
+                    // pending queues
+                    IfError(LoadData(colPendingStatusUpdates, "colPendingStatusUpdatesCache", true), Blank());
+                    IfError(LoadData(colPendingSubmissions, "colPendingSubmissionsCache", true), Blank());
+                    IfError(LoadData(colPendingSubmissionsPM, "colPendingSubmissionsPMCache", true), Blank())
+                );
+            
+                Set(varIsHOU, varUserRecord.role.Value = "Head of Unit");
+                Set(varIsHOE, varUserRecord.role.Value = "Head of Engineer");
+                Set(varIsAdminDept, varUserRecord.role.Value = "Admin");
+                Set(varIsEngineer, varUserRecord.role.Value = "Engineer");
+                Set(varIsTechnician, varUserRecord.role.Value = "Technician");
+                Set(varIsMaintainerScheduler, varUserRecord.role.Value = "Maintainer Scheduler");
+                Set(varIsPerformanceAnalyst, varUserRecord.role.Value = "Performance Analyst");
+                Set(varIsSuperAdmin, varUserRecord.role.Value = "Super Admin");
+                Set(varIsSupervisor, varUserRecord.role.Value = "Supervisor");
+            
+                UpdateContext({varIsError: false});
+                UpdateContext({varIsLoading: false});
+                Navigate(DASHBOARD)
+            );
+        Visible: =false
+        X: =1192
+        Y: =712
+        ZIndex: =1
+
+    "'Error-Container' As groupContainer.manualLayoutContainer":
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        DropShadow: =DropShadow.Regular
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =552
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        RadiusBottomLeft: =35
+        RadiusBottomRight: =35
+        RadiusTopLeft: =35
+        RadiusTopRight: =35
+        Visible: =varIsError
+        Width: =575
+        X: =386
+        Y: =120
+        ZIndex: =2
+
+        btnRetry As modernButton:
+            Align: =Align.Center
+            BasePaletteColor: =RGBA(230, 126, 34, 1)
+            BorderStyle: =""
+            Font: =""
+            FontWeight: =""
+            Height: =50
+            OnSelect: |
+                =
+                /*Notify("Processing retry. This may take a moment.");
+                UpdateContext({errorMessage: ""});
+                UpdateContext({varIsLoading: true});
+                UpdateContext({varIsError: false});
+                
+                // Step 1: Try to find user record
+                Set(
+                    varUserRecord,
+                    LookUp(tbl_user, employee_email = User().Email)
+                );
+                
+                // Step 2: No record found
+                If(
+                    IsBlank(varUserRecord),
+                
+                    UpdateContext({varIsLoading: false});
+                    UpdateContext({varIsError: true});
+                    UpdateContext({errorMessage: "Access denied. No account registered."})
+                );
+                
+                // Step 3: Record found but status ≠ 1
+                If(
+                    !IsBlank(varUserRecord) && varUserRecord.status.Id <> 1,
+                
+                    UpdateContext({varIsLoading: false});
+                    UpdateContext({varIsError: true});
+                    UpdateContext({errorMessage: "Your account is not active."})
+                );
+                
+                // Step 4: Record found, status = 1, but no role assigned
+                If(
+                    !IsBlank(varUserRecord) && varUserRecord.status.Id = 1 && IsBlank(varUserRecord.role),
+                
+                    UpdateContext({varIsLoading: false});
+                    UpdateContext({varIsError: true});
+                    UpdateContext({errorMessage: "Access denied. No role assigned to your account."})
+                );
+                
+                // Step 5: All good → Navigate
+                If(
+                    !IsBlank(varUserRecord) && varUserRecord.status.Id = 1 && !IsBlank(varUserRecord.role),
+                
+                    UpdateContext({varIsError: false});
+                    UpdateContext({varIsLoading: false});
+                    Navigate(DASHBOARD_MAIN)
+                );
+                */
+                
+                Set(varStartupDone, false);
+                Set(varStartupAttempts, 0);
+                UpdateContext({varIsLoading: true, varIsError: false, errorMessage: ""})
+            PaddingBottom: =5
+            PaddingLeft: =12
+            PaddingRight: =12
+            PaddingTop: =5
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =20
+            Text: ="Retry"
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =100
+            X: =239
+            Y: =461
+            ZIndex: =1
+
+        "'Svg-Icon-Error' As SVG_ICON":
+            Height: =200
+            IconName: |-
+                ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M12 3C9.68925 3 8.23007 5.58716 5.31171 10.7615L4.94805 11.4063C2.52291 15.7061 1.31034 17.856 2.40626 19.428C3.50217 21 6.21356 21 11.6363 21H12.3637C17.7864 21 20.4978 21 21.5937 19.428C22.6897 17.856 21.4771 15.7061 19.0519 11.4063L18.6883 10.7615C15.7699 5.58716 14.3107 3 12 3Z"" fill=""#e67e22""></path> <path d=""M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V13C12.75 13.4142 12.4142 13.75 12 13.75C11.5858 13.75 11.25 13.4142 11.25 13V8C11.25 7.58579 11.5858 7.25 12 7.25Z"" fill=""#e67e22""></path> <path d=""M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z"" fill=""#e67e22""></path> </g></svg>"
+            Width: =200
+            X: =195
+            Y: =85
+            ZIndex: =2
+
+        "'Body-Error' As label":
+            Align: =Align.Center
+            Font: =Font.'Segoe UI'
+            Height: =52
+            Size: =14
+            Text: =errorMessage
+            Width: =354
+            X: =112
+            Y: =377
+            ZIndex: =3
+
+        "'Title-Error' As label":
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Height: =80
+            Size: =20
+            Text: ="Error"
+            Width: =230
+            X: =168
+            Y: =296
+            ZIndex: =4
+
+    "'Loading-Container' As groupContainer.manualLayoutContainer":
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        DropShadow: =DropShadow.Regular
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =552
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        RadiusBottomLeft: =35
+        RadiusBottomRight: =35
+        RadiusTopLeft: =35
+        RadiusTopRight: =35
+        Visible: =varIsLoading
+        Width: =575
+        X: =386
+        Y: =120
+        ZIndex: =4
+
+        "'Svg-Icon-Loading' As SVG_ICON":
+            Height: =200
+            IconName: |-
+                ="<svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 200 200""><radialGradient id=""a12"" cx="".66"" fx="".66"" cy="".3125"" fy="".3125"" gradientTransform=""scale(1.5)""><stop offset=""0"" stop-color=""#341F97""></stop><stop offset="".3"" stop-color=""#341F97"" stop-opacity="".9""></stop><stop offset="".6"" stop-color=""#341F97"" stop-opacity="".6""></stop><stop offset="".8"" stop-color=""#341F97"" stop-opacity="".3""></stop><stop offset=""1"" stop-color=""#341F97"" stop-opacity=""0""></stop></radialGradient><circle transform-origin=""center"" fill=""none"" stroke=""url(#a12)"" stroke-width=""15"" stroke-linecap=""round"" stroke-dasharray=""200 1000"" stroke-dashoffset=""0"" cx=""100"" cy=""100"" r=""70""><animateTransform type=""rotate"" attributeName=""transform"" calcMode=""spline"" dur=""2"" values=""360;0"" keyTimes=""0;1"" keySplines=""0 0 1 1"" repeatCount=""indefinite""></animateTransform></circle><circle transform-origin=""center"" fill=""none"" opacity="".2"" stroke=""#341F97"" stroke-width=""15"" stroke-linecap=""round"" cx=""100"" cy=""100"" r=""70""></circle></svg>"
+            Width: =200
+            X: =195
+            Y: =85
+
+        "'Body-Loading' As label":
+            Align: =Align.Center
+            Height: =52
+            Size: =14
+            Text: ="Generating your response. This may take a moment."
+            Width: =354
+            X: =112
+            Y: =377
+            ZIndex: =2
+
+        "'Title-Loading' As label":
+            Align: =Align.Center
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =80
+            Size: =20
+            Text: ="Loading"
+            Width: =230
+            X: =168
+            Y: =296
+            ZIndex: =3
+

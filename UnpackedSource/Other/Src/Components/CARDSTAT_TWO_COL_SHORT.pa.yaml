@@ -1,0 +1,233 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  CARDSTAT_TWO_COL_SHORT:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      BgColor:
+        PropertyKind: Input
+        DisplayName: BgColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(255, 255, 10, 10)
+      CardColor:
+        PropertyKind: Input
+        DisplayName: CardColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      CountData:
+        PropertyKind: Input
+        DisplayName: CountData
+        Description: A custom property
+        DataType: Number
+        Default: =100
+      IconSVG:
+        PropertyKind: Input
+        DisplayName: IconSVG
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      IconSVG2:
+        PropertyKind: Input
+        DisplayName: IconSVG2
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      NavigateColor1:
+        PropertyKind: Input
+        DisplayName: NavigateColor1
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      NavigateColor2:
+        PropertyKind: Input
+        DisplayName: NavigateColor2
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+      NavigateCount1:
+        PropertyKind: Input
+        DisplayName: NavigateCount1
+        Description: A custom property
+        DataType: Text
+        Default: =0
+      NavigateCount2:
+        PropertyKind: Input
+        DisplayName: NavigateCount2
+        Description: A custom property
+        DataType: Text
+        Default: =0
+      NavigateFIll1:
+        PropertyKind: Input
+        DisplayName: NavigateFIll1
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 0)
+      NavigateFill2:
+        PropertyKind: Input
+        DisplayName: NavigateFill2
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 0)
+      NavigateText1:
+        PropertyKind: Input
+        DisplayName: NavigateText1
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      NavigateText2:
+        PropertyKind: Input
+        DisplayName: NavigateText2
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      NavigateTitle1:
+        PropertyKind: Input
+        DisplayName: NavigateTitle1
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      NavigateTitle2:
+        PropertyKind: Input
+        DisplayName: NavigateTitle2
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      Title:
+        PropertyKind: Input
+        DisplayName: Title
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      TitleColor:
+        PropertyKind: Input
+        DisplayName: TitleColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(0, 0, 0, 1)
+    Properties:
+      Height: =140
+      Width: =300
+    Children:
+      - card_5:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =CARDSTAT_TWO_COL_SHORT.CardColor
+            Height: =140
+            RadiusBottomLeft: =25
+            RadiusBottomRight: =25
+            RadiusTopLeft: =25
+            RadiusTopRight: =25
+            Width: =Parent.Width
+          Children:
+            - Container11_5:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Height: =120
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutWrap: =true
+                  Width: =280
+                  X: =10
+                  Y: =10
+                Children:
+                  - Container10_5:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =120
+                        X: =40
+                        Y: =40
+                      Children:
+                        - Container13_4:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              LayoutMaxHeight: =
+                              LayoutMinWidth: =200
+                              Width: =280
+                            Children:
+                              - Button1_3:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =CARDSTAT_TWO_COL_SHORT.NavigateColor1
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =CARDSTAT_TWO_COL_SHORT.NavigateFIll1
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =25
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(0, 0, 0, 1)
+                                    HoverFill: =ColorFade(RGBA(255, 255, 200, 0.5), -20%)
+                                    OnSelect: =Navigate(CARDSTAT_TWO_COL_SHORT.NavigateText1)
+                                    PaddingBottom: =20
+                                    PaddingTop: =10
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Size: =22
+                                    Text: =CARDSTAT_TWO_COL_SHORT.NavigateTitle1
+                                    Width: =106
+                                    X: =117
+                                    Y: =11
+                              - SVG_10:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Height: =58
+                                    Image: ="data:image/svg+xml;utf8," & EncodeUrl(CARDSTAT_TWO_COL_SHORT.IconSVG)
+                                    Width: =56
+                                    X: =12
+                                    Y: =5
+                              - SVG_11:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Height: =50
+                                    Image: ="data:image/svg+xml;utf8," & EncodeUrl(CARDSTAT_TWO_COL_SHORT.IconSVG2)
+                                    Width: =51
+                                    X: =110
+                                    Y: =60
+                              - Button1_4:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    Align: =Align.Left
+                                    BorderColor: =
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =CARDSTAT_TWO_COL_SHORT.NavigateColor1
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =CARDSTAT_TWO_COL_SHORT.NavigateFIll1
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =45
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(0, 0, 0, 1)
+                                    HoverFill: =ColorFade(RGBA(255, 255, 200, 0.5), -20%)
+                                    OnSelect: |-
+                                      =//Navigate
+                                      //(CARDSTAT_TWO_COL_SHORT.CountData)
+                                    PaddingBottom: =20
+                                    PaddingTop: =10
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Size: =24
+                                    Text: =CARDSTAT_TWO_COL_SHORT.CountData
+                                    Width: =67
+                                    X: =167
+                                    Y: =73

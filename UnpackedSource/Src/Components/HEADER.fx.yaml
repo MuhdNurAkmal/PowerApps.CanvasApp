@@ -1,0 +1,250 @@
+HEADER As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =80
+    varIsOffline: =false
+    varUserDepartment: ="Text"
+    varUserRole: ="Text"
+    Width: =1334
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    background As htmlViewer:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        Font: =Font.'Segoe UI'
+        Height: =75
+        HtmlText: |-
+            ="<div style='display:flex; align-items:center; justify-content:space-between; background-color:#fff; padding:12px 20px; height:64px;border-radius:25px;'>
+               
+            </div>"
+        Width: =1334
+        ZIndex: =1
+
+    "'Header-Container_2' As groupContainer.horizontalAutoLayoutContainer":
+        BorderColor: =RGBA(255, 255, 255, 1)
+        BorderStyle: =BorderStyle.None
+        DropShadow: =DropShadow.None
+        Height: =75
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+        LayoutMode: =LayoutMode.Auto
+        Width: =1334
+        ZIndex: =2
+
+        Logo_Prasarana_2 As image:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            Height: =55
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Image: =Prasarana_Logo
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Width: =198
+            X: =40
+            Y: =40
+            ZIndex: =1
+
+        "'User-Container_2' As groupContainer.horizontalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DropShadow: =DropShadow.None
+            Height: =80
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.End
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            PaddingRight: =20
+            ZIndex: =2
+
+            CONTAINER_OFFLINE_1 As groupContainer.manualLayoutContainer:
+                DropShadow: =DropShadow.None
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Visible: |-
+                    =/*If(
+                        Connection.Connected,
+                        false,
+                        true
+                    )*/
+                    HEADER.varIsOffline
+                ZIndex: =1
+
+                TextCanvas1_2 As modernText:
+                    Align: =Align.Center
+                    BorderColor: =RGBA(39, 113, 194, 1)
+                    BorderStyle: =""
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =RGBA(215, 58, 60, 1)
+                    Font: =Font.'Lato Black'
+                    FontWeight: =FontWeight.Bold
+                    Height: =36
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Size: =20
+                    Text: ="You are in Offline Mode"
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =511
+                    X: =188
+                    Y: =23
+                    ZIndex: =3
+
+            "'User-Details_2' As groupContainer.horizontalAutoLayoutContainer":
+                BorderStyle: =BorderStyle.None
+                DropShadow: =DropShadow.None
+                FillPortions: =0
+                LayoutAlignItems: =LayoutAlignItems.End
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =0
+                LayoutMinWidth: =20
+                LayoutMode: =LayoutMode.Auto
+                PaddingBottom: =10
+                PaddingRight: =15
+                PaddingTop: =10
+                Width: =350
+                ZIndex: =2
+
+                "'User-Name_3' As label":
+                    Align: =Align.Right
+                    AutoHeight: =true
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    BorderThickness: =2
+                    Color: =RGBA(0, 25, 170, 1)
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    FocusedBorderThickness: =4
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =24
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =11
+                    Text: =HEADER.varUserRole & " | " & HEADER.varUserDepartment
+                    Width: =208
+                    X: =1128
+                    Y: =12
+                    ZIndex: =1
+
+                "'User-Name_2' As label":
+                    Align: =Align.Right
+                    AutoHeight: =true
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    BorderThickness: =2
+                    Color: =RGBA(0, 25, 170, 1)
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    FocusedBorderThickness: =4
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =15
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LineHeight: =1
+                    PaddingBottom: =2
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =2
+                    Size: =12
+                    Text: =Upper(User().FullName)
+                    Width: =208
+                    X: =1128
+                    Y: =12
+                    ZIndex: =2
+
+                "'User-Email_2' As label":
+                    Align: =Align.Right
+                    AutoHeight: =true
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    BorderThickness: =2
+                    Color: =RGBA(79, 90, 94, 1)
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    FocusedBorderThickness: =4
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Lighter
+                    Height: =33
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =11
+                    Text: =User().Email
+                    Width: =300
+                    X: =40
+                    Y: =40
+                    ZIndex: =3
+
+            "'User-Image_2' As Avatar":
+                AccessibleLabel: =""
+                AlignInContainer: =AlignInContainer.Center
+                Appearance: ='Avatar.Appearance'.Brand
+                Badge: ='Avatar.Badge'.None
+                BasePaletteColor: =
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =0
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Image: =User().Image
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =64
+                LayoutMinWidth: =64
+                Name: =User().FullName
+                OutOfOffice: =false
+                Shape: ="Circular"
+                TabIndex: =0
+                Tooltip: =""
+                Visible: =true
+                Width: =50
+                X: =1030
+                Y: =12
+                ZIndex: =3
+

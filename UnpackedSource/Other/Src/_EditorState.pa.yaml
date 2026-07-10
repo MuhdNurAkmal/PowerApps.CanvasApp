@@ -1,0 +1,67 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+EditorState:
+  ScreensOrder:
+    - STARTUP
+    - DASHBOARD
+    - DASHBOARD_MAIN
+    - DASHBOARD_MS
+    - ADD_TEAM_MS
+    - MANAGE_TEAM_MS
+    - USER_LIST
+    - USER_LIST_1
+    - USER_VIEW
+    - TEAM_LIST
+    - TEAM_VIEW
+    - TASK_LIST
+    - TASK_VIEW
+    - TASK_CHECKLIST_PM
+    - TASK_CHECKLIST_PM_SV
+    - TASK_CHECKLIST_CM
+    - WORKORDER_LIST
+    - WORKORDER_LIST_SV
+    - WORKORDER_VIEW_ASSIGNED_TECHNICIAN
+    - WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS
+    - WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV
+    - WORKORDER_VIEW_TECHNICIAN
+    - NOTIFICATION_LIST
+    - NOTIFICATION_VIEW
+    - AUDITTRAIL_LIST
+    - REPORT_ANALYSIS
+    - REPORT_ANALYSIS_HOU
+    - REPORT_ANALYSIS_HOU_BACKUP
+    - REPORT_ANALYSIS_BACKUP
+    - REPORT_ANALYSIS_RSD_MAIN
+    - SYSTEMCONFIGURATION_LIST
+    - SYSTEMCONFIGURATION_PM
+    - TECHNICIAN_VIEWTASK_OFFLINE
+    - TECHNICIAN_DASHBOARD_OFFLINE
+    - DASHBOARD_v2
+    - Screen1
+  ComponentDefinitionsOrder:
+    - NAVBAR
+    - NAVBAR_ENGINEER
+    - NAVBAR_SYSTEMOWNER
+    - NAVBAR_AUDIT
+    - HEADER
+    - HEADER_OFFLINE
+    - CARD
+    - CARDSTAT
+    - CARDSTAT_TWO_COL
+    - CARDSTAT_TWO_COL_MS_DASHBOARD_LONG
+    - CARDSTAT_TWO_COL_SHORT
+    - SVG_ICON
+    - POPUP
+    - TABCHANGE
+    - TEAM
+    - cmpClock
+    - CUSTOMBUTTON
+    - JSONVIEWER
+    - FORM
+    - TITLE

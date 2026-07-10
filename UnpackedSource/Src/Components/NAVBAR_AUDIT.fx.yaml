@@ -1,0 +1,220 @@
+NAVBAR_AUDIT As CanvasComponent:
+    AccentColor: =RGBA(255, 0, 0, 1)
+    BgColor: =RGBA(52, 31, 151, 1)
+    CurrentPage: ="Text"
+    DashboardScreen: =App.ActiveScreen
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =640
+    IconColor: =RGBA(255, 255, 255, 1)
+    TaskListScreen: =App.ActiveScreen
+    Width: =80
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    "'Navbar-Links_1' As groupContainer.horizontalAutoLayoutContainer":
+        BorderColor: =RGBA(0, 0, 0, 0)
+        Fill: =NAVBAR_AUDIT.BgColor
+        Height: =640
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =15
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingTop: =40
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Width: =80
+        ZIndex: =1
+
+        Dashboard_1 As groupContainer.horizontalAutoLayoutContainer:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DropShadow: =DropShadow.None
+            FillPortions: =0
+            Height: =50
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =10
+            LayoutMinWidth: =50
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =1
+
+            Rectangle1_2 As rectangle:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                DisabledFill: =RGBA(166, 166, 166, 1)
+                Fill: |-
+                    =If(
+                        NAVBAR_AUDIT.CurrentPage = "DASHBOARD", NAVBAR_AUDIT.AccentColor,
+                        NAVBAR_AUDIT.BgColor
+                    )
+                FocusedBorderThickness: =4
+                Height: =50
+                HoverFill: =RGBA(0, 120, 212, 1)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                PressedFill: =RGBA(0, 120, 212, 1)
+                Width: =10
+                ZIndex: =2
+
+            DashboardBtn_1 As icon:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                Color: =NAVBAR_AUDIT.IconColor
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(220, 220, 220, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                FocusedBorderThickness: =0
+                Height: =50
+                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                HoverColor: =ColorFade(NAVBAR_AUDIT.AccentColor, -10%)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                Icon: =Icon.Home
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                OnSelect: =Navigate(NAVBAR_AUDIT.DashboardScreen,ScreenTransition.Fade)
+                PaddingLeft: =10
+                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Width: =50
+                X: =24
+                Y: =40
+                ZIndex: =3
+
+        Task_1 As groupContainer.horizontalAutoLayoutContainer:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DropShadow: =DropShadow.None
+            FillPortions: =0
+            Height: =50
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =10
+            LayoutMinWidth: =50
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =4
+
+            Rectangle1_3 As rectangle:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                DisabledFill: =RGBA(166, 166, 166, 1)
+                Fill: |-
+                    =If(
+                        NAVBAR_AUDIT.CurrentPage = "TASKLIST", NAVBAR_AUDIT.AccentColor,
+                        NAVBAR_AUDIT.BgColor
+                    )
+                FocusedBorderThickness: =4
+                Height: =50
+                HoverFill: =RGBA(0, 120, 212, 1)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                PressedFill: =RGBA(0, 120, 212, 1)
+                Width: =10
+                ZIndex: =5
+
+            TaskBtn_1 As icon:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                Color: =NAVBAR_AUDIT.IconColor
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(220, 220, 220, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                FocusedBorderThickness: =0
+                Height: =50
+                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                HoverColor: =ColorFade(NAVBAR_AUDIT.AccentColor, -10%)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                Icon: =Icon.DetailList
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                OnSelect: =Navigate(NAVBAR_AUDIT.TaskListScreen,ScreenTransition.Fade)
+                PaddingLeft: =10
+                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Width: =50
+                X: =24
+                Y: =40
+                ZIndex: =6
+
+        Exit_1 As groupContainer.horizontalAutoLayoutContainer:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DropShadow: =DropShadow.None
+            Height: =50
+            LayoutAlignItems: =LayoutAlignItems.End
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =10
+            LayoutMinWidth: =50
+            LayoutMode: =LayoutMode.Auto
+            PaddingBottom: =35
+            ZIndex: =7
+
+            Rectangle1_5 As rectangle:
+                AlignInContainer: =AlignInContainer.End
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                DisabledFill: =RGBA(166, 166, 166, 1)
+                Fill: |-
+                    =If(
+                        NAVBAR_AUDIT.CurrentPage = "TASKLIST", NAVBAR_AUDIT.AccentColor,
+                        NAVBAR_AUDIT.BgColor
+                    )
+                FocusedBorderThickness: =4
+                Height: =50
+                HoverFill: =RGBA(0, 120, 212, 1)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                PressedFill: =RGBA(0, 120, 212, 1)
+                Width: =10
+                ZIndex: =8
+
+            TaskBtn_3 As icon:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                Color: =NAVBAR_AUDIT.IconColor
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(220, 220, 220, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                FocusedBorderThickness: =0
+                Height: =50
+                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                HoverColor: =ColorFade(NAVBAR_AUDIT.AccentColor, -10%)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                Icon: =Icon.Leave
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                OnSelect: =Navigate(NAVBAR_AUDIT.TaskListScreen,ScreenTransition.Fade)
+                PaddingLeft: =10
+                PaddingRight: =10
+                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Width: =60
+                X: =24
+                Y: =40
+                ZIndex: =9
+

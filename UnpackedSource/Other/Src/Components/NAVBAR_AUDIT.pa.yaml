@@ -1,0 +1,248 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  NAVBAR_AUDIT:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      AccentColor:
+        PropertyKind: Input
+        DisplayName: AccentColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(255, 0, 0, 1)
+      BgColor:
+        PropertyKind: Input
+        DisplayName: BgColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(52, 31, 151, 1)
+      CurrentPage:
+        PropertyKind: Input
+        DisplayName: CurrentPage
+        Description: A custom property
+        DataType: Text
+        Default: ="Text"
+      DashboardScreen:
+        PropertyKind: Input
+        DisplayName: DashboardScreen
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+      IconColor:
+        PropertyKind: Input
+        DisplayName: IconColor
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(255, 255, 255, 1)
+      TaskListScreen:
+        PropertyKind: Input
+        DisplayName: TaskListScreen
+        Description: A custom property
+        DataType: Screen
+        Default: =App.ActiveScreen
+    Properties:
+      Width: =80
+    Children:
+      - Navbar-Links_1:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Fill: =NAVBAR_AUDIT.BgColor
+            Height: =640
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =15
+            PaddingTop: =40
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =80
+          Children:
+            - Dashboard_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =50
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =10
+                  LayoutMinWidth: =50
+                Children:
+                  - Rectangle1_2:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |-
+                          =If(
+                              NAVBAR_AUDIT.CurrentPage = "DASHBOARD", NAVBAR_AUDIT.AccentColor,
+                              NAVBAR_AUDIT.BgColor
+                          )
+                        FocusedBorderThickness: =4
+                        Height: =50
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Width: =10
+                  - DashboardBtn_1:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        Color: =NAVBAR_AUDIT.IconColor
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(220, 220, 220, 1)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =0
+                        Height: =50
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverColor: =ColorFade(NAVBAR_AUDIT.AccentColor, -10%)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Icon: =Icon.Home
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: =Navigate(NAVBAR_AUDIT.DashboardScreen,ScreenTransition.Fade)
+                        PaddingLeft: =10
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        Width: =50
+                        X: =24
+                        Y: =40
+            - Task_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =50
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =10
+                  LayoutMinWidth: =50
+                Children:
+                  - Rectangle1_3:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |-
+                          =If(
+                              NAVBAR_AUDIT.CurrentPage = "TASKLIST", NAVBAR_AUDIT.AccentColor,
+                              NAVBAR_AUDIT.BgColor
+                          )
+                        FocusedBorderThickness: =4
+                        Height: =50
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Width: =10
+                  - TaskBtn_1:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        Color: =NAVBAR_AUDIT.IconColor
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(220, 220, 220, 1)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =0
+                        Height: =50
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverColor: =ColorFade(NAVBAR_AUDIT.AccentColor, -10%)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Icon: =Icon.DetailList
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: =Navigate(NAVBAR_AUDIT.TaskListScreen,ScreenTransition.Fade)
+                        PaddingLeft: =10
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        Width: =50
+                        X: =24
+                        Y: =40
+            - Exit_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  DropShadow: =DropShadow.None
+                  Height: =50
+                  LayoutAlignItems: =LayoutAlignItems.End
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =10
+                  LayoutMinWidth: =50
+                  PaddingBottom: =35
+                Children:
+                  - Rectangle1_5:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.End
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |-
+                          =If(
+                              NAVBAR_AUDIT.CurrentPage = "TASKLIST", NAVBAR_AUDIT.AccentColor,
+                              NAVBAR_AUDIT.BgColor
+                          )
+                        FocusedBorderThickness: =4
+                        Height: =50
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Width: =10
+                  - TaskBtn_3:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        Color: =NAVBAR_AUDIT.IconColor
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(220, 220, 220, 1)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =0
+                        Height: =50
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverColor: =ColorFade(NAVBAR_AUDIT.AccentColor, -10%)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Icon: =Icon.Leave
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: =Navigate(NAVBAR_AUDIT.TaskListScreen,ScreenTransition.Fade)
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        Width: =60
+                        X: =24
+                        Y: =40

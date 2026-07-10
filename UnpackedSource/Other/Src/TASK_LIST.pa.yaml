@@ -1,0 +1,792 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TASK_LIST:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: "=/*If(\n    !varIsOffline,\n\n    // ONLINE: load live + cache\n    ClearCollect(\n        colTblMrlWorkorderAssign,\n        Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)\n    );\n    IfError(SaveData(colTblMrlWorkorderAssign, \"colTblMrlWorkorderAssignCache\"), Blank());\n    \n    // 1. Start the loading state\n    UpdateContext({varIsLoading: true});\n\n    // 2. Perform the Refresh\n    //Refresh(Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID));\n    Refresh(tbl_mrl_workorder_assign);\n    // 3. End the loading state\n    UpdateContext({varIsLoading: false});\n    ,\n\n    // OFFLINE: load from cache (Clear first — LoadData appends!)\n    Clear(colTblMrlWorkorderAssign);\n    IfError(LoadData(colTblMrlWorkorderAssign, \"colTblMrlWorkorderAssignCache\", true), Blank())\n);*/\n\nIf(\n    !varIsOffline,\n\n    // ONLINE: refresh connector, load live, cache both\n    UpdateContext({varIsLoading: true});\n\n    Refresh(tbl_mrl_workorder_assign);\n    Refresh(tbl_maintenance_order);\n\n    ClearCollect(\n        colTblMrlWorkorderAssign,\n        Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)\n    );\n\n    // parent MOs referenced by the assignments (delegable per-row LookUp)\n    Clear(colTblMaintenanceOrder);\n    ForAll(\n        Distinct(colTblMrlWorkorderAssign, maintenanceorder_no) As mo,\n        Collect(\n            colTblMaintenanceOrder,\n            LookUp(tbl_maintenance_order, maintenanceorder_no = mo.Value)\n        )\n    );\n\n    IfError(SaveData(colTblMrlWorkorderAssign, \"colTblMrlWorkorderAssignCache\"), Blank());\n    IfError(SaveData(colTblMaintenanceOrder, \"colTblMaintenanceOrderCache\"), Blank());\n\n    UpdateContext({varIsLoading: false})\n    ,\n\n    // OFFLINE: load from cache (Clear first — LoadData appends!)\n    Clear(colTblMrlWorkorderAssign);\n    IfError(LoadData(colTblMrlWorkorderAssign, \"colTblMrlWorkorderAssignCache\", true), Blank());\n\n    Clear(colTblMaintenanceOrder);\n    IfError(LoadData(colTblMaintenanceOrder, \"colTblMaintenanceOrderCache\", true), Blank())\n);"
+    Children:
+      - Main-Container_1:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_2:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =varIsOffline
+                  varUserDepartment: =varUserRecord.department.Value
+                  varUserRole: =varUserRecord.role.Value
+            - Content_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_TASK_LIST:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =AUDITTRAIL_LIST
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: =DASHBOARD
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: =NOTIFICATION_LIST
+                        ParentScreen: =
+                        ParentScreen2: =
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =TEAM_LIST
+                        UserMenu: =USER_LIST
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =App.ActiveScreen
+                        dataMenu: =colMenu
+                  - Dashboard-Content_1:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =DropShadow.None
+                        FillPortions: =8
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Title-Container_7:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =55
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =Parent.Width
+                              X: =40
+                              Y: =40
+                            Children:
+                              - txtTitle_dashboard_15:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(47, 53, 66, 1)
+                                    Height: =49
+                                    Size: =30
+                                    Text: ="Task List"
+                                    Width: =539
+                                    X: =8
+                              - icoRefresh_3:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(166, 166, 166, 1)
+                                    DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                                    Height: =30
+                                    Icon: =Icon.Reload
+                                    OnSelect: |-
+                                      =If(
+                                          !varIsOffline && Connection.Connected,
+
+                                          // ===== ONLINE REFRESH =====
+                                          UpdateContext({varIsLoading: true});
+
+                                          Refresh(tbl_mrl_workorder_assign);
+                                          Refresh(tbl_maintenance_order);
+
+                                          // reload collections (screens read these, not the connector)
+                                          ClearCollect(
+                                              colTblMrlWorkorderAssign,
+                                              Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                                          );
+
+                                          Clear(colTblMaintenanceOrder);
+                                          ForAll(
+                                              Distinct(colTblMrlWorkorderAssign, maintenanceorder_no) As mo,
+                                              With(
+                                                  { rec: LookUp(tbl_maintenance_order, maintenanceorder_no = mo.Value) },
+                                                  If(!IsBlank(rec), Collect(colTblMaintenanceOrder, rec))
+                                              )
+                                          );
+
+                                          // re-cache
+                                          IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
+                                          IfError(SaveData(colTblMaintenanceOrder, "colTblMaintenanceOrderCache"), Blank());
+
+                                          UpdateContext({varIsLoading: false});
+                                          Notify("Data Refreshed", NotificationType.Success)
+                                          ,
+
+                                          // ===== OFFLINE: nothing to refresh =====
+                                          Notify("Offline — showing cached data", NotificationType.Warning)
+                                      );
+                                    Width: =30
+                                    X: =1184
+                                    Y: =13
+                              - txtTittleConfigureTeam_5:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Font: =Font.Lato
+                                    FontColor: =RGBA(0, 0, 0, 0.6)
+                                    Height: =23
+                                    Size: =16
+                                    Text: ="Track and manage individual task milestones and technician."
+                                    Weight: ='TextCanvas.Weight'.Regular
+                                    Width: =746
+                                    X: =12
+                                    Y: =32
+                        - Task-Container_1:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =10
+                              PaddingRight: =10
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              X: =40
+                              Y: =40
+                            Children:
+                              - Task-List_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =App.Theme.Colors.Darker10
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =434
+                                    Items: |-
+                                      =//Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                                      colTblMrlWorkorderAssign
+                                    TemplateSize: =104
+                                    Width: =1195
+                                    X: =19
+                                    Y: =118
+                                  Children:
+                                    - Rectangle3_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =RGBA(255, 0, 0, 1)
+                                          Height: =Parent.TemplateHeight - Separator3_1.Height
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =6
+                                    - BadgeCanvas2_1:
+                                        Control: Badge@0.0.24
+                                        Properties:
+                                          Appearance: ='BadgeCanvas.Appearance'.Filled
+                                          Content: |+
+                                            =Switch(
+                                                LookUp(
+                                                    colTblMaintenanceOrder,
+                                                    maintenanceorder_no = ThisItem.maintenanceorder_no
+                                                ).maintenance_type.Value,
+                                                "YPM1", "PM",
+                                                "YCM1", "CM",
+                                                "N/A" // Fallback if it is blank or a different value
+                                            )
+
+                                          Font: =Font.'Lato Black'
+                                          FontSize: =16
+                                          Height: =35
+                                          Shape: ='BadgeCanvas.Shape'.Circular
+                                          ThemeColor: |+
+                                            =Switch(
+                                                LookUp(
+                                                    colTblMaintenanceOrder,
+                                                    maintenanceorder_no = ThisItem.maintenanceorder_no
+                                                ).maintenance_type.Value,
+                                                "YPM1", 'BadgeCanvas.ThemeColor'.Brand,
+                                                "YCM1", 'BadgeCanvas.ThemeColor'.Important,
+                                                'BadgeCanvas.ThemeColor'.Subtle 
+                                            )
+
+                                          Width: =60
+                                          X: =104
+                                          Y: =14
+                                    - Subtitle3_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =29
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: |-
+                                            =//Text(Value(ThisItem.maintenanceorder_no.Value), "0")
+                                            ThisItem.maintenanceorder_no
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =152
+                                          X: =173
+                                          Y: =14
+                                    - Body1_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.Lato
+                                          Height: =22
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          Text: =Text(LookUp(tbl_maintenance_order,maintenanceorder_no = ThisItem.maintenanceorder_no,functional_location))
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =314
+                                          X: =173
+                                          Y: =36
+                                    - Separator3_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =8
+                                          OnSelect: =Select(Parent)
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - Self.Height
+                                    - Button2_2:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =RGBA(52, 31, 151, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(52, 31, 151, 1)
+                                          Font: =Font.Lato
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =50
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =Set(varSelectedTask, ThisItem);
+                                            Navigate(TASK_VIEW, ScreenTransition.Fade);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          RadiusBottomLeft: =50
+                                          RadiusBottomRight: =50
+                                          RadiusTopLeft: =50
+                                          RadiusTopRight: =50
+                                          Size: =20
+                                          Text: ="❯"
+                                          Width: =50
+                                          X: =1130
+                                          Y: =19
+                                    - Body1_5:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.Lato
+                                          Height: =25
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          Text: |
+                                            =With(
+                                                {
+                                                    ops:
+                                                        IfError(
+                                                            ParseJSON(
+                                                                Substitute(
+                                                                    LookUp(
+                                                                        tbl_maintenance_order,
+                                                                        maintenanceorder_no = ThisItem.maintenanceorder_no,
+                                                                        operation_shorttext
+                                                                    ),
+                                                                    "'",
+                                                                    """"
+                                                                )
+                                                            ),
+                                                            Blank()
+                                                        )
+                                                },
+                                                If(
+                                                    IsBlank(ops) || CountRows(ops) = 0,
+                                                    Blank(),
+                                                    IfError(
+                                                        Text( First(ops).operation_text ),
+                                                        Blank()
+                                                    )
+                                                )
+                                            )
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =374
+                                          X: =179
+                                          Y: =65
+                                    - Body1_10:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.Lato
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =25
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Text: =ThisItem.ID
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =40
+                                          X: =33
+                                          Y: =18
+                                    - Body1_11:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.'Lato Black'
+                                          Height: =22
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Text(LookUp(tbl_maintenance_order,maintenanceorder_no = ThisItem.maintenanceorder_no, date_opened))
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =110
+                                          X: =521
+                                          Y: =28
+                                    - TextCanvas17:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: |-
+                                            =Switch(
+                                                ThisItem.status.Value,
+                                                "Submitted", Color.Blue,
+                                                "Processing", Color.DarkOrange,
+                                                "Closed", Color.Green,
+                                                Color.Black
+                                            )
+                                          Font: =Font.'Lato Black'
+                                          Height: =28
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =18
+                                          Text: |
+                                            =If(
+                                                IsBlank(ThisItem.status),
+                                                "NEW",
+                                                Upper(ThisItem.status.Value)
+                                            )
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =132
+                                          X: =957
+                                          Y: =28
+                                    - Body1_25:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.'Lato Black'
+                                          Height: =22
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: = Text(ThisItem.start_date, "dd/mm/yyyy hh:mm AM/PM")
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =110
+                                          X: =653
+                                          Y: =19
+                                    - Body1_26:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.'Lato Black'
+                                          Height: =22
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: = Text(ThisItem.end_date, "dd/mm/yyyy hh:mm AM/PM")
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =110
+                                          X: =803
+                                          Y: =19
+                              - Container21_2:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    BorderColor: =RGBA(247, 246, 246, 1)
+                                    BorderThickness: =1
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(247, 246, 246, 1)
+                                    Height: =49
+                                    RadiusBottomLeft: =20
+                                    RadiusBottomRight: =20
+                                    RadiusTopLeft: =20
+                                    RadiusTopRight: =20
+                                    Width: =1195
+                                    X: =19
+                                    Y: =61
+                                  Children:
+                                    - TextCanvas2_31:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =28
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Work Order No."
+                                          Width: =200
+                                          X: =172
+                                          Y: =10
+                                    - TextCanvas2_32:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="#"
+                                          Width: =57
+                                          X: =10
+                                          Y: =10
+                                    - TextCanvas2_40:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =35
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Task Status"
+                                          Width: =119
+                                          X: =972
+                                          Y: =7
+                                    - TextCanvas2_42:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="View"
+                                          Width: =70
+                                          X: =1119
+                                          Y: =10
+                                    - TextCanvas2_43:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =28
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Order Date"
+                                          Width: =108
+                                          X: =518
+                                          Y: =10
+                                    - TextCanvas2_119:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =42
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Maint. Start"
+                                          Width: =130
+                                          X: =654
+                                          Y: =10
+                                    - TextCanvas2_126:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Font: =Font.'Lato Black'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =35
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Maint. End"
+                                          Width: =130
+                                          X: =813
+                                          Y: =10
+                              - SearchContainer_8:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    BorderColor: =RGBA(245, 245, 245, 1)
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =48
+                                    RadiusBottomLeft: =35
+                                    RadiusBottomRight: =35
+                                    RadiusTopLeft: =35
+                                    RadiusTopRight: =35
+                                    Width: =706
+                                    X: =528
+                                    Y: =9
+                                  Children:
+                                    - ddSortOrder_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(166, 166, 166, 1)
+                                          ChevronBackground: =RGBA(166, 166, 166, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =RGBA(166, 166, 166, 1)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =
+                                          Font: =Font.Lato
+                                          Height: =32
+                                          HoverFill: =RGBA(255, 255, 255, 1)
+                                          Items: =["DESC","ASC"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(166, 166, 166, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(166, 166, 166, 1)
+                                          Width: =100
+                                          X: =263
+                                          Y: =7
+                                    - Dismiss_5:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          BorderRadius: =35
+                                          FontColor: =RGBA(0, 0, 0, 1)
+                                          Height: =30
+                                          Icon: ="Dismiss"
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          OnSelect: =Reset(txtWorkOrderListSearch_3); Set(varSearchTerm, "")
+                                          Text: =
+                                          Visible: '=!IsBlank(txtWorkOrderListSearch_3.Text)	'
+                                          Width: =30
+                                          X: =442
+                                          Y: =8
+                                    - txtWorkOrderListSearch_3:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(166, 166, 166, 1)
+                                          Default: =""
+                                          Font: =Font.Lato
+                                          Height: =32
+                                          HintText: ="Enter your search here"
+                                          HoverBorderColor: =RGBA(166, 166, 166, 1)
+                                          HoverFill: =RGBA(255, 255, 255, 1)
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =308
+                                          X: =380
+                                          Y: =7
+                                    - ddStatusSort_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(166, 166, 166, 1)
+                                          ChevronBackground: =RGBA(166, 166, 166, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =RGBA(122, 138, 143, 1)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: ="ALL"
+                                          Font: =Font.Lato
+                                          Height: =32
+                                          HoverFill: =RGBA(255, 255, 255, 1)
+                                          Items: |-
+                                            =SortByColumns(
+                                                ref_workorder_status,
+                                                "ID",
+                                                SortOrder.Ascending
+                                            )
+                                          Items.Value: =code_name
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(255, 255, 255, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(166, 166, 166, 1)
+                                          Width: =100
+                                          X: =92
+                                          Y: =7
+                                    - TextCanvas2_24:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Font: =Font.Lato
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Status :"
+                                          Width: =79
+                                          X: =14
+                                          Y: =6
+                                    - TextCanvas2_41:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Font: =Font.Lato
+                                          Height: =31
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Size: =20
+                                          Text: ="Sort :"
+                                          Width: =66
+                                          X: =197
+                                          Y: =8
+      - timerOfflineTaskList:
+          Control: Timer@2.1.0
+          Properties:
+            AutoStart: =true
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =5000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =SyncTick();
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Repeat: =true
+            Visible: =false
+            X: =200
+            Y: =35

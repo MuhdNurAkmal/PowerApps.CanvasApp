@@ -1,0 +1,22 @@
+SVG_ICON As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =640
+    IconColor: ="Text"
+    IconName: ="Text"
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    SVG_1 As image:
+        BorderColor: =RGBA(0, 0, 0, 1)
+        Height: =Parent.Height
+        Image: |-
+            ="data:image/svg+xml;utf8," & Substitute(
+                EncodeUrl(SVG_ICON.IconName),
+                "%7Bcolor%7D",
+                SVG_ICON.IconColor
+            )
+        Width: =Parent.Width
+        ZIndex: =1
+

@@ -1,0 +1,444 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  DASHBOARD_MAIN:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - Main-Container:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_21:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =varIsOffline
+                  varUserDepartment: =varUserRecord.department.Value
+                  varUserRole: =varUserRecord.role.Value
+            - Content:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_DASHBOARD:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =AUDITTRAIL_LIST
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: =DASHBOARD_MAIN
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: |
+                          =NOTIFICATION_LIST
+                        ParentScreen: =
+                        ParentScreen2: =
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =App.ActiveScreen
+                        UserMenu: =USER_LIST
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =WORKORDER_LIST_SV
+                        dataMenu: =colMenu
+                  - Dashboard-Content:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =DropShadow.None
+                        FillPortions: =8
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Title-Container:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =50
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =0
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =Parent.Width
+                            Children:
+                              - txtTitle_dashboard:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(47, 53, 66, 1)
+                                    Height: =42
+                                    Size: =30
+                                    Text: ="Dashboard"
+                                    Width: =539
+                                    Y: =4
+                        - Progress-Container:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              FillPortions: =0
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =20
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =10
+                              PaddingRight: =10
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              Width: =Parent.Width
+                            Children:
+                              - CARDSTAT_TWO_COL_NewNotification:
+                                  Control: CanvasComponent
+                                  ComponentName: CARDSTAT_TWO_COL
+                                  Properties:
+                                    BgColor: =RGBA(52, 31, 151, 1)
+                                    Height: =140
+                                    IconSVG: ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M18.7491 9V9.7041C18.7491 10.5491 18.9903 11.3752 19.4422 12.0782L20.5496 13.8012C21.5612 15.3749 20.789 17.5139 19.0296 18.0116C14.4273 19.3134 9.57274 19.3134 4.97036 18.0116C3.21105 17.5139 2.43882 15.3749 3.45036 13.8012L4.5578 12.0782C5.00972 11.3752 5.25087 10.5491 5.25087 9.7041V9C5.25087 5.13401 8.27256 2 12 2C15.7274 2 18.7491 5.13401 18.7491 9Z"" fill=""#ffffff""></path> <path d=""M7.24316 18.5454C7.8941 20.5506 9.77767 22.0002 11.9998 22.0002C14.222 22.0002 16.1055 20.5506 16.7565 18.5454C13.611 19.1357 10.3886 19.1357 7.24316 18.5454Z"" fill=""#ffffff""></path> </g></svg>"
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    NavigateColor1: =RGBA(255, 255, 255, 1)
+                                    NavigateColor2: =RGBA(255, 255, 255, 1)
+                                    NavigateCount1: ="0"
+                                    NavigateCount2: ="10"
+                                    NavigateFIll1: =RGBA(0, 0, 0, 0)
+                                    NavigateFill2: =RGBA(0, 0, 0, 0)
+                                    NavigateText1: =App.ActiveScreen
+                                    NavigateText2: =App.ActiveScreen
+                                    NavigateTitle1: ="CM"
+                                    NavigateTitle2: ="PM"
+                                    Title: ="New Work Order"
+                                    TitleColor: =RGBA(255, 255, 255, 1)
+                                    Width: =380
+                              - CARDSTAT_TWO_COL_1:
+                                  Control: CanvasComponent
+                                  ComponentName: CARDSTAT_TWO_COL
+                                  Properties:
+                                    BgColor: =RGBA(243, 156, 18, 1)
+                                    Height: =140
+                                    IconSVG: ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M16.1569 3.80211L16.8431 4.20846C18.8718 5.40987 19.8862 6.01057 20.4431 7C21 7.98943 21 9.19084 21 11.5937V12.4063C21 14.8092 21 16.0106 20.4431 17C19.8862 17.9894 18.8718 18.5901 16.8431 19.7915L16.1569 20.1979C14.1282 21.3993 13.1138 22 12 22C10.8862 22 9.8718 21.3993 7.84308 20.1979L7.15692 19.7915C5.1282 18.5901 4.11384 17.9894 3.55692 17C3 16.0106 3 14.8092 3 12.4063V11.5937C3 9.19084 3 7.98943 3.55692 7C4.11384 6.01057 5.1282 5.40987 7.15692 4.20846L7.84308 3.80211C9.8718 2.6007 10.8862 2 12 2C13.1138 2 14.1282 2.6007 16.1569 3.80211Z"" fill=""#ffffff""></path> <path d=""M12 6.25C12.4142 6.25 12.75 6.58579 12.75 7V13C12.75 13.4142 12.4142 13.75 12 13.75C11.5858 13.75 11.25 13.4142 11.25 13V7C11.25 6.58579 11.5858 6.25 12 6.25Z"" fill=""#ffffff""></path> <path d=""M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z"" fill=""#ffffff""></path> </g></svg>"
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    NavigateColor1: =RGBA(255, 255, 255, 1)
+                                    NavigateColor2: =RGBA(255, 255, 255, 1)
+                                    NavigateCount1: ="100"
+                                    NavigateCount2: ="100"
+                                    NavigateFIll1: =RGBA(0, 0, 0, 0)
+                                    NavigateFill2: =RGBA(0, 0, 0, 0)
+                                    NavigateText1: =App.ActiveScreen
+                                    NavigateText2: =App.ActiveScreen
+                                    NavigateTitle1: ="CM"
+                                    NavigateTitle2: ="PM"
+                                    Title: ="Process Work Order"
+                                    TitleColor: =RGBA(255, 255, 255, 1)
+                                    Width: =380
+                              - CARDSTAT_TWO_COL_2:
+                                  Control: CanvasComponent
+                                  ComponentName: CARDSTAT_TWO_COL
+                                  Properties:
+                                    BgColor: =RGBA(39, 174, 96, 1)
+                                    Height: =140
+                                    IconSVG: ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path fill-rule=""evenodd"" clip-rule=""evenodd"" d=""M2.54497 8.73005C2 9.79961 2 11.1997 2 14C2 16.8003 2 18.2004 2.54497 19.27C3.02433 20.2108 3.78924 20.9757 4.73005 21.455C5.79961 22 7.19974 22 10 22H14C16.8003 22 18.2004 22 19.27 21.455C20.2108 20.9757 20.9757 20.2108 21.455 19.27C22 18.2004 22 16.8003 22 14C22 11.1997 22 9.79961 21.455 8.73005C20.9757 7.78924 20.2108 7.02433 19.27 6.54497C18.2004 6 16.8003 6 14 6H10C7.19974 6 5.79961 6 4.73005 6.54497C3.78924 7.02433 3.02433 7.78924 2.54497 8.73005ZM15.0595 12.4995C15.3353 12.1905 15.3085 11.7164 14.9995 11.4406C14.6905 11.1647 14.2164 11.1915 13.9406 11.5005L10.9286 14.8739L10.0595 13.9005C9.78359 13.5915 9.30947 13.5647 9.0005 13.8406C8.69152 14.1164 8.66468 14.5905 8.94055 14.8995L10.3691 16.4995C10.5114 16.6589 10.7149 16.75 10.9286 16.75C11.1422 16.75 11.3457 16.6589 11.488 16.4995L15.0595 12.4995Z"" fill=""#ffffff""></path> <path opacity=""0.5"" d=""M11.9993 2C16.7133 2 19.0704 2 20.5348 3.46447C21.2923 4.22195 21.658 5.21824 21.8345 6.65598V10H2.16406V6.65598C2.3406 5.21824 2.70628 4.22195 3.46377 3.46447C4.92823 2 7.28525 2 11.9993 2Z"" fill=""#ffffff""></path> </g></svg>"
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    NavigateColor1: =RGBA(255, 255, 255, 1)
+                                    NavigateColor2: =RGBA(255, 255, 255, 1)
+                                    NavigateCount1: '=50 '
+                                    NavigateCount2: =50
+                                    NavigateFIll1: =RGBA(0, 0, 0, 0)
+                                    NavigateFill2: =RGBA(0, 0, 0, 0)
+                                    NavigateText1: =App.ActiveScreen
+                                    NavigateText2: =App.ActiveScreen
+                                    NavigateTitle1: ="CM"
+                                    NavigateTitle2: ="PM"
+                                    Title: ="Close Work Order"
+                                    TitleColor: =RGBA(255, 255, 255, 1)
+                                    Width: =380
+                        - Task-Container:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =10
+                              PaddingRight: =10
+                              RadiusBottomLeft: =35
+                              RadiusBottomRight: =35
+                              RadiusTopLeft: =35
+                              RadiusTopRight: =35
+                              X: =40
+                              Y: =40
+                            Children:
+                              - Task-List:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =App.Theme.Colors.Darker10
+                                    Height: =275
+                                    Items: =Filter(tbl_mrl_workorder_assign, technician.Id = varUserRecord.ID)
+                                    Width: =1180
+                                    X: =32
+                                    Y: =76
+                                  Children:
+                                    - Title2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(50, 49, 48, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =27
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Text(Value(ThisItem.workorder.Value), "0")
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =912
+                                          X: =144
+                                          Y: =20
+                                    - Subtitle3:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =Self.Size * 1.8
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          Text: =Text(LookUp(tbl_mrl_workorder,workorder_no=ThisItem.workorder.Value,functional_location))
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =Title2.Width
+                                          X: =Title2.X
+                                          Y: =Title2.Y + Title2.Height
+                                    - Body1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =Self.Size * 1.8
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                                          Text: |+
+                                            =With(
+                                                {
+                                                    ops:
+                                                        IfError(
+                                                            ParseJSON(
+                                                                Substitute(
+                                                                    LookUp(
+                                                                        tbl_mrl_workorder,
+                                                                        ID = ThisItem.workorder.Id,
+                                                                        operations
+                                                                    ),
+                                                                    "'",
+                                                                    """"
+                                                                )
+                                                            ),
+                                                            Blank()
+                                                        )
+                                                },
+                                                If(
+                                                    IsBlank(ops) || CountRows(ops) = 0,
+                                                    Blank(),
+                                                    IfError(
+                                                        Text( First(ops).operation_text ),
+                                                        Blank()
+                                                    )
+                                                )
+                                            )
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =Subtitle3.Width
+                                          X: =Title2.X
+                                          Y: =Subtitle3.Y + Subtitle3.Height
+                                    - Separator3:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =8
+                                          OnSelect: =Select(Parent)
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - Self.Height
+                                    - Rectangle3:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =RGBA(67, 49, 148, 1)
+                                          Height: =Parent.TemplateHeight - Separator3.Height
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =6
+                                    - BadgeCanvas2:
+                                        Control: Badge@0.0.24
+                                        Properties:
+                                          Appearance: ='BadgeCanvas.Appearance'.Filled
+                                          Content: |-
+                                            =If(
+                                                !IsBlank(
+                                                    LookUp(
+                                                        tbl_mrl_workorder,
+                                                        workorder_no = ThisItem.workorder.Value,
+                                                        maint_act_type
+                                                    )
+                                                ),
+                                                "PM",
+                                                "CM"
+                                            )
+                                          Font: =Font.'Lato Black'
+                                          FontSize: =16
+                                          Height: =35
+                                          Shape: ='BadgeCanvas.Shape'.Circular
+                                          ThemeColor: |+
+                                            =If(
+                                                !IsBlank(
+                                                    LookUp(
+                                                        tbl_mrl_workorder,
+                                                        workorder_no = ThisItem.workorder.Value,
+                                                        maint_act_type
+                                                    )
+                                                ),
+                                                'BadgeCanvas.ThemeColor'.Brand,
+                                                'BadgeCanvas.ThemeColor'.Important
+                                            )
+
+                                          Width: =76
+                                          X: =27
+                                          Y: =33
+                                    - Title2_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(50, 49, 48, 1)
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =27
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: |+
+                                            =If(
+                                                IsBlank(ThisItem.status),
+                                                "NEW",
+                                                Upper(ThisItem.status.Value)
+                                            )
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =574
+                                          X: =605
+                                          Y: =20
+                              - HeaderCard-Container:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Height: =45
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =1202
+                                    X: =10
+                                    Y: =10
+                                  Children:
+                                    - txtTaskList:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Start
+                                          Font: =Font.'Lato Black'
+                                          FontColor: =RGBA(47, 53, 66, 1)
+                                          Height: =42
+                                          Size: =30
+                                          Text: ="My Task List"
+                                          Width: =539
+                                          X: =24
+                                          Y: =3
+                                    - btnViewAll:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          Appearance: ='ButtonCanvas.Appearance'.Primary
+                                          BasePaletteColor: =RGBA(255, 0, 38, 1)
+                                          BorderRadius: =35
+                                          Font: =Font.'Lato Black'
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          Height: =42
+                                          Icon: ="ArrowRight"
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                          Layout: ='ButtonCanvas.Layout'.IconAfter
+                                          OnSelect: =Navigate(TASK_LIST,ScreenTransition.Fade)
+                                          Text: ="View All"
+                                          Width: =116
+                                          X: =1082
+                                          Y: =3

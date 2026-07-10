@@ -1,0 +1,1603 @@
+USER_LIST_1 As screen:
+    OnHidden: |-
+        =UpdateContext({isPopupAdmin:false})
+    OnVisible: |-
+        =// 1. Start the loading state
+        UpdateContext({varIsLoading: true});
+        
+        // 2. Perform the Refresh
+        Refresh(tbl_mrl_users);
+        Refresh(ref_status);
+        
+        // 3. End the loading state
+        UpdateContext({varIsLoading: false});
+
+    "'Main-Container_29' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =768
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_30 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            varUserDepartment: =varUserRecord.department.Value
+            varUserRole: =varUserRecord.role.Value
+            Visible: =true
+
+        ContentBody_16 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =2
+
+            NAVBAR_AUDITTRAIL_LIST_7 As NAVBAR:
+                AuditMenu: =AUDITTRAIL_LIST
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                DashboardMenu: |
+                    =DASHBOARD
+                dataMenu: =colMenu
+                EnableChildFocus: =true
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                NotificationMenu: =NOTIFICATION_LIST
+                ParentScreen: =
+                ParentScreen2: =
+                SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                TaskMenu: =TASK_LIST
+                TeamMenu: =TEAM_LIST
+                UserMenu: =USER_LIST_1
+                Visible: =true
+                WorkOrderMenu: =WORKORDER_LIST
+                ZIndex: =2
+
+            "'Dashboard-Content_10' As groupContainer.horizontalAutoLayoutContainer":
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                DropShadow: =DropShadow.None
+                FillPortions: =8
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGap: =10
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                ZIndex: =3
+
+                "'Title-Container_18' As groupContainer.manualLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    FillPortions: =0
+                    Height: =60
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =0
+                    LayoutMinWidth: =250
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =4
+
+                    txtTitle_dashboard_32 As Text:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =true
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(47, 53, 66, 1)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =49
+                        Size: =30
+                        TabIndex: =0
+                        Text: ="List User"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =139
+                        Wrap: =true
+                        X: =8
+                        Y: =0
+                        ZIndex: =5
+
+                    ButtonCanvas4_3 As Button:
+                        Align: =Align.Right
+                        Appearance: ='ButtonCanvas.Appearance'.Primary
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        BorderColor: =
+                        BorderRadius: =35
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =0
+                        DisplayMode: =DisplayMode.Edit
+                        Font: =Font.Lato
+                        FontColor: =
+                        FontSize: =18
+                        Height: =48
+                        Icon: ="Add"
+                        IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                        OnSelect: |-
+                            =UpdateContext({isPopupNewUser:true})
+                        Text: ="New User"
+                        Width: =140
+                        X: =1091
+                        Y: =5
+                        ZIndex: =6
+
+                    txtTittleConfigureTeam_23 As Text:
+                        Align: ="Start"
+                        AutoHeight: =false
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.Lato
+                        FontColor: =RGBA(0, 0, 0, 0.6)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =27
+                        Size: =16
+                        TabIndex: =0
+                        Text: ="Manage user profiles, department assignments, and security roles for all registered personnel."
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ='TextCanvas.Weight'.Regular
+                        Width: =876
+                        Wrap: =true
+                        X: =8
+                        Y: =33
+                        ZIndex: =9
+
+                    "'loading & spinner_2' As group":
+                        Height: =5
+                        Width: =5
+                        X: =40
+                        Y: =40
+                        ZIndex: =20
+
+                        icoRefresh_13 As icon:
+                            BorderStyle: =BorderStyle.None
+                            Color: =RGBA(166, 166, 166, 1)
+                            DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                            Height: =30
+                            Icon: =Icon.Reload
+                            OnSelect: |-
+                                =// 1. Start the loading state
+                                UpdateContext({varIsLoading: true});
+                                
+                                // 2. Perform the Refresh
+                                Refresh(tbl_mrl_users);
+                                Refresh(ref_status);
+                                
+                                // 3. End the loading state
+                                UpdateContext({varIsLoading: false});
+                                
+                                Notify("Data Refreshed", NotificationType.Success)
+                            Rotation: =
+                            Tooltip: ="Refresh Data"
+                            Visible: =If (!varIsLoading, true, false)
+                            Width: =30
+                            X: =1050
+                            Y: =15
+                            ZIndex: =7
+
+                        Spinner1_2 As Spinner:
+                            BasePaletteColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            FontColor: =
+                            Height: =30
+                            SpinnerColor: =
+                            TrackColor: =
+                            Visible: =If (!varIsLoading, false, true)
+                            Width: =30
+                            X: =1050
+                            Y: =15
+                            ZIndex: =8
+
+                "'User-Container_9' As groupContainer.manualLayoutContainer":
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    X: =40
+                    Y: =40
+                    ZIndex: =11
+
+                    SearchContainer_10 As groupContainer.manualLayoutContainer:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =48
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Width: =706
+                        X: =528
+                        Y: =9
+                        ZIndex: =12
+
+                        TextCanvas2_139 As Text:
+                            Align: ='TextCanvas.Align'.Center
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.Lato
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =32
+                            Size: =20
+                            TabIndex: =0
+                            Text: |-
+                                ="Status :"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Medium
+                            Width: =79
+                            Wrap: =true
+                            X: =14
+                            Y: =6
+                            ZIndex: =13
+
+                        ddStatusSort_5 As dropdown:
+                            BorderColor: =RGBA(166, 166, 166, 1)
+                            BorderThickness: =3
+                            ChevronBackground: =RGBA(166, 166, 166, 1)
+                            ChevronHoverBackground: =RGBA(122, 138, 143, 1)
+                            Default: ="ALL"
+                            Font: =Font.Lato
+                            Height: =32
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            Items: |-
+                                =SortByColumns(
+                                    ref_workorder_status,
+                                    "ID",
+                                    SortOrder.Ascending
+                                )
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            SelectionFill: =RGBA(166, 166, 166, 1)
+                            Width: =100
+                            X: =92
+                            Y: =7
+                            ZIndex: =14
+
+                        ddSortOrder_5 As dropdown:
+                            BorderColor: =RGBA(166, 166, 166, 1)
+                            BorderThickness: =3
+                            ChevronBackground: =RGBA(166, 166, 166, 1)
+                            ChevronHoverBackground: =RGBA(166, 166, 166, 1)
+                            Default: =
+                            Font: =Font.Lato
+                            Height: =32
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            Items: =["DESC","ASC"]
+                            PressedFill: =RGBA(166, 166, 166, 1)
+                            SelectionFill: =RGBA(166, 166, 166, 1)
+                            Width: =100
+                            X: =263
+                            Y: =7
+                            ZIndex: =15
+
+                        txtWorkOrderListSearch_5 As text:
+                            BorderColor: =RGBA(166, 166, 166, 1)
+                            BorderThickness: =3
+                            Default: =""
+                            Font: =Font.Lato
+                            Height: =32
+                            HintText: ="Enter your search here"
+                            HoverBorderColor: =RGBA(166, 166, 166, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Width: =308
+                            X: =380
+                            Y: =7
+                            ZIndex: =16
+
+                        TextCanvas2_140 As Text:
+                            Align: ='TextCanvas.Align'.Center
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.Lato
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =31
+                            Size: =20
+                            TabIndex: =0
+                            Text: |-
+                                ="Sort :"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Medium
+                            Width: =66
+                            Wrap: =true
+                            X: =197
+                            Y: =8
+                            ZIndex: =17
+
+                        Dismiss_7 As Button:
+                            AcceptsFocus: =true
+                            AccessibleLabel: =""
+                            Align: =""
+                            Appearance: ='ButtonCanvas.Appearance'.Transparent
+                            BasePaletteColor: =
+                            BorderColor: =
+                            BorderRadius: =35
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =""
+                            FontColor: =RGBA(0, 0, 0, 1)
+                            FontItalic: =false
+                            FontSize: =0
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =30
+                            Icon: ="Dismiss"
+                            IconRotation: =0
+                            IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                            Layout: ="Icon before"
+                            OnSelect: =Reset(txtWorkOrderListSearch_5); Set(varSearchTerm, "")
+                            TabIndex: =0
+                            Text: =
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =!IsBlank(txtWorkOrderListSearch_5.Text)	
+                            Width: =30
+                            X: =442
+                            Y: =8
+                            ZIndex: =18
+
+                    Container21_6 As groupContainer.manualLayoutContainer:
+                        BorderColor: =RGBA(247, 246, 246, 1)
+                        BorderThickness: =1
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(247, 246, 246, 1)
+                        Height: =49
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =1195
+                        X: =19
+                        Y: =61
+                        ZIndex: =19
+
+                        TextCanvas2_141 As Text:
+                            Align: ='TextCanvas.Align'.Center
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =32
+                            Size: =20
+                            TabIndex: =0
+                            Text: |-
+                                ="#"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Bold
+                            Width: =57
+                            Wrap: =true
+                            X: =0
+                            Y: =10
+                            ZIndex: =20
+
+                        TextCanvas2_142 As Text:
+                            Align: ='TextCanvas.Align'.Start
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =32
+                            Size: =20
+                            TabIndex: =0
+                            Text: ="Name / Email /Department"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Bold
+                            Width: =363
+                            Wrap: =true
+                            X: =76
+                            Y: =10
+                            ZIndex: =21
+
+                        TextCanvas2_143 As Text:
+                            Align: ='TextCanvas.Align'.Start
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =32
+                            Size: =20
+                            TabIndex: =0
+                            Text: ="Roles"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Bold
+                            Width: =55
+                            Wrap: =true
+                            X: =779
+                            Y: =10
+                            ZIndex: =22
+
+                        TextCanvas2_144 As Text:
+                            Align: ='TextCanvas.Align'.Center
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =32
+                            Size: =20
+                            TabIndex: =0
+                            Text: ="Status"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Bold
+                            Width: =131
+                            Wrap: =true
+                            X: =906
+                            Y: =10
+                            ZIndex: =23
+
+                        TextCanvas2_145 As Text:
+                            Align: ='TextCanvas.Align'.Center
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =32
+                            Size: =20
+                            TabIndex: =0
+                            Text: ="View"
+                            Tooltip: =""
+                            VerticalAlign: =VerticalAlign.Middle
+                            Visible: =true
+                            Weight: ='TextCanvas.Weight'.Bold
+                            Width: =118
+                            Wrap: =true
+                            X: =1063
+                            Y: =10
+                            ZIndex: =24
+
+                    "galUsers_1 As gallery.'BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
+                        BorderColor: =App.Theme.Colors.Darker10
+                        DelayItemLoading: =true
+                        Height: =439
+                        Items: =Filter(tbl_mrl_users, department.Value = varUserRecord.department.Value && email <> Blank())
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        ShowNavigation: =true
+                        TemplatePadding: =0
+                        TemplateSize: =85
+                        Width: =1230
+                        X: =4
+                        Y: =110
+                        ZIndex: =25
+
+                        Rectangle3_14 As rectangle:
+                            BorderColor: =RGBA(255, 0, 0, 1)
+                            Fill: =RGBA(255, 0, 0, 1)
+                            Height: =72
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =8
+                            ZIndex: =26
+
+                        Body1_9 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =26
+                            LineHeight: =1
+                            OnSelect: =Select(Parent)
+                            Overflow: =Overflow.Scroll
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =12
+                            TabIndex: =0
+                            Text: |
+                                =//Upper(Left(Office365Users.UserProfileV2(ThisItem.email).givenName, 1))
+                                
+                                //Lower(Mid(Office365Users.UserProfileV2(ThisItem.email).givenName, 2, Len(Office365Users.UserProfileV2(ThisItem.email).givenName) - 1))
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =409
+                            X: =107
+                            Y: =3
+                            ZIndex: =27
+
+                        btnUserView_1 As button:
+                            BorderColor: =RGBA(52, 31, 151, 1)
+                            Fill: =RGBA(52, 31, 151, 1)
+                            Font: =Font.Lato
+                            FontWeight: =FontWeight.Normal
+                            Height: =50
+                            OnSelect: |-
+                                =Set(varSelectedUser,ThisItem);
+                                Navigate(USER_VIEW,ScreenTransition.Fade)
+                            RadiusBottomLeft: =50
+                            RadiusBottomRight: =50
+                            RadiusTopLeft: =50
+                            RadiusTopRight: =50
+                            Size: =20
+                            Text: ="➔"
+                            Width: =50
+                            X: =1114
+                            Y: =9
+                            ZIndex: =28
+
+                        Title9_30 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Font: =Font.'Lato Black'
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =24
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: |-
+                                =With(
+                                    { 
+                                        // Get the email from your users table
+                                        TargetEmail: LookUp(tbl_mrl_users, email = ThisItem.email).email 
+                                    },
+                                    If(
+                                        !IsBlank(TargetEmail) && IsMatch(TargetEmail, Match.Email),
+                                        Proper(Office365Users.UserProfileV2(TargetEmail).displayName),
+                                        // Fallback if the email is missing or API fails
+                                        Blank() 
+                                    )
+                                )
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =405
+                            X: =152
+                            Y: =12
+                            ZIndex: =29
+
+                        Body1_27 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =
+                            Height: =39
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.role.Value
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =131
+                            X: =756
+                            Y: =16
+                            ZIndex: =30
+
+                        Body1_29 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: |
+                                =Switch(
+                                    ThisItem.status.Value,
+                                    "Active", Color.Green,
+                                    "Deactivate", Color.Tomato,
+                                    Color.Black
+                                )
+                            Font: =Font.'Lato Black'
+                            FontWeight: =FontWeight.Bold
+                            Height: =39
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.status.Value
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =131
+                            X: =924
+                            Y: =16
+                            ZIndex: =31
+
+                        "'User-Image_13' As Avatar":
+                            AccessibleLabel: =""
+                            Appearance: ='Avatar.Appearance'.Brand
+                            Badge: ='Avatar.Badge'.None
+                            BasePaletteColor: =
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Font: =""
+                            FontColor: =
+                            FontItalic: =false
+                            FontSize: =0
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            FontWeight: =""
+                            Height: =54
+                            Image: =Office365Users.UserPhotoV2(ThisItem.email)
+                            Name: =
+                            OutOfOffice: =false
+                            Shape: ="Circular"
+                            TabIndex: =0
+                            Tooltip: =""
+                            Visible: =true
+                            Width: =54
+                            X: =84
+                            Y: =18
+                            ZIndex: =32
+
+                        TextCanvas7_1 As Text:
+                            AutoHeight: =false
+                            BorderColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =
+                            Height: =32
+                            Size: =16
+                            Text: =ThisItem.ID
+                            Weight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Width: =21
+                            X: =32
+                            Y: =24
+                            ZIndex: =33
+
+                        Body1_30 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =20
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =12
+                            Text: =ThisItem.email
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =405
+                            X: =152
+                            Y: =29
+                            ZIndex: =34
+
+                        Body1_31 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Font: =App.Theme.Font
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =21
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =12
+                            Text: =ThisItem.department.Value
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =113
+                            X: =152
+                            Y: =48
+                            ZIndex: =35
+
+                        Separator3_14 As rectangle:
+                            BorderColor: =RGBA(52, 31, 151, 1)
+                            BorderThickness: =1
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =1
+                            OnSelect: =Select(Parent)
+                            Visible: =false
+                            Width: =Parent.TemplateWidth
+                            Y: =75
+                            ZIndex: =36
+
+    popupNewUser_1 As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isPopupNewUser, true, false)
+        Width: =1366
+        ZIndex: =2
+
+        Container31_2 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(52, 31, 151, 1)
+            Height: =532
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =35
+            RadiusBottomRight: =35
+            RadiusTopLeft: =35
+            RadiusTopRight: =35
+            Width: =1097
+            X: =145
+            Y: =117
+            ZIndex: =37
+
+            icoClosePopup_4 As icon:
+                Color: =RGBA(255, 255, 255, 1)
+                Icon: =Icon.Cancel
+                OnSelect: |-
+                    =UpdateContext({isPopupNewUser: false})
+                Width: =32
+                X: =1046
+                Y: =4
+                ZIndex: =38
+
+            TextCanvas11_4 As Text:
+                Align: ="Start"
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =61
+                Size: =30
+                TabIndex: =0
+                Text: ="New User"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =208
+                Wrap: =true
+                X: =89
+                Y: =7
+                ZIndex: =39
+
+            Icon9_4 As icon:
+                Color: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.View
+                Height: =40
+                Icon: =Icon.AddUser
+                Width: =50
+                X: =21
+                Y: =19
+                ZIndex: =40
+
+            txtTittleConfigureTeam_24 As Text:
+                Align: ="Start"
+                AutoHeight: =false
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =27
+                Size: =16
+                TabIndex: =0
+                Text: ="Initialize a new user profile by providing personal details, assigning departmental roles, and setting system access levels"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Regular
+                Width: =876
+                Wrap: =true
+                X: =88
+                Y: =41
+                ZIndex: =41
+
+            TextCanvas12_10 As Text:
+                Align: ="Start"
+                AutoHeight: =false
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =41
+                Size: =20
+                TabIndex: =0
+                Text: ="Email *"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Semibold
+                Width: =77
+                Wrap: =true
+                X: =197
+                Y: =96
+                ZIndex: =42
+
+            "txtEmail_1 As 'Text input'":
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                BasePaletteColor: =
+                BorderColor: =RGBA(166, 166, 166, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =16
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =38
+                MaxLength: =-1
+                Mode: ="SingleLine"
+                OnChange: =false
+                Placeholder: =""
+                Required: =false
+                TabIndex: =0
+                Tooltip: =""
+                TriggerOutput: ="FocusOut"
+                Type: ="Text"
+                ValidationState: ="None"
+                Value: =""
+                Visible: =true
+                Width: =650
+                X: =289
+                Y: =99
+                ZIndex: =43
+
+            ButtonCanvas4_4 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =Align.Center
+                Appearance: ="Primary"
+                BasePaletteColor: =RGBA(8, 222, 8, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =0
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =38
+                Icon: ="Search"
+                IconRotation: =0
+                IconStyle: ="Outline"
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =// Check Exist Record
+                    If(
+                        !IsBlank(LookUp(tbl_mrl_users, email = txtEmail_1.Value)),
+                        // If Exist
+                        Notify("This email '" & txtEmail_1.Value & "' already associated with an account ",NotificationType.Error),
+                      
+                        // If Not Exist;
+                    
+                        // Check Exist in Microsoft 365
+                        IfError(
+                            Office365Users.UserProfileV2(txtEmail_1.Value).displayName,
+                    
+                            Notify("This email '" & txtEmail_1.Value & "' is not associated with a Microsoft Account.",NotificationType.Error),
+                    
+                            UpdateContext({
+                                varTempuserName:  Office365Users.UserProfileV2(txtEmail_1.Value).displayName
+                            });      
+                        )
+                        
+                    )
+                TabIndex: =0
+                Text: ="Search"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Width: =110
+                X: =971
+                Y: =99
+                ZIndex: =44
+
+            "txtName_1 As 'Text input'":
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                BasePaletteColor: =
+                BorderColor: =RGBA(166, 166, 166, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.View
+                Fill: =
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =16
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =38
+                MaxLength: =-1
+                Mode: ="SingleLine"
+                OnChange: =false
+                Placeholder: =""
+                Required: =false
+                TabIndex: =0
+                Tooltip: =""
+                TriggerOutput: ="FocusOut"
+                Type: ="Text"
+                ValidationState: ="None"
+                Value: =varTempuserName
+                Visible: =true
+                Width: =648
+                X: =289
+                Y: =203
+                ZIndex: =45
+
+            TextCanvas12_14 As Text:
+                Align: ="Start"
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =55
+                Size: =20
+                TabIndex: =0
+                Text: ="Name"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Semibold
+                Width: =64
+                Wrap: =true
+                X: =197
+                Y: =206
+                ZIndex: =46
+
+            "txtStaffID_1 As 'Text input'":
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ="FilledDarker"
+                BasePaletteColor: =
+                BorderColor: =RGBA(166, 166, 166, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =16
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =38
+                MaxLength: =-1
+                Mode: ="SingleLine"
+                OnChange: =false
+                Placeholder: =""
+                Required: =false
+                TabIndex: =0
+                Tooltip: =""
+                TriggerOutput: ="FocusOut"
+                Type: ="Text"
+                ValidationState: ="None"
+                Value: =""
+                Visible: =true
+                Width: =648
+                X: =289
+                Y: =263
+                ZIndex: =47
+
+            TextCanvas12_15 As Text:
+                Align: ="Start"
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =55
+                Size: =20
+                TabIndex: =0
+                Text: ="Consign ID / SAP ID"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Semibold
+                Width: =189
+                Wrap: =true
+                X: =78
+                Y: =268
+                ZIndex: =48
+
+            ddRoles_1 As dropdown:
+                AllowEmptySelection: =true
+                ChevronBackground: =RGBA(188, 30, 69, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(188,30,69,1), -20%)
+                Default: =Blank()
+                HoverBorderColor: =ColorFade(RGBA(188,30,69,1), -15%)
+                Items: =ref_roles
+                PressedFill: =RGBA(188, 30, 69, 1)
+                Size: =11
+                Width: =450
+                X: =289
+                Y: =323
+                ZIndex: =49
+
+            icoRefresh_14 As icon:
+                Color: =RGBA(171, 182, 196, 1)
+                DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                Height: =30
+                Icon: =Icon.Reload
+                OnSelect: =Reset(ddRoles_1)
+                Rotation: =
+                Tooltip: ="Refresh Data"
+                Visible: =If (!varIsLoading, true, false)
+                Width: =30
+                X: =756
+                Y: =328
+                ZIndex: =50
+
+            TextCanvas12_16 As Text:
+                Align: ="Start"
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =55
+                Size: =20
+                TabIndex: =0
+                Text: ="Role*"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Semibold
+                Width: =62
+                Wrap: =true
+                X: =199
+                Y: =330
+                ZIndex: =51
+
+            ddDepartments_1 As dropdown:
+                AllowEmptySelection: =true
+                ChevronBackground: =RGBA(188, 30, 69, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(188,30,69,1), -20%)
+                Default: =Blank()
+                HoverBorderColor: =ColorFade(RGBA(188,30,69,1), 15%)
+                Items: |-
+                    =AddColumns(
+                        ref_mrl_departments,
+                        DisplayLabel,
+                        Department_Code & " - " & Department_Name
+                    )
+                PressedFill: =RGBA(188, 30, 69, 1)
+                Size: =11
+                Width: =450
+                X: =288
+                Y: =385
+                ZIndex: =52
+
+            icoRefresh_15 As icon:
+                Color: =RGBA(171, 182, 196, 1)
+                DisplayMode: =If(varIsLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                Height: =30
+                Icon: =Icon.Reload
+                OnSelect: =Reset(ddRoles_1)
+                Rotation: =
+                Tooltip: ="Refresh Data"
+                Visible: =If (!varIsLoading, true, false)
+                Width: =30
+                X: =756
+                Y: =391
+                ZIndex: =53
+
+            TextCanvas12_17 As Text:
+                Align: ="Start"
+                AutoHeight: =true
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =46
+                Size: =20
+                TabIndex: =0
+                Text: ="Department *"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ='TextCanvas.Weight'.Semibold
+                Width: =133
+                Wrap: =true
+                X: =130
+                Y: =392
+                ZIndex: =54
+
+            ButtonCanvas2_32 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='ButtonCanvas.Appearance'.Primary
+                BasePaletteColor: =RGBA(189, 178, 176, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =
+                IconRotation: =0
+                IconStyle: ="Outline"
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =Reset(txtEmail_1);
+                    Reset(txtName_1);
+                    Reset(txtStaffID_1);
+                    Reset(ddRoles_1);
+                    Reset(ddDepartments_1);
+                    
+                    UpdateContext({
+                        isPopupNewUser: false,
+                        varTempuserName : Blank()
+                    })
+                TabIndex: =0
+                Text: ="Cancel"
+                Tooltip: =""
+                VerticalAlign: =VerticalAlign.Middle
+                Visible: =true
+                Width: =128
+                X: =707
+                Y: =471
+                ZIndex: =55
+
+            ButtonCanvas2_33 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='ButtonCanvas.Appearance'.Primary
+                BasePaletteColor: =RGBA(110, 110, 225, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =2
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =
+                IconRotation: =0
+                IconStyle: ="Outline"
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =  UpdateContext({
+                        isPopupConfirm: true
+                        //varIsLoading: false
+                    })
+                TabIndex: =0
+                Text: ="Save"
+                Tooltip: =""
+                VerticalAlign: =VerticalAlign.Middle
+                Visible: =true
+                Width: =237
+                X: =849
+                Y: =471
+                ZIndex: =56
+
+    popupConfirm_1 As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isPopupConfirm, true , false)
+        Width: =1366
+        ZIndex: =3
+
+        Rectangle11_5 As rectangle:
+            Fill: =RGBA(59, 53, 176, 1)
+            Height: =380
+            Width: =682
+            X: =363
+            Y: =175
+            ZIndex: =57
+
+        Icon2_12 As icon:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =38
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({
+                    isPopupConfirm: false
+                })
+            Width: =45
+            X: =988
+            Y: =192
+            ZIndex: =58
+
+        Icon6_14 As icon:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =80
+            Icon: =Icon.Warning
+            Width: =80
+            X: =662
+            Y: =216
+            ZIndex: =59
+
+        TextCanvas15_3 As Text:
+            Align: ='TextCanvas.Align'.Center
+            AutoHeight: =false
+            BorderColor: =
+            BorderStyle: =""
+            ContentLanguage: =""
+            DisplayMode: =DisplayMode.Edit
+            Fill: =
+            Font: =Font.'Lato Black'
+            FontColor: =RGBA(255, 255, 255, 1)
+            FontItalic: =false
+            FontStrikethrough: =false
+            FontUnderline: =false
+            Height: =54
+            Size: =30
+            TabIndex: =0
+            Text: ="Confirmation ?"
+            Tooltip: =""
+            VerticalAlign: =""
+            Visible: =true
+            Weight: ="Regular"
+            Width: =280
+            Wrap: =true
+            X: =564
+            Y: =305
+            ZIndex: =60
+
+        TextCanvas15_33 As Text:
+            Align: ='TextCanvas.Align'.Center
+            AutoHeight: =false
+            BorderColor: =
+            BorderStyle: =""
+            ContentLanguage: =""
+            DisplayMode: =DisplayMode.Edit
+            Fill: =
+            Font: =Font.Lato
+            FontColor: =RGBA(255, 255, 255, 1)
+            FontItalic: =false
+            FontStrikethrough: =false
+            FontUnderline: =false
+            Height: =76
+            Size: =18
+            TabIndex: =0
+            Text: ="Are you sure you want to register this user?"
+            Tooltip: =""
+            VerticalAlign: =""
+            Visible: =true
+            Weight: ="Regular"
+            Width: =466
+            Wrap: =true
+            X: =475
+            Y: =366
+            ZIndex: =61
+
+        ButtonCanvas2_34 As Button:
+            AcceptsFocus: =true
+            AccessibleLabel: =""
+            Align: =""
+            Appearance: ='ButtonCanvas.Appearance'.Primary
+            BasePaletteColor: =RGBA(189, 178, 176, 1)
+            BorderColor: =
+            BorderRadius: =10
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =2
+            ContentLanguage: =""
+            DisplayMode: =DisplayMode.Edit
+            Font: =""
+            FontColor: =
+            FontItalic: =false
+            FontSize: =18
+            FontStrikethrough: =false
+            FontUnderline: =false
+            FontWeight: =""
+            Height: =50
+            Icon: =
+            IconRotation: =0
+            IconStyle: ="Outline"
+            Layout: ="Icon before"
+            OnSelect: |+
+                =UpdateContext({
+                    isPopupConfirm: false
+                })
+                
+                
+            TabIndex: =0
+            Text: ="Cancel"
+            Tooltip: =""
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =true
+            Width: =210
+            X: =475
+            Y: =458
+            ZIndex: =62
+
+        ButtonCanvas2_35 As Button:
+            AcceptsFocus: =true
+            AccessibleLabel: =""
+            Align: =""
+            Appearance: ="Primary"
+            BasePaletteColor: =RGBA(8, 222, 8, 1)
+            BorderColor: =
+            BorderRadius: =10
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =2
+            ContentLanguage: =""
+            DisplayMode: |-
+                =//DisplayMode.Edit
+                
+                If(varSelectedTask.status.Value = "Submitted" || varSelectedTask.status.Value = "Closed", DisplayMode.Disabled, DisplayMode.Edit)
+            Font: =""
+            FontColor: =RGBA(255, 255, 255, 1)
+            FontItalic: =false
+            FontSize: =18
+            FontStrikethrough: =false
+            FontUnderline: =false
+            FontWeight: =""
+            Height: =50
+            Icon: =
+            IconRotation: =0
+            IconStyle: ='ButtonCanvas.IconStyle'.Filled
+            Layout: ="Icon before"
+            OnSelect: |-
+                =// 1. Check if mandatory fields are filled
+                If(
+                    IsBlank(txtEmail_1.Value) || IsBlank(ddRoles_1.Selected) || IsBlank(ddDepartments_1.Selected),
+                    
+                    // IF INVALID: Show warning
+                    Notify("Please fill in all mandatory fields (Email, Role, and Department).", NotificationType.Warning);
+                    UpdateContext({isPopupConfirm: false});,
+                
+                    // IF VALID: Proceed with Patch
+                    UpdateContext({ varIsLoading: true }); // Optional: trigger your spinning icon
+                    
+                    IfError(
+                        Patch(
+                            tbl_mrl_users,
+                            Defaults(tbl_mrl_users),
+                            {
+                                email: Trim(txtEmail_1.Value),
+                                // Staff ID is patched only if not blank, otherwise sends blank
+                                mrl_employee_id: If(!IsBlank(txtStaffID_1.Value), Trim(txtStaffID_1.Value), Blank()),
+                                role: { 
+                                    Id: ddRoles_1.Selected.ID, 
+                                    Value: ddRoles_1.Selected.role_name 
+                                },
+                                department: { 
+                                    Id: ddDepartments_1.Selected.ID, 
+                                    Value: ddDepartments_1.Selected.Department_Code 
+                                },
+                                status: { 
+                                    Id: 1, 
+                                    Value: "Active" 
+                                }
+                            }
+                        ),
+                        
+                        // Error Handling
+                        Notify("Error: Could not create user. The email might already exist.", NotificationType.Error),
+                        
+                        // Success Actions
+                        Notify("User account '" & varTempuserName & "' created successfully.", NotificationType.Success);
+                        
+                        // Clean up UI
+                        Reset(txtEmail_1);
+                        Reset(txtName_1);
+                        Reset(txtStaffID_1);
+                        Reset(ddRoles_1);
+                        Reset(ddDepartments_1);
+                
+                        UpdateContext({
+                            isPopupNewUser: false,
+                            isPopupConfirm: false,
+                            varTempuserName: Blank(),
+                            varIsLoading: false
+                        })
+                    )
+                )
+            TabIndex: =0
+            Text: ="Register"
+            Tooltip: =""
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =true
+            Width: =210
+            X: =731
+            Y: =458
+            ZIndex: =63
+

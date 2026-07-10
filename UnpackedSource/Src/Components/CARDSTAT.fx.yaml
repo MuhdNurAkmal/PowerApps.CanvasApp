@@ -1,0 +1,150 @@
+CARDSTAT As CanvasComponent:
+    BgColor: =RGBA(255, 255, 10, 10)
+    Count: ="Text"
+    CountColor: =RGBA(0, 0, 0, 1)
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =140
+    IconColor: ="Text"
+    IconName: ="Text"
+    Title: ="Text"
+    TitleColor: =RGBA(0, 0, 0, 1)
+    Width: =600
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    card As groupContainer.manualLayoutContainer:
+        Fill: =CARDSTAT.BgColor
+        Height: =140
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Width: =Parent.Width
+        ZIndex: =1
+
+        Container11 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Height: =120
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMode: =LayoutMode.Auto
+            X: =10
+            Y: =10
+            ZIndex: =1
+
+            Container12 As groupContainer.manualLayoutContainer:
+                DropShadow: =DropShadow.None
+                FillPortions: =0
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =30
+                Width: =100
+                ZIndex: =1
+
+                SVG As image:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Height: =78
+                    Image: |-
+                        ="data:image/svg+xml;utf8," & Substitute(
+                            EncodeUrl(CARDSTAT.IconName),
+                            "%7Bcolor%7D",
+                            CARDSTAT.IconColor
+                        )
+                    Width: =73
+                    X: =15
+                    Y: =21
+                    ZIndex: =1
+
+            Container10 As groupContainer.horizontalAutoLayoutContainer:
+                DropShadow: =DropShadow.None
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                X: =40
+                Y: =40
+                ZIndex: =2
+
+                Container13 As groupContainer.manualLayoutContainer:
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =1
+
+                    Count As Text:
+                        Align: ="Start"
+                        AutoHeight: =true
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Segoe UI'
+                        FontColor: =CARDSTAT.CountColor
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =90
+                        Size: =60
+                        TabIndex: =0
+                        Text: =CARDSTAT.Count
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                        Wrap: =true
+                        X: =12
+                        Y: =24
+                        ZIndex: =1
+
+                    Titile As Text:
+                        Align: ="Start"
+                        AutoHeight: =false
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.Lato
+                        FontColor: =CARDSTAT.TitleColor
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =30
+                        Size: =20
+                        TabIndex: =0
+                        Text: =CARDSTAT.Title
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =227
+                        Wrap: =true
+                        X: =12
+                        Y: =10
+                        ZIndex: =2
+

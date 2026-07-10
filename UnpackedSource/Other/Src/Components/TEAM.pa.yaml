@@ -1,0 +1,56 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  TEAM:
+    DefinitionType: CanvasComponent
+    Properties:
+      Height: =500
+      Width: =800
+    Children:
+      - Container1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Height: =500
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =800
+          Children:
+            - Container8:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =340
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Width: =730
+                  X: =40
+                  Y: =117
+            - DropdownCanvas1:
+                Control: DropDown@0.0.45
+                Properties:
+                  BorderRadius: =20
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Items: =tbl_notifications
+                  X: =148
+                  Y: =54
+            - Label1:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Text: ="Team :"
+                  Width: =93
+                  X: =55
+                  Y: =50

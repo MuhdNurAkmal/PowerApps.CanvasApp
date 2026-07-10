@@ -1,0 +1,1327 @@
+TASK_CHECKLIST_CM As screen:
+    OnVisible: |-
+        =/*
+        //If(
+            // condition
+            !IsBlank(varSelectedWorkOrder),
+        
+            // true
+            Set(
+                varSelectedTemplate,
+                LookUp(
+                    ref_template,
+                    ID = varSelectedWorkOrder.ID
+                ).TemplateJson
+            ),
+        
+            // false
+            If(
+                // condition
+                !IsBlank(varSelectedTask),
+        
+                // true
+                Set(
+                    varSelectedTemplate,
+                    LookUp(
+                        ref_template,
+                        ID = varSelectedTask.ID
+                    ).TemplateJson
+                )
+            )
+        )
+        */
+        
+        
+        //Set(varDrpCarPosition, LookUp(colRefCarPosition, car_position = "ECA1"));
+        //Reset(drpCarPosition);
+        
+        
+        
+        
+        If(
+            !varIsOffline,
+        
+            // ONLINE: load live + cache
+            ClearCollect(
+                colTblMrlWorkorderAssign,
+                Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+            );
+            IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
+            
+            
+            If(
+                varIsNewEntry,
+                // This clears the dropdowns only when starting new maintenance
+                Reset(ddStation);
+                Reset(ddSystem);
+                Reset(ddSubSystem);
+                Reset(ddSubSubSystem);
+                Reset(ddRootCause);
+                Reset(txtRemark);
+                Reset(dtPlanStartDate);
+                Reset(dtPlanEndDate);
+                
+                // Clear RSDM specific fields
+                If(varUserRecord.department.Value = "RSDM", 
+                    Reset(ddTrainNo); 
+                    Reset(ddCarPosition)
+                )
+            )
+            ,
+        
+            // OFFLINE: load from cache (Clear first — LoadData appends!)
+            Clear(colTblMrlWorkorderAssign);
+            IfError(LoadData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache", true), Blank())
+        );
+
+    "'Main-Container_8' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =768
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_8 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            varIsOffline: =varIsOffline
+            varUserDepartment: =varUserRecord.department.Value
+            varUserRole: =varUserRecord.role.Value
+            Visible: =true
+
+        ContentBody_8 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =5
+
+            NAVBAR_CHECKLIST_1 As NAVBAR:
+                AuditMenu: =AUDITTRAIL_LIST
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                DashboardMenu: =DASHBOARD
+                dataMenu: =colMenu
+                EnableChildFocus: =true
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                NotificationMenu: =NOTIFICATION_LIST
+                ParentScreen: =TASK_LIST
+                ParentScreen2: =NOTIFICATION_LIST
+                SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                TaskMenu: =TASK_LIST
+                TeamMenu: =TEAM_LIST
+                UserMenu: =USER_LIST
+                Visible: =true
+                WorkOrderMenu: =WORKORDER_LIST
+
+            ContainerMain_6 As groupContainer.manualLayoutContainer:
+                DropShadow: =DropShadow.None
+                Fill: =RGBA(245, 245, 245, 1)
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+                ContainerAction_3 As groupContainer.manualLayoutContainer:
+                    DropShadow: =DropShadow.None
+                    Height: =65
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Width: =1234
+                    Y: =576
+                    ZIndex: =1
+
+                    Button2_14 As button:
+                        BorderColor: =RGBA(52, 31, 151, 1)
+                        Fill: =RGBA(52, 31, 151, 1)
+                        Font: =Font.Lato
+                        FontWeight: =FontWeight.Normal
+                        Height: =50
+                        OnSelect: |
+                            =
+                            Navigate(previousScreen,ScreenTransition.Fade) &&
+                            Reset(ddSystem)
+                        RadiusBottomLeft: =50
+                        RadiusBottomRight: =50
+                        RadiusTopLeft: =50
+                        RadiusTopRight: =50
+                        Size: =20
+                        Text: ="❮"
+                        Width: =50
+                        X: =3
+                        Y: =10
+                        ZIndex: =11
+
+                    btnSubmitCM As modernButton:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        BorderStyle: =""
+                        Color: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Lato Black'
+                        FontWeight: =""
+                        Height: =42
+                        Icon: ="ArrowRight"
+                        IconStyle: =IconStyle.Filled
+                        Layout: =ButtonLayout.IconAfter
+                        OnSelect: |-
+                            =UpdateContext({ isPopUpCMTechConfirmClose : true });
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =16
+                        Text: ="Submit"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Visible: |-
+                            =//If(previousScreen = WORKORDER_VIEW_ASSIGNED_TECHNICIAN, true, false)
+                            // The button only shows if the user is a Technician AND they clicked "Start Maintenance"
+                            varUserRecord.role.Value = "Technician" && varIsNewEntry = true
+                        Width: =127
+                        X: =1106
+                        Y: =13
+                        ZIndex: =12
+
+                    btnSaveCM As modernButton:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderStyle: =""
+                        Color: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Lato Black'
+                        FontWeight: =""
+                        Height: =42
+                        Icon: ="Save"
+                        IconStyle: =IconStyle.Filled
+                        OnSelect: |-
+                            =Notify(varSelectedTask.maintenanceorder_no);
+                            
+                            /*Set(varCMPayload, {
+                                maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
+                                station_id: ddStation.Selected.ID,
+                                station_value: ddStation.Selected.station_name,
+                                system_id: LookUp(colRefSystem, system_name = ddSystem.Selected.Value).ID,
+                                system_value: ddSystem.Selected.Value,
+                                subsystem_id: LookUp(colRefSubsystem, subsystem_name = ddSubSystem.Selected.Value).ID,
+                                subsystem_value: ddSubSystem.Selected.Value,
+                                sub_subsystem_id: LookUp(colRefSubSubsystem, sub_subsystem_name = ddSubSubSystem.Selected.Value).ID,
+                                sub_subsystem_value: ddSubSubSystem.Selected.Value,
+                                root_cause_id: LookUp(colRefRootCause, root_cause_name = ddRootCause.Selected.Value).ID,
+                                root_cause_value: ddRootCause.Selected.Value,
+                                plan_start_date: dtPlanStartDate.SelectedDate,
+                                plan_end_date: dtPlanEndDate.SelectedDate,
+                                remarks: txtRemark.Text,
+                                is_rsdm: varUserRecord.department.Value = "RSDM",
+                                train_no_id: If(varUserRecord.department.Value = "RSDM", ddTrainNo.Selected.ID),
+                                train_no_value: If(varUserRecord.department.Value = "RSDM", ddTrainNo.Selected.train_no),
+                                car_position_id: If(varUserRecord.department.Value = "RSDM", ddCarPosition.Selected.ID),
+                                car_position_value: If(varUserRecord.department.Value = "RSDM", ddCarPosition.Selected.car_position),
+                                assign_id: varSelectedTask.ID,
+                                assign_mo_no: varSelectedTask.maintenanceorder_no,
+                                user_email: varUserRecord.email,
+                                user_role: varUserRecord.role.Value,
+                                user_department: varUserRecord.department.Value,
+                                submitted_at: Now(),
+                                location_longitude: Location.Longitude,
+                                location_latitude: Location.Latitude
+                            });
+                            */
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =16
+                        Text: ="Save"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Visible: |-
+                            =//If(previousScreen = WORKORDER_VIEW_ASSIGNED_TECHNICIAN, true, false)
+                            // The button only shows if the user is a Technician AND they clicked "Start Maintenance"
+                            varUserRecord.role.Value = "Technician" && varIsNewEntry = true
+                        Width: =116
+                        X: =978
+                        Y: =13
+                        ZIndex: =69
+
+                Container7_4 As groupContainer.manualLayoutContainer:
+                    ContentLanguage: =
+                    DropShadow: =DropShadow.None
+                    Height: =526
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =30
+                    RadiusBottomRight: =30
+                    RadiusTopLeft: =30
+                    RadiusTopRight: =30
+                    Width: =1234
+                    Y: =50
+                    ZIndex: =2
+
+                    Container22 As groupContainer.horizontalAutoLayoutContainer:
+                        DropShadow: =DropShadow.None
+                        Height: =526
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutGap: =20
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        LayoutMode: =LayoutMode.Auto
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        Width: =1234
+                        ZIndex: =4
+
+                        Container24 As groupContainer.manualLayoutContainer:
+                            DropShadow: =DropShadow.None
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FillPortions: =0
+                            LayoutGridColumnMinWidth: =0
+                            LayoutGridColumns: =6
+                            LayoutGridRowMinHeight: =0
+                            LayoutGridRows: =6
+                            LayoutMaxHeight: =0
+                            LayoutMaxWidth: =0
+                            LayoutMinHeight: =100
+                            LayoutMinWidth: =100
+                            RadiusBottomLeft: =30
+                            RadiusBottomRight: =30
+                            RadiusTopLeft: =30
+                            RadiusTopRight: =30
+                            Width: =350
+                            X: =40
+                            Y: =40
+                            ZIndex: =1
+
+                            FORM_2 As FORM:
+                                ChildTabPriority: =true
+                                ContentLanguage: =""
+                                Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,functional_location)
+                                EnableChildFocus: =true
+                                Height: =93
+                                Label: ="Functional Location"
+                                Visible: =true
+                                Width: =325
+                                X: =10
+                                Y: =129
+
+                            FORM_3 As FORM:
+                                ChildTabPriority: =true
+                                ContentLanguage: =""
+                                Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,operation_workcenter.Value)
+                                EnableChildFocus: =true
+                                Height: =57
+                                Label: ="Department"
+                                Visible: =true
+                                Width: =325
+                                X: =8
+                                Y: =222
+
+                            FORM_6 As FORM:
+                                ChildTabPriority: =true
+                                ContentLanguage: =""
+                                Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,maintenanceorder_description)
+                                EnableChildFocus: =true
+                                Height: =57
+                                Label: ="Work Order Description"
+                                Visible: =true
+                                Width: =325
+                                X: =10
+                                Y: =285
+
+                            FORM_5 As FORM:
+                                ChildTabPriority: =true
+                                ContentLanguage: =""
+                                Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,date_created)
+                                EnableChildFocus: =true
+                                Height: =57
+                                Label: ="Date Opened"
+                                Visible: =true
+                                Width: =325
+                                X: =10
+                                Y: =342
+
+                            FORM_4 As FORM:
+                                ChildTabPriority: =true
+                                ContentLanguage: =""
+                                Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,operation_shorttext)
+                                EnableChildFocus: =true
+                                Height: =57
+                                Label: ="Operation"
+                                Visible: =true
+                                Width: =325
+                                X: =10
+                                Y: =402
+
+                            FORM_1 As FORM:
+                                Data: =LookUp(colTblMaintenanceOrder,maintenanceorder_no = varSelectedTask.maintenanceorder_no,maintenanceorder_no)
+                                Height: =57
+                                Label: ="Work Order No"
+                                Width: =337
+                                X: =8
+                                Y: =72
+                                ZIndex: =19
+
+                            TITLE_1 As TITLE:
+                                Height: =72
+                                Title: ="Workorder Details"
+                                Width: =335
+                                X: =10
+                                ZIndex: =20
+
+                        Container26 As groupContainer.manualLayoutContainer:
+                            DropShadow: =DropShadow.None
+                            Fill: =RGBA(255, 255, 255, 1)
+                            LayoutGridColumnMinWidth: =0
+                            LayoutGridColumns: =6
+                            LayoutGridRowMinHeight: =0
+                            LayoutGridRows: =6
+                            LayoutMaxHeight: =0
+                            LayoutMaxWidth: =0
+                            LayoutMinHeight: =16
+                            LayoutMinWidth: =16
+                            RadiusBottomLeft: =30
+                            RadiusBottomRight: =30
+                            RadiusTopLeft: =30
+                            RadiusTopRight: =30
+                            ZIndex: =2
+
+                            TITLE_2 As TITLE:
+                                ChildTabPriority: =true
+                                ContentLanguage: =""
+                                EnableChildFocus: =true
+                                Height: =72
+                                Title: ="Corrective Maintenance"
+                                Visible: =true
+                                Width: =480
+
+                            TextCanvas4_15 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =36
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Train No"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =162
+                                X: =372
+                                Y: =72
+                                ZIndex: =70
+
+                            TextCanvas4_16 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =36
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Car Position"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =162
+                                X: =613
+                                Y: =72
+                                ZIndex: =71
+
+                            TextCanvas4_17 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =36
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="System"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =162
+                                X: =20
+                                Y: =150
+                                ZIndex: =72
+
+                            TextCanvas4_18 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =36
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Subsystem"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =162
+                                X: =298
+                                Y: =150
+                                ZIndex: =73
+
+                            TextCanvas4_19 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =42
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Sub - Subsystem"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =162
+                                X: =578
+                                Y: =150
+                                ZIndex: =74
+
+                            TextCanvas4_20 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =42
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Root Cause"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =157
+                                X: =22
+                                Y: =237
+                                ZIndex: =75
+
+                            TextCanvas4_21 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =40
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Station"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =157
+                                X: =20
+                                Y: =72
+                                ZIndex: =76
+
+                            TextCanvas4_22 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =42
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Remarks"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =157
+                                X: =22
+                                Y: =319
+                                ZIndex: =77
+
+                            txtRemark As modernTextInput:
+                                Appearance: =Appearance.FilledDarker
+                                BorderColor: =RGBA(0, 0, 0, 1)
+                                BorderStyle: =BorderStyle.Solid
+                                BorderThickness: =1
+                                Default: =If(varIsNewEntry, Blank(), varSavedCMResponse.remarks)
+                                Font: =""
+                                FontWeight: =""
+                                Height: =139
+                                MaxLength: =-1
+                                Placeholder: =""
+                                Required: =false
+                                Size: =18
+                                TriggerOutput: =TriggerOutput.FocusOut
+                                Type: =TextInputType.Multiline
+                                ValidationState: =ValidationState.None
+                                Width: =809
+                                X: =22
+                                Y: =351
+                                ZIndex: =78
+
+                            TextCanvas4_23 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =60
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Plan Start Date"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =190
+                                X: =300
+                                Y: =237
+                                ZIndex: =79
+
+                            dtPlanStartDate As modernDatePicker:
+                                Appearance: =Appearance.FilledDarker
+                                BorderColor: =RGBA(0, 0, 0, 1)
+                                BorderStyle: =BorderStyle.Solid
+                                BorderThickness: =1
+                                DefaultDate: =If(varIsNewEntry, Blank(), varSavedCMResponse.plan_start_date)
+                                Font: =""
+                                FontWeight: =""
+                                Height: =40
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =10
+                                PaddingTop: =0
+                                Placeholder: ="Select a date..."
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =250
+                                X: =577
+                                Y: =265
+                                ZIndex: =80
+
+                            TextCanvas4_24 As modernText:
+                                AutoHeight: =true
+                                BorderStyle: =""
+                                Font: =Font.Lato
+                                FontWeight: =FontWeight.Semibold
+                                Height: =60
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Size: =20
+                                Text: ="Plan End Date"
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =172
+                                X: =578
+                                Y: =237
+                                ZIndex: =81
+
+                            dtPlanEndDate As modernDatePicker:
+                                Appearance: =Appearance.FilledDarker
+                                BorderColor: =RGBA(0, 0, 0, 1)
+                                BorderStyle: =BorderStyle.Solid
+                                BorderThickness: =1
+                                DefaultDate: =If(varIsNewEntry, Blank(), varSavedCMResponse.plan_end_date)
+                                Font: =""
+                                FontWeight: =""
+                                Height: =40
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =10
+                                PaddingTop: =0
+                                Placeholder: ="Select a date..."
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =250
+                                X: =300
+                                Y: =265
+                                ZIndex: =82
+
+                            ddStation As modernDropdown:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                Default: =//If(varIsNewEntry, varSavedCMResponse.station_name.Value, "")
+                                Font: =""
+                                Height: =40
+                                ItemDisplayText: =ThisItem.station_name
+                                Items: =colRefStation
+                                Required: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =330
+                                X: =20
+                                Y: =100
+                                ZIndex: =83
+
+                            ddTrainNo As modernDropdown:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                Font: =""
+                                Height: =40
+                                ItemDisplayText: =ThisItem.train_no
+                                Items: =colRefTrain
+                                Required: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =220
+                                X: =373
+                                Y: =100
+                                ZIndex: =84
+
+                            ddCarPosition As modernDropdown:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                Font: =""
+                                Height: =40
+                                ItemDisplayText: =ThisItem.car_position
+                                Items: =colRefCarPosition
+                                Required: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =220
+                                X: =612
+                                Y: =100
+                                ZIndex: =85
+
+                            ddSystem As modernCombobox:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                DefaultSelectedItems: |-
+                                    =//If(varIsNewEntry, Blank(), Table({ Value: varSavedCMResponse.system.Value }))
+                                Font: =""
+                                Height: =40
+                                InputTextPlaceholder: ="Find System"
+                                ItemDisplayText: =ThisItem.Value
+                                Items: =Distinct(colRefSystemHierarchy,system.Value)
+                                OnChange: |-
+                                    =Reset(ddSubSystem);
+                                    Reset(ddSubSubSystem);
+                                    Reset(ddRootCause);
+                                Required: =false
+                                SelectMultiple: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =250
+                                X: =20
+                                Y: =180
+                                ZIndex: =86
+
+                            ddSubSystem As modernCombobox:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                DefaultSelectedItems: |-
+                                    =//If(varIsNewEntry, Blank(), Table({ Value: varSavedCMResponse.subsystem.Value }))
+                                Font: =""
+                                Height: =40
+                                InputTextPlaceholder: ="Find SubSystem"
+                                ItemDisplayText: =ThisItem.Value
+                                Items: |-
+                                    =Distinct(
+                                        Filter(
+                                            colRefSystemHierarchy,
+                                            system.Value = ddSystem.Selected.Value
+                                        ), 
+                                        subsystem.Value
+                                    )
+                                OnChange: |-
+                                    =
+                                    Reset(ddSubSubSystem);
+                                    Reset(ddRootCause);
+                                Required: =false
+                                SelectMultiple: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =250
+                                X: =298
+                                Y: =180
+                                ZIndex: =87
+
+                            ddSubSubSystem As modernCombobox:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                DefaultSelectedItems: |-
+                                    =//If(varIsNewEntry, Blank(), Table({ Value: varSavedCMResponse.sub_subsystem.Value }))
+                                Font: =""
+                                Height: =40
+                                InputTextPlaceholder: ="Find Sub-Subsystem"
+                                ItemDisplayText: =ThisItem.Value
+                                Items: |-
+                                    =Distinct(
+                                        Filter(
+                                            colRefSystemHierarchy, 
+                                            system.Value = ddSystem.Selected.Value &&
+                                            subsystem.Value = ddSubSystem.Selected.Value
+                                        ), 
+                                        sub_subsystem.Value
+                                    )
+                                OnChange: |-
+                                    =
+                                    
+                                    Reset(ddRootCause);
+                                Required: =false
+                                SelectMultiple: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =250
+                                X: =578
+                                Y: =180
+                                ZIndex: =88
+
+                            ddRootCause As modernCombobox:
+                                Appearance: =Appearance.FilledDarker
+                                BorderStyle: =""
+                                DefaultSelectedItems: |-
+                                    =// If(varIsNewEntry, Blank(), Table({ Value: varSavedCMResponse.root_cause.Value }))
+                                Font: =""
+                                Height: =40
+                                InputTextPlaceholder: ="Find Root Cause"
+                                ItemDisplayText: =ThisItem.Value
+                                Items: |-
+                                    =Distinct(
+                                        Filter(
+                                            colRefSystemHierarchy,
+                                            system.Value = ddSystem.Selected.Value &&
+                                            subsystem.Value = ddSubSystem.Selected.Value &&
+                                            sub_subsystem.Value = ddSubSubSystem.Selected.Value
+                                        ), 
+                                        root_cause.Value
+                                    )
+                                Required: =false
+                                SelectMultiple: =false
+                                Size: =18
+                                ValidationState: =ValidationState.None
+                                Width: =250
+                                X: =20
+                                Y: =265
+                                ZIndex: =89
+
+                TitleContainer_3 As groupContainer.manualLayoutContainer:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Height: =50
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =1234
+                    ZIndex: =3
+
+                    txtTitle_dashboard_8 As modernText:
+                        BorderStyle: =""
+                        Color: =RGBA(47, 53, 66, 1)
+                        Font: =Font.'Lato Black'
+                        Height: =49
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =30
+                        Text: |-
+                            ="Checklist Form - Corrective Maintenance
+                            "
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =593
+                        X: =12
+                        Y: =1
+                        ZIndex: =7
+
+    popUpCMTechConfirmClose As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: |-
+            =
+            If(isPopUpCMTechConfirmClose, true, false)
+        Width: =1366
+        ZIndex: =2
+
+        Container29_3 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(59, 53, 176, 1)
+            Height: =311
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =35
+            RadiusBottomRight: =35
+            RadiusTopLeft: =35
+            RadiusTopRight: =35
+            Width: =465
+            X: =464
+            Y: =208
+            ZIndex: =1
+
+            TextCanvas13_6 As Text:
+                Align: ='TextCanvas.Align'.Center
+                AutoHeight: =false
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.'Lato Black'
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =42
+                Size: =30
+                TabIndex: =0
+                Text: ="Confirmation"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Weight: ="Regular"
+                Width: =217
+                Wrap: =true
+                X: =129
+                Y: =114
+                ZIndex: =1
+
+            TextCanvas14_4 As Text:
+                Align: ='TextCanvas.Align'.Center
+                AutoHeight: =false
+                BorderColor: =
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Fill: =
+                Font: =Font.Lato
+                FontColor: =RGBA(255, 255, 255, 1)
+                FontItalic: =false
+                FontStrikethrough: =false
+                FontUnderline: =false
+                Height: =68
+                Size: =18
+                TabIndex: =0
+                Text: ="Do you want to proceed with submission?"
+                Tooltip: =""
+                VerticalAlign: =VerticalAlign.Middle
+                Visible: =true
+                Weight: ="Regular"
+                Width: =291
+                Wrap: =true
+                X: =84
+                Y: =156
+                ZIndex: =2
+
+            Icon5_7 As Icon:
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Height: =80
+                Icon: ="Warning"
+                IconColor: =RGBA(255, 255, 255, 1)
+                IconStyle: ="Outline"
+                Rotation: =0
+                TabIndex: =0
+                Tooltip: =""
+                Visible: =true
+                Width: =80
+                X: =197
+                Y: =34
+                ZIndex: =3
+
+            ButtonCanvas1_7 As modernButton:
+                Align: =Align.Center
+                BasePaletteColor: =RGBA(110, 110, 225, 1)
+                BorderStyle: =""
+                Font: =""
+                FontWeight: =""
+                Height: =50
+                OnSelect: |-
+                    =/* stable version 07/07/2026
+                    // 1. Save full failure report to the dedicated CM table
+                    Patch(
+                        tbl_response_cm,
+                        Defaults(tbl_response_cm),
+                        {
+                              
+                            maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
+                            
+                            station_name: {
+                                Id: ddStation.Selected.ID,
+                                Value: ddStation.Selected.station_name
+                            },
+                            system: {
+                                Id: LookUp(ref_system, system_name = ddSystem.Selected.Value).ID,
+                                Value: ddSystem.Selected.Value
+                            },
+                            subsystem: {
+                                Id: LookUp(ref_subsystem, subsystem_name = ddSubSystem.Selected.Value).ID,
+                                Value: ddSubSystem.Selected.Value
+                            }, 
+                            sub_subsystem: {
+                                Id: LookUp(ref_sub_subsystem, sub_subsystem_name = ddSubSubSystem.Selected.Value).ID,
+                                Value: ddSubSubSystem.Selected.Value
+                            },
+                            root_cause: {
+                                Id: LookUp(ref_root_cause, root_cause_name = ddRootCause.Selected.Value).ID,
+                                Value: ddRootCause.Selected.Value
+                            },
+                            plan_start_date: dtPlanStartDate.SelectedDate, 
+                            plan_end_date: dtPlanEndDate.SelectedDate,
+                            remarks: txtRemark.Text,
+                            train_no: If(varUserRecord.department.Value = "RSDM",
+                                { Id: ddTrainNo.Selected.ID, Value: ddTrainNo.Selected.train_no },
+                                Blank()
+                            ),
+                            car_position: If(varUserRecord.department.Value = "RSDM",
+                                { Id: ddCarPosition.Selected.ID, Value: ddCarPosition.Selected.car_position },
+                                Blank()
+                            )
+                        }
+                    );
+                    
+                    // 2. Update Technician Assignment Status to "Submitted"
+                    Patch(
+                        tbl_mrl_workorder_assign,
+                        LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID),
+                        {
+                            status: { Id: 5, Value: "Submitted" },
+                            end_date: Now()
+                        }
+                    );
+                    
+                    // 3. Log the status in the Log table
+                    Patch(
+                        tbl_mrl_workorder_assign_log,
+                        Defaults(tbl_mrl_workorder_assign_log),
+                        {
+                            workorder_assign_id: varSelectedTask.ID,
+                            maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                            maintenanceorder_status: "Submitted",
+                            user_email: varUserRecord.email,
+                            user_role: varUserRecord.role.Value,
+                            user_department: varUserRecord.department.Value,
+                            location_longitude: Location.Longitude,
+                            location_latitude: Location.Latitude
+                        }
+                    );
+                    
+                    // 4. Update ONLY the Remark in the Master Table (tbl_mrl_workorder)
+                    Patch(
+                        tbl_maintenance_order,
+                        LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedTask.maintenanceorder_no),
+                        {
+                            remarks: txtRemark.Text 
+                        }
+                    );
+                    
+                    // 5. Cleanup and Navigation
+                    Reset(ddSystem);
+                    Reset(ddSubSystem);
+                    Reset(ddSubSubSystem);
+                    Reset(ddRootCause);
+                    Reset(ddStation);
+                    Reset(txtRemark);
+                    Reset(dtPlanStartDate);
+                    Reset(dtPlanEndDate);
+                    
+                    Set(varIsNewEntry, false); 
+                    
+                    UpdateContext({
+                        isPopUpCMTechConfirmClose : false
+                    });
+                    
+                    
+                    Notify("Task Successfully Submitted", NotificationType.Success);
+                    Navigate(TASK_LIST);
+                    
+                    end stable version 07/07/2026
+                    */
+                    
+                    // ============================================================
+                    // Step 1: Capture payload as plain values (before any Reset)
+                    // ============================================================
+                    Set(varCMPayload, {
+                        maintenanceorder_no: varSelectedTask.maintenanceorder_no,
+                        station_id: ddStation.Selected.ID,
+                        station_value: ddStation.Selected.station_name,
+                        system_id: LookUp(colRefSystem, system_name = ddSystem.Selected.Value).ID,
+                        system_value: ddSystem.Selected.Value,
+                        subsystem_id: LookUp(colRefSubsystem, subsystem_name = ddSubSystem.Selected.Value).ID,
+                        subsystem_value: ddSubSystem.Selected.Value,
+                        sub_subsystem_id: LookUp(colRefSubSubsystem, sub_subsystem_name = ddSubSubSystem.Selected.Value).ID,
+                        sub_subsystem_value: ddSubSubSystem.Selected.Value,
+                        root_cause_id: LookUp(colRefRootCause, root_cause_name = ddRootCause.Selected.Value).ID,
+                        root_cause_value: ddRootCause.Selected.Value,
+                        plan_start_date: dtPlanStartDate.SelectedDate,
+                        plan_end_date: dtPlanEndDate.SelectedDate,
+                        remarks: txtRemark.Text,
+                        is_rsdm: varUserRecord.department.Value = "RSDM",
+                        train_no_id: If(varUserRecord.department.Value = "RSDM", ddTrainNo.Selected.ID),
+                        train_no_value: If(varUserRecord.department.Value = "RSDM", ddTrainNo.Selected.train_no),
+                        car_position_id: If(varUserRecord.department.Value = "RSDM", ddCarPosition.Selected.ID),
+                        car_position_value: If(varUserRecord.department.Value = "RSDM", ddCarPosition.Selected.car_position),
+                        assign_id: varSelectedTask.ID,
+                        assign_mo_no: varSelectedTask.maintenanceorder_no,
+                        user_email: varUserRecord.email,
+                        user_role: varUserRecord.role.Value,
+                        user_department: varUserRecord.department.Value,
+                        submitted_at: Now(),
+                        location_longitude: Location.Longitude,
+                        location_latitude: Location.Latitude
+                    });
+                    
+                    // ============================================================
+                    // Step 2: Online → patch directly. Offline → queue.
+                    // ============================================================
+                    If(
+                        Connection.Connected && !varIsOffline,
+                    
+                        // ===== ONLINE: your existing 4 patches, but reading from varCMPayload =====
+                        Patch(tbl_response_cm, Defaults(tbl_response_cm), {
+                            maintenanceorder_no: varCMPayload.maintenanceorder_no,
+                            station_name: { Id: varCMPayload.station_id, Value: varCMPayload.station_value },
+                            system: { Id: varCMPayload.system_id, Value: varCMPayload.system_value },
+                            subsystem: { Id: varCMPayload.subsystem_id, Value: varCMPayload.subsystem_value },
+                            sub_subsystem: { Id: varCMPayload.sub_subsystem_id, Value: varCMPayload.sub_subsystem_value },
+                            root_cause: { Id: varCMPayload.root_cause_id, Value: varCMPayload.root_cause_value },
+                            plan_start_date: varCMPayload.plan_start_date,
+                            plan_end_date: varCMPayload.plan_end_date,
+                            remarks: varCMPayload.remarks,
+                            train_no: If(varCMPayload.is_rsdm, { Id: varCMPayload.train_no_id, Value: varCMPayload.train_no_value }, Blank()),
+                            car_position: If(varCMPayload.is_rsdm, { Id: varCMPayload.car_position_id, Value: varCMPayload.car_position_value }, Blank())
+                        });
+                    
+                        Patch(tbl_mrl_workorder_assign,
+                            LookUp(tbl_mrl_workorder_assign, ID = varCMPayload.assign_id),
+                            { status: { Id: 5, Value: "Submitted" }, end_date: varCMPayload.submitted_at }
+                        );
+                    
+                        Patch(tbl_mrl_workorder_assign_log, Defaults(tbl_mrl_workorder_assign_log), {
+                            workorder_assign_id: varCMPayload.assign_id,
+                            maintenanceorder_no: varCMPayload.assign_mo_no,
+                            maintenanceorder_status: "Submitted",
+                            user_email: varCMPayload.user_email,
+                            user_role: varCMPayload.user_role,
+                            user_department: varCMPayload.user_department,
+                            location_longitude: varCMPayload.location_longitude,
+                            location_latitude: varCMPayload.location_latitude
+                        });
+                        
+                        Patch(tbl_maintenance_order,
+                            LookUp(tbl_maintenance_order, maintenanceorder_no = varCMPayload.assign_mo_no),
+                            { remarks: varCMPayload.remarks }
+                        ),
+                    
+                        // ===== OFFLINE: queue it =====
+                        Collect(colPendingSubmissions, varCMPayload);
+                        IfError(SaveData(colPendingSubmissions, "colPendingSubmissionsCache"), Blank());
+                    
+                        // Optimistic local update so TASK_LIST shows it as Submitted
+                        Patch(colTblMrlWorkorderAssign,
+                            LookUp(colTblMrlWorkorderAssign, ID = varCMPayload.assign_id),
+                            { status: { Id: 5, Value: "Submitted" }, end_date: varCMPayload.submitted_at }
+                        );
+                        IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank())
+                    );
+                    
+                    // ===== Cleanup (shared) =====
+                    Reset(ddSystem); Reset(ddSubSystem); Reset(ddSubSubSystem);
+                    Reset(ddRootCause); Reset(ddStation); Reset(txtRemark);
+                    Reset(dtPlanStartDate); Reset(dtPlanEndDate);
+                    Set(varIsNewEntry, false);
+                    UpdateContext({ isPopUpCMTechConfirmClose: false });
+                    Notify(
+                        If(Connection.Connected && !varIsOffline,
+                            "Task Successfully Submitted",
+                            "Saved offline — will sync when connection returns"
+                        ),
+                        If(Connection.Connected && !varIsOffline, NotificationType.Success, NotificationType.Warning)
+                    );
+                    Navigate(TASK_LIST);
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =12
+                PaddingTop: =5
+                RadiusBottomLeft: =35
+                RadiusBottomRight: =35
+                RadiusTopLeft: =35
+                RadiusTopRight: =35
+                Size: =18
+                Text: ="Submit & End Maintainenace"
+                VerticalAlign: =VerticalAlign.Middle
+                Width: =300
+                X: =149
+                Y: =248
+                ZIndex: =4
+
+            btnClose_3 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='ButtonCanvas.Appearance'.Primary
+                BasePaletteColor: =RGBA(189, 178, 176, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =""
+                IconRotation: =0
+                IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =UpdateContext({isPopUpCMTechConfirmClose:false});
+                TabIndex: =0
+                Text: ="Cancel"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Width: =120
+                X: =16
+                Y: =248
+                ZIndex: =5
+
+    timerOfflineCM As timer:
+        AutoStart: =true
+        Duration: =5000
+        OnTimerEnd: |-
+            =/*If(
+                Connection.Connected,
+                // any successful check resets the counter
+                Set(varOfflineChecks, 0);
+                If(
+                    varIsOffline,
+                    Set(varIsOffline, false);
+                    ClearCollect(colTblMrlWorkorderAssign, Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID));
+                    IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
+                    //Notify("Back online — data refreshed", NotificationType.Success)
+                ),
+            
+                // not connected — count before committing
+                Set(varOfflineChecks, varOfflineChecks + 1);
+                If(
+                    varOfflineChecks >= 3 && !varIsOffline,
+                    Set(varIsOffline, true);
+                    IfError(
+                        LoadData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache", true),
+                        Blank()
+                    );
+                    //Notify("Connection lost — switched to cached data", NotificationType.Warning)
+                )
+            )*/
+            
+            SyncTick()
+        Repeat: =true
+        Visible: =false
+        X: =195
+        Y: =35
+        ZIndex: =3
+

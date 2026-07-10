@@ -1,0 +1,449 @@
+DASHBOARD_v2 As screen:
+    BackgroundImage: =
+
+    "'Main-Container_9' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_9 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            Visible: =true
+
+        Content_7 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =2
+
+            NAVBAR_10 As NAVBAR_ENGINEER:
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                CurrentPage: ="DASHBOARD"
+                EnableChildFocus: =true
+                ExitButton: ="Text"
+                Fill: =RGBA(0,0,0,0)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                TaskListScreen: =TASK_LIST
+                Visible: =true
+
+            "'Dashboard-Content_5' As groupContainer.horizontalAutoLayoutContainer":
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                DropShadow: =DropShadow.None
+                FillPortions: =8
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGap: =10
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                ZIndex: =3
+
+                "'Title-Container_5' As groupContainer.manualLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    FillPortions: =0
+                    Height: =50
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =0
+                    LayoutMinWidth: =250
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =4
+
+                    txtTitle_dashboard_9 As Text:
+                        Align: ='TextCanvas.Align'.Start
+                        AutoHeight: =false
+                        BorderColor: =
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =
+                        Font: =Font.'Lato Black'
+                        FontColor: =RGBA(47, 53, 66, 1)
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =42
+                        Size: =30
+                        TabIndex: =0
+                        Text: ="Dashboard"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =539
+                        Wrap: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =5
+
+                "'Progress-Container_2' As groupContainer.horizontalAutoLayoutContainer":
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FillPortions: =0
+                    LayoutAlignItems: =LayoutAlignItems.Center
+                    LayoutGap: =20
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutJustifyContent: =LayoutJustifyContent.Center
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =Parent.Width
+                    ZIndex: =6
+
+                    CARDSTAT_TWO_COL_NewNotification_2 As CARDSTAT_TWO_COL:
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        IconSVG: |-
+                            ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M18.7491 9V9.7041C18.7491 10.5491 18.9903 11.3752 19.4422 12.0782L20.5496 13.8012C21.5612 15.3749 20.789 17.5139 19.0296 18.0116C14.4273 19.3134 9.57274 19.3134 4.97036 18.0116C3.21105 17.5139 2.43882 15.3749 3.45036 13.8012L4.5578 12.0782C5.00972 11.3752 5.25087 10.5491 5.25087 9.7041V9C5.25087 5.13401 8.27256 2 12 2C15.7274 2 18.7491 5.13401 18.7491 9Z"" fill=""#ffffff""></path> <path d=""M7.24316 18.5454C7.8941 20.5506 9.77767 22.0002 11.9998 22.0002C14.222 22.0002 16.1055 20.5506 16.7565 18.5454C13.611 19.1357 10.3886 19.1357 7.24316 18.5454Z"" fill=""#ffffff""></path> </g></svg>"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =640
+                        LayoutMinWidth: =640
+                        NavigateColor1: =RGBA(255, 255, 255, 1)
+                        NavigateColor2: =RGBA(255, 255, 255, 1)
+                        NavigateCount1: ="0"
+                        NavigateCount2: ="10"
+                        NavigateTitle1: ="CM"
+                        NavigateTitle2: ="PM"
+                        Title: ="New Notification"
+                        TitleColor: =RGBA(255, 255, 255, 1)
+                        Width: =380
+
+                    CARDSTAT_TWO_COL_5 As CARDSTAT_TWO_COL:
+                        BgColor: =RGBA(243, 156, 18, 1)
+                        IconSVG: |-
+                            ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path opacity=""0.5"" d=""M16.1569 3.80211L16.8431 4.20846C18.8718 5.40987 19.8862 6.01057 20.4431 7C21 7.98943 21 9.19084 21 11.5937V12.4063C21 14.8092 21 16.0106 20.4431 17C19.8862 17.9894 18.8718 18.5901 16.8431 19.7915L16.1569 20.1979C14.1282 21.3993 13.1138 22 12 22C10.8862 22 9.8718 21.3993 7.84308 20.1979L7.15692 19.7915C5.1282 18.5901 4.11384 17.9894 3.55692 17C3 16.0106 3 14.8092 3 12.4063V11.5937C3 9.19084 3 7.98943 3.55692 7C4.11384 6.01057 5.1282 5.40987 7.15692 4.20846L7.84308 3.80211C9.8718 2.6007 10.8862 2 12 2C13.1138 2 14.1282 2.6007 16.1569 3.80211Z"" fill=""#ffffff""></path> <path d=""M12 6.25C12.4142 6.25 12.75 6.58579 12.75 7V13C12.75 13.4142 12.4142 13.75 12 13.75C11.5858 13.75 11.25 13.4142 11.25 13V7C11.25 6.58579 11.5858 6.25 12 6.25Z"" fill=""#ffffff""></path> <path d=""M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z"" fill=""#ffffff""></path> </g></svg>"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =640
+                        LayoutMinWidth: =640
+                        NavigateColor1: =RGBA(255, 255, 255, 1)
+                        NavigateColor2: =RGBA(255, 255, 255, 1)
+                        NavigateCount1: ="100"
+                        NavigateCount2: ="100"
+                        NavigateTitle1: ="CM"
+                        NavigateTitle2: ="PM"
+                        Title: ="Pending Work Order"
+                        TitleColor: =RGBA(255, 255, 255, 1)
+                        Width: =380
+                        ZIndex: =2
+
+                    CARDSTAT_TWO_COL_6 As CARDSTAT_TWO_COL:
+                        BgColor: =RGBA(39, 174, 96, 1)
+                        IconSVG: |-
+                            ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path fill-rule=""evenodd"" clip-rule=""evenodd"" d=""M2.54497 8.73005C2 9.79961 2 11.1997 2 14C2 16.8003 2 18.2004 2.54497 19.27C3.02433 20.2108 3.78924 20.9757 4.73005 21.455C5.79961 22 7.19974 22 10 22H14C16.8003 22 18.2004 22 19.27 21.455C20.2108 20.9757 20.9757 20.2108 21.455 19.27C22 18.2004 22 16.8003 22 14C22 11.1997 22 9.79961 21.455 8.73005C20.9757 7.78924 20.2108 7.02433 19.27 6.54497C18.2004 6 16.8003 6 14 6H10C7.19974 6 5.79961 6 4.73005 6.54497C3.78924 7.02433 3.02433 7.78924 2.54497 8.73005ZM15.0595 12.4995C15.3353 12.1905 15.3085 11.7164 14.9995 11.4406C14.6905 11.1647 14.2164 11.1915 13.9406 11.5005L10.9286 14.8739L10.0595 13.9005C9.78359 13.5915 9.30947 13.5647 9.0005 13.8406C8.69152 14.1164 8.66468 14.5905 8.94055 14.8995L10.3691 16.4995C10.5114 16.6589 10.7149 16.75 10.9286 16.75C11.1422 16.75 11.3457 16.6589 11.488 16.4995L15.0595 12.4995Z"" fill=""#ffffff""></path> <path opacity=""0.5"" d=""M11.9993 2C16.7133 2 19.0704 2 20.5348 3.46447C21.2923 4.22195 21.658 5.21824 21.8345 6.65598V10H2.16406V6.65598C2.3406 5.21824 2.70628 4.22195 3.46377 3.46447C4.92823 2 7.28525 2 11.9993 2Z"" fill=""#ffffff""></path> </g></svg>"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =640
+                        LayoutMinWidth: =640
+                        NavigateColor1: =RGBA(255, 255, 255, 1)
+                        NavigateColor2: =RGBA(255, 255, 255, 1)
+                        Title: ="Completed Work Order"
+                        TitleColor: =RGBA(255, 255, 255, 1)
+                        Width: =380
+                        ZIndex: =3
+
+                "'Task-Container_5' As groupContainer.manualLayoutContainer":
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    X: =40
+                    Y: =40
+                    ZIndex: =7
+
+                    "Gallery4 As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                        DelayItemLoading: =true
+                        Height: =273
+                        Items: =tbl_notifications
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =126
+                        Width: =1185
+                        X: =29
+                        Y: =68
+                        ZIndex: =1
+
+                        Title3_1 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =30
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: |-
+                                ="Location: " & ThisItem.location
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =500
+                            X: =579
+                            Y: =28
+                            ZIndex: =2
+
+                        Title3 As label:
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =30
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: |-
+                                ="Notification ID: " & ThisItem.notification_id
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =500
+                            X: =79
+                            Y: =28
+                            ZIndex: =3
+
+                        Subtitle2 As label:
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =54
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: |-
+                                ="Notification Date: " & ThisItem.notification_date
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =500
+                            X: =Title3.X
+                            Y: =61
+                            ZIndex: =4
+
+                        Separator2 As rectangle:
+                            Height: =8
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =6
+
+                        Rectangle4 As rectangle:
+                            BorderColor: =RGBA(255, 0, 0, 1)
+                            Fill: =RGBA(255, 0, 0, 1)
+                            Height: =Parent.TemplateHeight - Separator2.Height
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =4
+                            ZIndex: =7
+
+                        BadgeCanvas1 As Badge:
+                            BasePaletteColor: =
+                            Content: |-
+                                =If(
+                                    ThisItem.ref_notificationType_id = 11, 
+                                    "CM",
+                                    "PM"
+                                )
+                            DisplayMode: =DisplayMode.Edit
+                            FontColor: =
+                            Height: =32
+                            ThemeColor: |+
+                                =If(
+                                    ThisItem.ref_notificationType_id = 11,
+                                    'BadgeCanvas.ThemeColor'.Severe,
+                                    'BadgeCanvas.ThemeColor'.Success
+                                )
+                                
+                            Width: =45
+                            X: =16
+                            Y: =29
+                            ZIndex: =8
+
+                        Title3_2 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =54
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: |-
+                                ="Description: " & ThisItem.description
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =500
+                            X: =579
+                            Y: =61
+                            ZIndex: =9
+
+                        Button2_8 As button:
+                            BorderColor: =RGBA(52, 31, 151, 1)
+                            Fill: =RGBA(52, 31, 151, 1)
+                            Font: =Font.Lato
+                            FontWeight: =FontWeight.Normal
+                            Height: =50
+                            OnSelect: |-
+                                =Set(varSelectedTask, ThisItem);
+                                Navigate(TASK_VIEW, ScreenTransition.Fade);
+                            RadiusBottomLeft: =50
+                            RadiusBottomRight: =50
+                            RadiusTopLeft: =50
+                            RadiusTopRight: =50
+                            Size: =20
+                            Text: ="❯"
+                            Width: =50
+                            X: =1103
+                            Y: =34
+                            ZIndex: =10
+
+                    "'HeaderCard-Container_2' As groupContainer.manualLayoutContainer":
+                        DropShadow: =DropShadow.None
+                        Height: =45
+                        LayoutGridColumnMinWidth: =0
+                        LayoutGridColumns: =6
+                        LayoutGridRowMinHeight: =0
+                        LayoutGridRows: =6
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =1202
+                        X: =10
+                        Y: =10
+                        ZIndex: =2
+
+                        txtTaskList_2 As Text:
+                            Align: ='TextCanvas.Align'.Start
+                            AutoHeight: =false
+                            BorderColor: =
+                            BorderStyle: =""
+                            ContentLanguage: =""
+                            DisplayMode: =DisplayMode.Edit
+                            Fill: =
+                            Font: =Font.'Lato Black'
+                            FontColor: =RGBA(47, 53, 66, 1)
+                            FontItalic: =false
+                            FontStrikethrough: =false
+                            FontUnderline: =false
+                            Height: =42
+                            Size: =30
+                            TabIndex: =0
+                            Text: ="My Task List"
+                            Tooltip: =""
+                            VerticalAlign: =""
+                            Visible: =true
+                            Weight: ="Regular"
+                            Width: =539
+                            Wrap: =true
+                            X: =24
+                            Y: =3
+                            ZIndex: =1
+
+                        Button4 As button:
+                            BorderColor: =ColorFade(Self.Fill, 0%)
+                            BorderStyle: =BorderStyle.None
+                            ContentLanguage: =false
+                            DisabledColor: =RGBA(255, 255, 255, 1)
+                            Fill: =RGBA(255, 0, 0, 1)
+                            FontWeight: =FontWeight.Bold
+                            Height: =35
+                            HoverColor: =RGBA(255, 0, 0, 1)
+                            HoverFill: =ColorFade(RGBA(0000, 0, 0, 0), -20%)
+                            OnSelect: |-
+                                =        Navigate(TASKLIST_v2, ScreenTransition.Fade);
+                                        Notify("Loading Task List...", NotificationType.Information);
+                            PressedColor: =RGBA(0, 0, 0, 1)
+                            PressedFill: =Self.Fill
+                            RadiusBottomLeft: =20
+                            RadiusBottomRight: =20
+                            RadiusTopLeft: =20
+                            RadiusTopRight: =20
+                            Size: =10
+                            Text: ="View All"
+                            Tooltip: ="Go to Task List"
+                            Width: =135
+                            X: =1065
+                            Y: =6
+                            ZIndex: =2
+

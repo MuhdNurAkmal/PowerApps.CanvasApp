@@ -1,0 +1,36 @@
+CUSTOMBUTTON As CanvasComponent:
+    BgColor: =RGBA(0, 0, 0, 1)
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =640
+    IconColor: =RGBA(0, 0, 0, 1)
+    IconSVG: ="Text"
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Card As groupContainer.manualLayoutContainer:
+        Fill: =CUSTOMBUTTON.BgColor
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        RadiusBottomLeft: =50
+        RadiusBottomRight: =50
+        RadiusTopLeft: =50
+        RadiusTopRight: =50
+        Width: =233
+        X: =168
+        Y: =270
+        ZIndex: =1
+
+        SVG_13 As image:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Fill: =CUSTOMBUTTON.IconColor
+            Height: =200
+            Image: |-
+                ="data:image/svg+xml;utf8," & EncodeUrl(CUSTOMBUTTON.IconSVG)
+            Width: =160
+            X: =36
+            ZIndex: =1
+

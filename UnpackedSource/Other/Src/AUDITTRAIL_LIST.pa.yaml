@@ -1,0 +1,602 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  AUDITTRAIL_LIST:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: =true
+    Children:
+      - Main-Container_14:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =768
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HEADER_13:
+                Control: CanvasComponent
+                ComponentName: HEADER
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  Height: =80
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  Width: =1334
+                  varIsOffline: =false
+                  varUserDepartment: ="Text"
+                  varUserRole: ="Text"
+            - ContentBody_5:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(245, 245, 245, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - NAVBAR_AUDITTRAIL_LIST:
+                      Control: CanvasComponent
+                      ComponentName: NAVBAR
+                      Properties:
+                        AccentColor: =RGBA(255, 0, 0, 1)
+                        AuditMenu: =App.ActiveScreen
+                        BgColor: =RGBA(52, 31, 151, 1)
+                        DashboardMenu: =DASHBOARD
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NotificationMenu: =NOTIFICATION_LIST
+                        ParentScreen: =
+                        ParentScreen2: =
+                        ReportAnalysis: =App.ActiveScreen
+                        ReportAnalysisHOU: =App.ActiveScreen
+                        SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                        TaskMenu: =TASK_LIST
+                        TeamMenu: =TEAM_LIST
+                        UserMenu: =USER_LIST
+                        Width: =80
+                        WorkOrderMenu: =WORKORDER_LIST
+                        WorkOrderSvMenu: =App.ActiveScreen
+                        dataMenu: =colMenu
+                  - ContainerMain_5:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(245, 245, 245, 1)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                      Children:
+                        - TitleContainer_7:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              Height: =50
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Width: =1234
+                            Children:
+                              - txtTitle_dashboard_14:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(0, 0, 0, 1)
+                                    Height: =49
+                                    Size: =30
+                                    Text: ="Audit Trail"
+                                    Width: =526
+                                    X: =12
+                                    Y: =1
+                        - ContainerAction_7:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =65
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =1234
+                              Y: =576
+                            Children:
+                              - Button2_13:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =RGBA(52, 31, 151, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(52, 31, 151, 1)
+                                    Font: =Font.Lato
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =50
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Back(ScreenTransition.Fade)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    RadiusBottomLeft: =50
+                                    RadiusBottomRight: =50
+                                    RadiusTopLeft: =50
+                                    RadiusTopRight: =50
+                                    Size: =20
+                                    Text: ="❮"
+                                    Width: =50
+                                    X: =3
+                                    Y: =10
+                              - btnSubmit_3:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Center
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =RGBA(249, 83, 109, 1)
+                                    BorderRadius: =35
+                                    Font: =Font.'Lato Black'
+                                    FontColor: =RGBA(255, 255, 255, 1)
+                                    Height: =42
+                                    Icon: ="ArrowRight"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    Layout: ='ButtonCanvas.Layout'.TextOnly
+                                    OnSelect: =Navigate(TASK_LIST,ScreenTransition.Fade)
+                                    Text: ="ADMIN"
+                                    Width: =116
+                                    X: =1118
+                                    Y: =21
+                        - ctnTaskLog:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderStyle: =BorderStyle.None
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =494
+                              RadiusBottomLeft: =30
+                              RadiusBottomRight: =30
+                              RadiusTopLeft: =30
+                              RadiusTopRight: =0
+                              Visible: =If(varLogTab = 2,true, false)
+                              Width: =1234
+                              Y: =82
+                            Children:
+                              - Gallery6_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =RGBA(188, 31, 69, 1)
+                                    Height: =436
+                                    Items: |
+                                      =tbl_log
+                                    ShowNavigation: =true
+                                    TemplateSize: =90
+                                    Transition: =Transition.Pop
+                                    Width: =1234
+                                    Y: =58
+                                  Children:
+                                    - Separator5_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =8
+                                          OnSelect: =Select(Parent)
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - Self.Height
+                                    - Rectangle5_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(188, 31, 69, 1)
+                                          Fill: =RGBA(188, 31, 69, 1)
+                                          Height: =Parent.TemplateHeight - Separator5_1.Height
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =4
+                                    - TextCanvas26:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Size: =16
+                                          Text: =ThisItem.ID
+                                          Width: =33
+                                          X: =32
+                                          Y: =30
+                                    - TextCanvas27:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =79
+                                          Size: =16
+                                          Text: =ThisItem.action
+                                          Width: =101
+                                          X: =199
+                                          Y: =3
+                                    - TextCanvas29:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Size: =16
+                                          Text: =ThisItem.workorder_no_ref
+                                          X: =341
+                                          Y: =25
+                                    - TextCanvas30:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =40
+                                          Size: =16
+                                          Text: =ThisItem.performed_by
+                                          X: =77
+                                          Y: =22
+                                    - TextCanvas31:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Size: =16
+                                          Text: =ThisItem.dept_name
+                                          X: =496
+                                          Y: =22
+                                    - TextCanvas32:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =82
+                                          Size: =16
+                                          Text: =ThisItem.details
+                                          Width: =201
+                                          X: =814
+                                    - TextCanvas33:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =60
+                                          Size: =16
+                                          Text: =ThisItem.user_email
+                                          Width: =157
+                                          X: =592
+                                          Y: =16
+                                    - TextCanvas34:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =46
+                                          Size: =16
+                                          Text: =ThisItem.log_timestamp
+                                          Width: =146
+                                          X: =1066
+                                          Y: =18
+                              - detailBarTaskLog:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    Fill: =RGBA(214, 221, 224, 0.61)
+                                    Height: =38
+                                    RadiusTopRight: =0
+                                    Width: =1234
+                                  Children:
+                                    - TextCanvas24:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="User"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =95
+                                          Y: =8
+                                    - TextCanvas24_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Action"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =191
+                                          Y: =8
+                                    - TextCanvas24_2:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Work Order Ref"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          Width: =132
+                                          X: =322
+                                          Y: =8
+                                    - TextCanvas24_3:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Dept"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =499
+                                          Y: =8
+                                    - TextCanvas24_4:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="User Email"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =602
+                                          Y: =8
+                                    - TextCanvas24_5:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Details"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =859
+                                          Y: =8
+                                    - TextCanvas24_6:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Timestamp"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =1067
+                                          Y: =8
+                                    - TextCanvas24_7:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="#"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          Width: =46
+                                          X: =34
+                                          Y: =8
+                        - ctnWorkOrderLog:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderStyle: =BorderStyle.None
+                              ContentLanguage: =If(varLogTab = 1,true, false)
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =494
+                              RadiusBottomLeft: =30
+                              RadiusBottomRight: =30
+                              RadiusTopLeft: =30
+                              RadiusTopRight: =0
+                              Visible: =If(varLogTab = 1,true, false)
+                              Width: =1234
+                              Y: =82
+                            Children:
+                              - galleryAssignedTech_2:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_TwoTextVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =454
+                                    Items: =If(varLogTab = 1, tbl_mrl_workorder_log, Blank())
+                                    Width: =1234
+                                    Y: =38
+                                  Children:
+                                    - Separator8_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =8
+                                          OnSelect: =Select(Parent)
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - Self.Height
+                                    - Rectangle8_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(0, 18, 107, 1)
+                                          Height: =78
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =5
+                                          Y: =10
+                                    - TextCanvas39:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.workorderno_ref
+                                          X: =97
+                                          Y: =40
+                                    - TextCanvas40:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.ID
+                                          Width: =34
+                                          X: =35
+                                          Y: =40
+                                    - TextCanvas42:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.Created
+                                          Width: =132
+                                          X: =871
+                                          Y: =40
+                                    - TextCanvas43:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.user_department
+                                          X: =598
+                                          Y: =40
+                                    - TextCanvas44:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.user_email
+                                          Width: =346
+                                          X: =252
+                                          Y: =40
+                                    - TextCanvas45:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.user_role
+                                          X: =734
+                                          Y: =40
+                                    - TextCanvas46:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Size: =18
+                                          Text: =ThisItem.workorder_status
+                                          X: =1071
+                                          Y: =40
+                              - detailBarWorkOrderLog:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    Fill: =RGBA(214, 221, 224, 0.61)
+                                    Height: =38
+                                    RadiusTopRight: =0
+                                    Width: =1234
+                                  Children:
+                                    - TextCanvas24_8:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Work Order No"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          Width: =151
+                                          X: =79
+                                          Y: =8
+                                    - TextCanvas24_11:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Dept"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =600
+                                          Y: =8
+                                    - TextCanvas24_12:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="User Email"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =304
+                                          Y: =8
+                                    - TextCanvas24_13:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Role"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =728
+                                          Y: =8
+                                    - TextCanvas24_14:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Timestamp"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =872
+                                          Y: =8
+                                    - TextCanvas24_15:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="#"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          Width: =46
+                                          X: =34
+                                          Y: =8
+                                    - TextCanvas24_16:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Font: =Font.Lato
+                                          Height: =30
+                                          Size: =18
+                                          Text: ="Status"
+                                          Weight: ='TextCanvas.Weight'.Semibold
+                                          X: =1061
+                                          Y: =8
+                        - ctnLogTab:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =32
+                              Width: =443
+                              X: =791
+                              Y: =50
+                            Children:
+                              - Gallery-Tab-Button_2:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Horizontal_TwoTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =40
+                                    Items: =Table({ID:1,Label:"Work Order Log",Color:RGBA(110,110,225,1)},{ID:2,Label:"Task Log ",Color:RGBA(255,255,255,1)})
+                                    TemplateSize: =199
+                                    Width: =399
+                                    X: =44
+                                  Children:
+                                    - ButtonCanvas3_5:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          BasePaletteColor: =If(ThisItem.ID = varLogTab, RGBA(110,110,225,1),RGBA(255,255,255,1))
+                                          BorderRadiusTopLeft: =20
+                                          BorderRadiusTopRight: =20
+                                          Font: =Font.Lato
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          FontSize: =18
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =35
+                                          OnSelect: =Set(varLogTab,ThisItem.ID);
+                                          Text: =ThisItem.Label
+                                          Width: =199

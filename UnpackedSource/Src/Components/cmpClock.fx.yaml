@@ -1,0 +1,79 @@
+cmpClock As CanvasComponent:
+    bgColor: =RGBA(0, 0, 0, 1)
+    Fill: =RGBA(255, 255, 255, 0)
+    Height: =167
+    iconSVG: ="Text"
+    lblDateColor: =RGBA(0, 0, 0, 1)
+    lblTimeColor: =RGBA(0, 0, 0, 1)
+    OnReset: =Set(varNow, Now())
+    Width: =500
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    tmrClock As timer:
+        AutoStart: =true
+        Duration: =1000
+        OnTimerEnd: =Set(varNow, Now())
+        Repeat: =true
+        Visible: =false
+        X: =62
+        Y: =300
+        ZIndex: =1
+
+    ctrCard As groupContainer.manualLayoutContainer:
+        Fill: =cmpClock.bgColor
+        Height: =Parent.Height
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        PaddingBottom: =5
+        PaddingLeft: =5
+        PaddingRight: =5
+        PaddingTop: =5
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Width: =Parent.Width
+        ZIndex: =3
+
+        lblTime As label:
+            Align: =Align.Center
+            Color: =cmpClock.lblTimeColor
+            Font: =Font.Lato
+            FontWeight: =FontWeight.Bold
+            Height: =86
+            Size: =40
+            Text: |-
+                =Text(varNow, "HH:mm:ss")
+            Width: =232
+            X: =28
+            Y: =48
+            ZIndex: =1
+
+        lblDate As label:
+            Align: =Align.Center
+            Color: =cmpClock.lblDateColor
+            Fill: =RGBA(0,0,0,0)
+            Font: =Font.Lato
+            FontWeight: =FontWeight.Bold
+            Height: =49
+            Size: =16
+            Text: =Text(varNow, "dddd, dd mmmm yyyy")
+            Width: =286
+            X: =3
+            Y: =18
+            ZIndex: =2
+
+        SVG_12 As image:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Height: =90
+            Image: |-
+                ="data:image/svg+xml;utf8," & EncodeUrl(cmpClock.iconSVG)
+            Width: =93
+            X: =326
+            Y: =29
+            ZIndex: =3
+

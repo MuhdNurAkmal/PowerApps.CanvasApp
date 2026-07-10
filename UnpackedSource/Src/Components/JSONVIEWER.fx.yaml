@@ -1,0 +1,14 @@
+JSONVIEWER As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =640
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    HtmlText1 As htmlViewer:
+        HtmlText: ="<script>alert(0)</script>"
+        X: =40
+        Y: =40
+        ZIndex: =1
+

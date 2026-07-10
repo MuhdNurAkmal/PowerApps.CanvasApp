@@ -1,0 +1,889 @@
+TASK_CHECKLIST_PM_SV As screen:
+    OnHidden: |-
+        =UpdateContext({
+            varSelectedTemplate: Blank(),
+            varCurrentRecord: Blank(),
+            varChecklistPMDialog: false,
+            varIsDataReady: false
+        });
+        
+        UpdateContext({ isPopUpTechConfirmClose : false });
+        UpdateContext({ isPopUpEngConfirmClose : false });
+    OnVisible: |-
+        =// Reset state first
+        UpdateContext({
+            varSelectedTemplate: Blank(),
+            varCurrentRecord: Blank(),
+            varData: Blank(),
+        
+            isTcpsPopupConfirmRevise: false, 
+            isTcpsPopupConfirmVerify: false,
+            isWvatsPopupReviseRemark: false
+        });
+        
+        UpdateContext({ varIsDataReady: false });
+        
+        ///////////////////////////////////////////////
+        // Init - based on user role
+        
+        Switch(
+            varUserRecord.role.Value,
+            
+            "Engineer", 
+                ////////////////////////////////////
+                // If Engineer
+        
+                // get template
+                UpdateContext({
+                    varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)
+                });
+        
+                // get template 
+                UpdateContext({
+                    varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)
+                });
+            
+                // Validate template existence
+                If(
+                    IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),
+                    // TEMPLATE MISSING
+                    Notify("Template missing or Template JSON is empty for this Work Order.", NotificationType.Error),
+                    UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});
+                );
+        
+                If(
+                    !IsBlank(workorderAssignId),
+                    // workorderAssignId is not blank
+                    Set(
+                        varChecklistOutput,
+                        If(
+                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            Blank(),
+                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                        )
+                    );,
+        
+                    // workorderAssignId blank
+                    // set response to collection
+                    Set(
+                        varChecklistOutput,
+                        If(
+                            IsBlank(varData.completed_responses),
+                            Blank(),
+                            varData.completed_responses
+                        )
+                    );
+                );,
+        
+        
+            "Supervisor",
+                ////////////////////////////////////
+                // If Supervisor
+        
+                // get template
+                UpdateContext({
+                    varData: LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no)
+                });
+        
+                // get template 
+                UpdateContext({
+                    varCurrentRecord: LookUp(ref_template, ID = varData.form_template.Id)
+                });
+            
+                // Validate template existence
+                If(
+                    IsBlank(varCurrentRecord) || IsBlank(varCurrentRecord.TemplateJson),
+                    // TEMPLATE MISSING
+                    Notify("Template missing or Template JSON is empty for this Work Order.", NotificationType.Error),
+                    UpdateContext({varSelectedTemplate: varCurrentRecord.TemplateJson});
+                );
+        
+        
+                
+                If(
+                    !IsBlank(workorderAssignId),
+                    // workorderAssignId is not blank
+                    Set(
+                        varChecklistOutput,
+                        If(
+                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            Blank(),
+                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                        )
+                    );,
+        
+                    // workorderAssignId blank
+                    // set response to collection
+                    Set(
+                        varChecklistOutput,
+                        If(
+                            IsBlank(varData.completed_responses),
+                            Blank(),
+                            varData.completed_responses
+                        )
+                    );
+                );,
+            ""            
+        );
+        
+        
+        UpdateContext({ varIsDataReady: true });
+
+    "'Main-Container_7' As groupContainer.horizontalAutoLayoutContainer":
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =768
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HEADER_7 As HEADER:
+            ChildTabPriority: =true
+            ContentLanguage: =""
+            EnableChildFocus: =true
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =640
+            LayoutMinWidth: =640
+            varIsOffline: =varIsOffline
+            varUserDepartment: =varUserRecord.department.Value
+            varUserRole: =varUserRecord.role.Value
+            Visible: =true
+
+        ContentBody_15 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(245, 245, 245, 1)
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutGap: =16
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =0
+            LayoutMinWidth: =0
+            LayoutMode: =LayoutMode.Auto
+            LayoutWrap: =true
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            ZIndex: =2
+
+            NAVBAR_CHECKLIST_2 As NAVBAR:
+                AuditMenu: =AUDITTRAIL_LIST
+                ChildTabPriority: =true
+                ContentLanguage: =""
+                DashboardMenu: =DASHBOARD
+                dataMenu: =colMenu
+                EnableChildFocus: =true
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinWidth: =640
+                NotificationMenu: =NOTIFICATION_LIST
+                ParentScreen: =TASK_LIST
+                ParentScreen2: =NOTIFICATION_LIST
+                SystemConfigurationMenu: =SYSTEMCONFIGURATION_LIST
+                TaskMenu: =TASK_LIST
+                TeamMenu: =TEAM_LIST
+                UserMenu: =USER_LIST
+                Visible: =true
+                WorkOrderMenu: =WORKORDER_LIST
+                ZIndex: =2
+
+            conBody_1 As groupContainer.manualLayoutContainer:
+                DropShadow: =DropShadow.None
+                Fill: =RGBA(245, 245, 245, 1)
+                LayoutGridColumnMinWidth: =0
+                LayoutGridColumns: =6
+                LayoutGridRowMinHeight: =0
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =3
+
+                TitleContainer_15 As groupContainer.manualLayoutContainer:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DropShadow: =DropShadow.None
+                    Height: =50
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =1234
+                    ZIndex: =4
+
+                    txtTitle_dashboard_31 As modernText:
+                        BorderStyle: =""
+                        Color: =RGBA(47, 53, 66, 1)
+                        Font: =Font.'Lato Black'
+                        Height: =49
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =30
+                        Text: |-
+                            ="Review Checklist Form - Preventive Maintenance
+                            "
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =694
+                        X: =12
+                        Y: =1
+                        ZIndex: =5
+
+                Container7_5 As groupContainer.manualLayoutContainer:
+                    ContentLanguage: =
+                    DropShadow: =DropShadow.None
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =526
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =35
+                    RadiusBottomRight: =35
+                    RadiusTopLeft: =35
+                    RadiusTopRight: =35
+                    Width: =1234
+                    Y: =50
+                    ZIndex: =6
+
+                    SimpleDynamicForm3 As DynamicFormPCF:
+                        ChecklistOutput: =Coalesce(ParseJSON(varChecklistOutput), ParseJSON(Blank()))
+                        DisplayMode: =DisplayMode.Edit
+                        Height: =498
+                        TemplateJSON: =varSelectedTemplate
+                        Width: =1194
+                        X: =15
+                        Y: =15
+                        ZIndex: =1
+
+                conFooter_1 As groupContainer.manualLayoutContainer:
+                    DropShadow: =DropShadow.None
+                    Height: =65
+                    LayoutGridColumnMinWidth: =0
+                    LayoutGridColumns: =6
+                    LayoutGridRowMinHeight: =0
+                    LayoutGridRows: =6
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Width: =1234
+                    Y: =576
+                    ZIndex: =8
+
+                    btnBackArrow_1 As button:
+                        BorderColor: =RGBA(52, 31, 151, 1)
+                        Fill: =RGBA(52, 31, 151, 1)
+                        Font: =Font.Lato
+                        FontWeight: =FontWeight.Normal
+                        Height: =50
+                        OnSelect: |+
+                            =
+                            Set(isPopupChecklist, false);
+                            
+                            Switch(
+                                varUserRecord.role.Value,
+                                "Engineer", Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN,ScreenTransition.Fade),
+                                "Technician", Navigate(TASK_VIEW,ScreenTransition.Fade),
+                                "Maintainer Scheduler", Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN,ScreenTransition.Fade),
+                                "Supervisor", Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV,ScreenTransition.Fade)
+                            );
+                            
+                        RadiusBottomLeft: =50
+                        RadiusBottomRight: =50
+                        RadiusTopLeft: =50
+                        RadiusTopRight: =50
+                        Size: =20
+                        Text: ="❮"
+                        Width: =50
+                        X: =3
+                        Y: =10
+                        ZIndex: =9
+
+                    btnTechSave_1 As modernButton:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderStyle: =""
+                        Color: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Lato Black'
+                        FontWeight: =""
+                        Height: =50
+                        Icon: ="ArrowUndo"
+                        IconStyle: =IconStyle.Filled
+                        OnSelect: |
+                            =UpdateContext({isTcpsPopupConfirmRevise : true})
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =17
+                        Text: ="Revise"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =132
+                        X: =869
+                        Y: =9
+                        ZIndex: =55
+
+                    btnTechSubmit_1 As modernButton:
+                        Align: =Align.Center
+                        BasePaletteColor: =RGBA(110, 110, 225, 1)
+                        BorderStyle: =""
+                        Color: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Lato Black'
+                        FontWeight: =""
+                        Height: =50
+                        Icon: ="Checkmark"
+                        IconStyle: =IconStyle.Filled
+                        OnSelect: |-
+                            =UpdateContext({isTcpsPopupConfirmVerify : true});
+                        PaddingBottom: =5
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =5
+                        RadiusBottomLeft: =35
+                        RadiusBottomRight: =35
+                        RadiusTopLeft: =35
+                        RadiusTopRight: =35
+                        Size: =17
+                        Text: ="Verify"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =229
+                        X: =1005
+                        Y: =8
+                        ZIndex: =56
+
+                    btnViewChecklistWorkOrder_10 As Button:
+                        AcceptsFocus: =true
+                        AccessibleLabel: =""
+                        Align: =Align.Center
+                        Appearance: ='ButtonCanvas.Appearance'.Primary
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        BorderColor: =
+                        BorderRadius: =35
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Font: =Font.Lato
+                        FontColor: =RGBA(255, 255, 255, 1)
+                        FontItalic: =false
+                        FontSize: =17
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        FontWeight: =""
+                        Height: =50
+                        Icon: ="Document"
+                        IconRotation: =0
+                        IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                        Layout: ='ButtonCanvas.Layout'.IconBefore
+                        OnSelect: |-
+                            =UpdateContext({
+                                isWvatsPopupReviseRemark : true
+                            });
+                        TabIndex: =0
+                        Text: ="View Revise Remark"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =If (varSelectedWorkOrder.dmp_status.Value = "REV1",true, false)
+                        Width: =221
+                        X: =643
+                        Y: =9
+                        ZIndex: =57
+
+    tcpsPopUpConfirmVerify As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isTcpsPopupConfirmVerify, true, false)
+        Width: =1366
+        ZIndex: =3
+
+        Container29_1 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(59, 53, 176, 1)
+            Height: =311
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =35
+            RadiusBottomRight: =35
+            RadiusTopLeft: =35
+            RadiusTopRight: =35
+            Width: =465
+            X: =464
+            Y: =208
+            ZIndex: =21
+
+            Icon5_5 As Icon:
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Height: =80
+                Icon: ="Warning"
+                IconColor: =RGBA(255, 255, 255, 1)
+                IconStyle: ="Outline"
+                Rotation: =0
+                TabIndex: =0
+                Tooltip: =""
+                Visible: =true
+                Width: =80
+                X: =197
+                Y: =34
+                ZIndex: =22
+
+            TextCanvas13_4 As modernText:
+                Align: =Align.Center
+                BorderStyle: =""
+                Color: =RGBA(255, 255, 255, 1)
+                Font: =Font.'Lato Black'
+                Height: =42
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =30
+                Text: ="Confirmation"
+                VerticalAlign: =VerticalAlign.Top
+                Width: =217
+                X: =129
+                Y: =114
+                ZIndex: =23
+
+            TextCanvas14_2 As modernText:
+                Align: =Align.Center
+                BorderStyle: =""
+                Color: =RGBA(255, 255, 255, 1)
+                Font: =Font.Lato
+                Height: =68
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =18
+                Text: ="Do you want verify this checklist form?"
+                Width: =322
+                X: =73
+                Y: =156
+                ZIndex: =24
+
+            btnClose_1 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='ButtonCanvas.Appearance'.Primary
+                BasePaletteColor: =RGBA(189, 178, 176, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =""
+                IconRotation: =0
+                IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =UpdateContext({isTcpsPopupConfirmVerify:false});
+                TabIndex: =0
+                Text: ="Cancel"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Width: =120
+                X: =16
+                Y: =248
+                ZIndex: =25
+
+            ButtonCanvas1_5 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ="Primary"
+                BasePaletteColor: =RGBA(110, 110, 225, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =""
+                IconRotation: =0
+                IconStyle: ="Outline"
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =//////////////////////////////////////////////////////////////////////////////////////////
+                    // Update checklist form (response) and update Technician Status to submitted
+                    
+                    Patch(
+                        tbl_mrl_workorder_assign,
+                        LookUp( tbl_mrl_workorder_assign, ID = workorderAssignId ),
+                        {
+                           verify_status: "true"
+                        }
+                    );
+                    
+                    UpdateContext({
+                        isTcpsPopupConfirmVerify : false
+                    });
+                    Notify("Checklist Form Successfully Reviewed");
+                    Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV);
+                TabIndex: =0
+                Text: ="Verify"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Width: =300
+                X: =149
+                Y: =248
+                ZIndex: =26
+
+    tcpsPopUpConfirmRevise As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isTcpsPopupConfirmRevise, true, false)
+        Width: =1366
+        ZIndex: =4
+
+        Container29_2 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(59, 53, 176, 1)
+            Height: =416
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =35
+            RadiusBottomRight: =35
+            RadiusTopLeft: =35
+            RadiusTopRight: =35
+            Width: =553
+            X: =399
+            Y: =145
+            ZIndex: =1
+
+            Icon5_6 As Icon:
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Height: =80
+                Icon: ="Warning"
+                IconColor: =RGBA(255, 255, 255, 1)
+                IconStyle: ="Outline"
+                Rotation: =0
+                TabIndex: =0
+                Tooltip: =""
+                Visible: =true
+                Width: =80
+                X: =239
+                Y: =27
+                ZIndex: =1
+
+            TextCanvas13_5 As modernText:
+                Align: =Align.Center
+                BorderStyle: =""
+                Color: =RGBA(255, 255, 255, 1)
+                Font: =Font.'Lato Black'
+                Height: =42
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =30
+                Text: ="Confirmation"
+                VerticalAlign: =VerticalAlign.Top
+                Width: =217
+                X: =171
+                Y: =107
+                ZIndex: =2
+
+            TextCanvas14_3 As modernText:
+                Align: =Align.Center
+                BorderStyle: =""
+                Color: =RGBA(255, 255, 255, 1)
+                Font: =Font.Lato
+                Height: =68
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =18
+                Text: ="Do you want return to technician to revise this checklist form?"
+                Width: =322
+                X: =115
+                Y: =149
+                ZIndex: =3
+
+            btnClose_2 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ='ButtonCanvas.Appearance'.Primary
+                BasePaletteColor: =RGBA(189, 178, 176, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =""
+                IconRotation: =0
+                IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =UpdateContext({isTcpsPopupConfirmRevise:false});
+                TabIndex: =0
+                Text: ="Cancel"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Width: =145
+                X: =16
+                Y: =353
+                ZIndex: =4
+
+            ButtonCanvas1_6 As Button:
+                AcceptsFocus: =true
+                AccessibleLabel: =""
+                Align: =""
+                Appearance: ="Primary"
+                BasePaletteColor: =RGBA(110, 110, 225, 1)
+                BorderColor: =
+                BorderRadius: =35
+                BorderStyle: =""
+                ContentLanguage: =""
+                DisplayMode: =DisplayMode.Edit
+                Font: =""
+                FontColor: =
+                FontItalic: =false
+                FontSize: =18
+                FontStrikethrough: =false
+                FontUnderline: =false
+                FontWeight: =""
+                Height: =50
+                Icon: =""
+                IconRotation: =0
+                IconStyle: ="Outline"
+                Layout: ="Icon before"
+                OnSelect: |-
+                    =//////////////////////////////////////////////////////////////////////////////////////////
+                    // Update checklist form (response) and update Technician Status to submitted
+                    
+                    Patch(
+                        tbl_mrl_workorder_assign,
+                        LookUp( tbl_mrl_workorder_assign, ID = workorderAssignId ),
+                        {
+                            status:{ Id: 9, Value: "Revise" },
+                            verify_status: "false",
+                            revise_remarks: tcpsTxtRemarks.Text
+                        }
+                    );
+                    
+                      // Log Main Work Order Change
+                        Patch(
+                            tbl_mrl_workorder_assign_log,
+                            Defaults(tbl_mrl_workorder_assign_log),
+                            {
+                                workorder_assign_id: workorderAssignId,
+                                maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
+                                maintenanceorder_status: "Revise",
+                                user_email: varUserRecord.email,
+                                user_role: varUserRecord.role.Value,
+                                user_department: varUserRecord.department.Value,
+                                location_longitude: Location.Longitude,
+                                location_latitude: Location.Latitude
+                            }
+                        );
+                    
+                    
+                    UpdateContext({
+                        isPopUpTechConfirmClose : false
+                    });
+                    Notify("Checklist Form Successfully Reviewed");
+                    Navigate(WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV);
+                TabIndex: =0
+                Text: ="Revise"
+                Tooltip: =""
+                VerticalAlign: =""
+                Visible: =true
+                Width: =360
+                X: =180
+                Y: =353
+                ZIndex: =5
+
+            tcpsTxtRemarks As modernTextInput:
+                Appearance: =Appearance.FilledDarker
+                Height: =110
+                Placeholder: ="Enter Remarks"
+                TriggerOutput: =TriggerOutput.Keypress
+                Type: =TextInputType.Multiline
+                ValidationState: =ValidationState.None
+                Width: =504
+                X: =28
+                Y: =224
+                ZIndex: =6
+
+    "'wvats-popupReviseRemark_1' As groupContainer.manualLayoutContainer":
+        Fill: =RGBA(0, 0, 0, 0.7)
+        Height: =768
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        Visible: =If(isWvatsPopupReviseRemark, true, false)
+        Width: =1366
+        ZIndex: =5
+
+        Container27_6 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(59, 53, 176, 1)
+            Height: =381
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            RadiusBottomLeft: =35
+            RadiusBottomRight: =35
+            RadiusTopLeft: =35
+            RadiusTopRight: =35
+            Width: =535
+            X: =387
+            Y: =168
+            ZIndex: =1
+
+            TextCanvas15_29 As modernText:
+                Align: =Align.Center
+                AutoHeight: =true
+                BorderStyle: =""
+                Color: =RGBA(255, 255, 255, 1)
+                Font: =Font.'Lato Black'
+                Height: =54
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =30
+                Text: ="Remark Revise"
+                VerticalAlign: =VerticalAlign.Top
+                Width: =280
+                X: =129
+                Y: =167
+                ZIndex: =1
+
+            TextCanvas15_30 As modernText:
+                Align: =Align.Center
+                BorderStyle: =""
+                Color: =RGBA(255, 255, 255, 1)
+                Font: =Font.Lato
+                Height: =47
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =18
+                Text: =varSelectedWorkOrder.revise_remark_sv
+                VerticalAlign: =VerticalAlign.Top
+                Width: =496
+                X: =21
+                Y: =231
+                ZIndex: =2
+
+            Icon2_10 As icon:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =38
+                Icon: =Icon.Cancel
+                OnSelect: |
+                    =UpdateContext({isWvatsPopupReviseRemark:false});
+                Width: =45
+                X: =474
+                Y: =18
+                ZIndex: =3
+
+            Icon6_12 As icon:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =80
+                Icon: =Icon.Warning
+                Width: =80
+                X: =229
+                Y: =71
+                ZIndex: =4
+

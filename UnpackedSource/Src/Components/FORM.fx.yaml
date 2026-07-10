@@ -1,0 +1,87 @@
+FORM As CanvasComponent:
+    Data: ="Text"
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =100
+    Label: ="Text"
+    Width: =If(App.Width < 640, App.Width, App.Width * 0.4)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Container38 As groupContainer.verticalAutoLayoutContainer:
+        DropShadow: =DropShadow.None
+        Height: =FORM.Height
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumnMinWidth: =0
+        LayoutGridColumns: =6
+        LayoutGridRowMinHeight: =0
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =8
+        PaddingLeft: =8
+        PaddingRight: =8
+        PaddingTop: =8
+        Width: =FORM.Width
+        ZIndex: =1
+
+        Container39 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.None
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutGridColumnMinWidth: =0
+            LayoutGridColumns: =6
+            LayoutGridRowMinHeight: =0
+            LayoutGridRows: =6
+            LayoutMaxHeight: =0
+            LayoutMaxWidth: =0
+            LayoutMinHeight: =16
+            LayoutMinWidth: =16
+            LayoutMode: =LayoutMode.Auto
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            ZIndex: =1
+
+            Text8 As modernText:
+                AutoHeight: =true
+                BorderStyle: =BorderStyle.None
+                Font: =Font.'Open Sans'
+                FontWeight: =FontWeight.Bold
+                LayoutMaxHeight: =0
+                LayoutMaxWidth: =0
+                LayoutMinHeight: =16
+                LayoutMinWidth: =16
+                Size: =18
+                Text: =FORM.Label
+                ZIndex: =1
+
+            Text9 As modernText:
+                AutoHeight: =true
+                Font: =Font.Lato
+                FontWeight: =FontWeight.Semibold
+                LayoutMaxHeight: =0
+                LayoutMaxWidth: =0
+                LayoutMinHeight: =16
+                LayoutMinWidth: =16
+                Size: =18
+                Text: |-
+                    =":"
+                Width: =20
+                ZIndex: =2
+
+            Text8_1 As modernText:
+                AutoHeight: =true
+                BorderStyle: =""
+                FillPortions: =1
+                Font: =Font.Lato
+                FontWeight: =FontWeight.Lighter
+                Height: =35
+                LayoutMaxHeight: =0
+                LayoutMaxWidth: =0
+                LayoutMinHeight: =16
+                LayoutMinWidth: =16
+                Size: =20
+                Text: =If(!IsBlank(FORM.Data), FORM.Data, "")
+                ZIndex: =3
+
