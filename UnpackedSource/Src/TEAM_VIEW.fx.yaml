@@ -136,7 +136,7 @@ TEAM_VIEW As screen:
                             UpdateContext({varIsLoading: true});
                             
                             // 2. Perform the Refresh
-                            Refresh(tbl_mrl_users);
+                            Refresh(tbl_user);
                             Refresh(ref_status);
                             
                             // 3. End the loading state
@@ -262,15 +262,15 @@ TEAM_VIEW As screen:
                         BorderThickness: =3
                         ChevronBackground: =RGBA(166, 166, 166, 1)
                         ChevronHoverBackground: =RGBA(166, 166, 166, 1)
-                        Default: =LookUp( ref_mrl_departments, Department_Code = varSelectedTeam.department.Value, Department_Code & " - " & Department_Name)
+                        Default: =LookUp( ref_department, department_code = varSelectedTeam.department.Value, department_code & " - " & department_name)
                         Font: =Font.Lato
                         Height: =35
                         HoverFill: =RGBA(255, 255, 255, 1)
                         Items: |-
                             =AddColumns(
-                                Filter(ref_mrl_departments,ID = varUserRecord.department.Id),
+                                Filter(ref_department,ID = varUserRecord.department.Id),
                                 DisplayLabel,
-                                Department_Code & " - " & Department_Name
+                                department_code & " - " & department_name
                             )
                         PressedFill: =RGBA(166, 166, 166, 1)
                         SelectionFill: =RGBA(166, 166, 166, 1)
@@ -671,7 +671,7 @@ TEAM_VIEW As screen:
                             PaddingRight: =0
                             PaddingTop: =0
                             Size: =12
-                            Text: =LookUp(tbl_mrl_users, ID = ThisItem.technician.Id).role.Value
+                            Text: =LookUp(tbl_user, ID = ThisItem.technician.Id).role.Value
                             VerticalAlign: =VerticalAlign.Top
                             Width: =80
                             X: =443
@@ -1047,11 +1047,11 @@ TEAM_VIEW As screen:
                 Items: |+
                     =Filter(
                         AddColumns(
-                            tbl_mrl_users,
+                            tbl_user,
                             full_name, 
                             If(
-                                !IsBlank(email) && IsMatch(email, Match.Email),
-                                Proper(Office365Users.UserProfileV2(email).displayName),
+                                !IsBlank(employee_email) && IsMatch(employee_email, Match.Email),
+                                Proper(Office365Users.UserProfileV2(employee_email).displayName),
                                 "Unknown User"
                             )
                         ), 
@@ -1096,7 +1096,7 @@ TEAM_VIEW As screen:
                     PaddingLeft: =0
                     PaddingRight: =0
                     PaddingTop: =0
-                    Text: =ThisItem.email
+                    Text: =ThisItem.employee_email
                     VerticalAlign: =VerticalAlign.Top
                     Width: =441
                     X: =Title11.X
@@ -1134,7 +1134,7 @@ TEAM_VIEW As screen:
                     FontUnderline: =false
                     FontWeight: =""
                     Height: =60
-                    Image: =Office365Users.UserPhotoV2(ThisItem.email)
+                    Image: =Office365Users.UserPhotoV2(ThisItem.employee_email)
                     Name: =
                     OutOfOffice: =false
                     Shape: ="Circular"

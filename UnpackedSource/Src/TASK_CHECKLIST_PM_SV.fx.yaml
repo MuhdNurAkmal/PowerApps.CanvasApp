@@ -57,9 +57,9 @@ TASK_CHECKLIST_PM_SV As screen:
                     Set(
                         varChecklistOutput,
                         If(
-                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            IsBlank(LookUp(tbl_workorder_assign, ID = workorderAssignId, response)),
                             Blank(),
-                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                            LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                         )
                     );,
         
@@ -106,9 +106,9 @@ TASK_CHECKLIST_PM_SV As screen:
                     Set(
                         varChecklistOutput,
                         If(
-                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            IsBlank(LookUp(tbl_workorder_assign, ID = workorderAssignId, response)),
                             Blank(),
-                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                            LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                         )
                     );,
         
@@ -569,8 +569,8 @@ TASK_CHECKLIST_PM_SV As screen:
                     // Update checklist form (response) and update Technician Status to submitted
                     
                     Patch(
-                        tbl_mrl_workorder_assign,
-                        LookUp( tbl_mrl_workorder_assign, ID = workorderAssignId ),
+                        tbl_workorder_assign,
+                        LookUp( tbl_workorder_assign, ID = workorderAssignId ),
                         {
                            verify_status: "true"
                         }
@@ -741,8 +741,8 @@ TASK_CHECKLIST_PM_SV As screen:
                     // Update checklist form (response) and update Technician Status to submitted
                     
                     Patch(
-                        tbl_mrl_workorder_assign,
-                        LookUp( tbl_mrl_workorder_assign, ID = workorderAssignId ),
+                        tbl_workorder_assign,
+                        LookUp( tbl_workorder_assign, ID = workorderAssignId ),
                         {
                             status:{ Id: 9, Value: "Revise" },
                             verify_status: "false",
@@ -752,8 +752,8 @@ TASK_CHECKLIST_PM_SV As screen:
                     
                       // Log Main Work Order Change
                         Patch(
-                            tbl_mrl_workorder_assign_log,
-                            Defaults(tbl_mrl_workorder_assign_log),
+                            tbl_workorder_assign_log,
+                            Defaults(tbl_workorder_assign_log),
                             {
                                 workorder_assign_id: workorderAssignId,
                                 maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,

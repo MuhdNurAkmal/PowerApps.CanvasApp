@@ -54,9 +54,9 @@ TASK_CHECKLIST_PM As screen:
                 Set(
                     varChecklistOutput,
                     If(
-                        IsBlank(LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID, response)),
+                        IsBlank(LookUp(tbl_workorder_assign, ID = varSelectedTask.ID, response)),
                         Blank(),
-                        LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID, response)
+                        LookUp(tbl_workorder_assign, ID = varSelectedTask.ID, response)
                     )
                 );,
         
@@ -91,9 +91,9 @@ TASK_CHECKLIST_PM As screen:
                     Set(
                         varChecklistOutput,
                         If(
-                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            IsBlank(LookUp(tbl_workorder_assign, ID = workorderAssignId, response)),
                             Blank(),
-                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                            LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                         )
                     );,
         
@@ -137,9 +137,9 @@ TASK_CHECKLIST_PM As screen:
                     Set(
                         varChecklistOutput,
                         If(
-                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            IsBlank(LookUp(tbl_workorder_assign, ID = workorderAssignId, response)),
                             Blank(),
-                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                            LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                         )
                     );,
         
@@ -186,9 +186,9 @@ TASK_CHECKLIST_PM As screen:
                     Set(
                         varChecklistOutput,
                         If(
-                            IsBlank(LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)),
+                            IsBlank(LookUp(tbl_workorder_assign, ID = workorderAssignId, response)),
                             Blank(),
-                            LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                            LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                         )
                     );,
         
@@ -280,7 +280,7 @@ TASK_CHECKLIST_PM As screen:
                     !IsBlank(workorderAssignId),
                     Set(
                         varChecklistOutput,
-                        LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                        LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                     );,
                     Set(
                         varChecklistOutput,
@@ -310,7 +310,7 @@ TASK_CHECKLIST_PM As screen:
                     !IsBlank(workorderAssignId),
                     Set(
                         varChecklistOutput,
-                        LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                        LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                     );,
                     Set(
                         varChecklistOutput,
@@ -341,7 +341,7 @@ TASK_CHECKLIST_PM As screen:
                     !IsBlank(workorderAssignId),
                     Set(
                         varChecklistOutput,
-                        LookUp(tbl_mrl_workorder_assign, ID = workorderAssignId, response)
+                        LookUp(tbl_workorder_assign, ID = workorderAssignId, response)
                     );,
                     Set(
                         varChecklistOutput,
@@ -657,8 +657,8 @@ TASK_CHECKLIST_PM As screen:
                         OnSelect: |-
                             =// update response json to sharepoint
                             Patch(
-                                tbl_mrl_workorder_assign,
-                                LookUp( tbl_mrl_workorder_assign, ID = varSelectedTask.ID ),
+                                tbl_workorder_assign,
+                                LookUp( tbl_workorder_assign, ID = varSelectedTask.ID ),
                                 {
                                    response: varChecklistOutput
                                 }
@@ -783,10 +783,10 @@ TASK_CHECKLIST_PM As screen:
                         }
                     );
                     
-                    // log tbl_mrl_workorder_log status ASG
+                    // log tbl_workorder_log status ASG
                     Patch(
-                        tbl_mrl_workorder_log,
-                        Defaults(tbl_mrl_workorder_log),
+                        tbl_workorder_log,
+                        Defaults(tbl_workorder_log),
                         {
                             maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                             maintenanceorder_status: "CLS",
@@ -801,19 +801,19 @@ TASK_CHECKLIST_PM As screen:
                     /*
                     // Update work order assign to closed
                     ForAll(
-                        Filter(tbl_mrl_workorder_assign, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no),
+                        Filter(tbl_workorder_assign, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no),
                         Patch(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             ThisRecord,
                             {
                                 status: { Id: 6 , Value: "Closed" }
                             }
                         );
                     
-                        // log tbl_mrl_workorder_assign_log status Processing
+                        // log tbl_workorder_assign_log status Processing
                         Patch(
-                            tbl_mrl_workorder_assign_log,
-                            Defaults(tbl_mrl_workorder_assign_log),
+                            tbl_workorder_assign_log,
+                            Defaults(tbl_workorder_assign_log),
                             {
                                 workorder_assign_id: ThisRecord.ID,
                                 maintenanceorder_no: Round(varSelectedWorkOrder.maintenanceorder_no,0),
@@ -832,7 +832,7 @@ TASK_CHECKLIST_PM As screen:
                     ClearCollect(
                         colToClose,
                         Filter(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                         )
                     );
@@ -844,7 +844,7 @@ TASK_CHECKLIST_PM As screen:
                             {
                                 UpdatedAssign:
                                 Patch(
-                                    tbl_mrl_workorder_assign,
+                                    tbl_workorder_assign,
                                     CurrentAssign,
                                     {
                                         status: { Id: 6, Value: "Closed" }
@@ -852,8 +852,8 @@ TASK_CHECKLIST_PM As screen:
                                 )
                             },
                             Patch(
-                                tbl_mrl_workorder_assign_log,
-                                Defaults(tbl_mrl_workorder_assign_log),
+                                tbl_workorder_assign_log,
+                                Defaults(tbl_workorder_assign_log),
                                 {
                                     workorder_assign_id: UpdatedAssign.ID,
                                     maintenanceorder_no: Round(varSelectedWorkOrder.maintenanceorder_no, 0),
@@ -1104,8 +1104,8 @@ TASK_CHECKLIST_PM As screen:
                     // Update checklist form (response) and update Technician Status to submitted
                     
                     Patch(
-                        tbl_mrl_workorder_assign,
-                        LookUp( tbl_mrl_workorder_assign, ID = varSelectedTask.ID ),
+                        tbl_workorder_assign,
+                        LookUp( tbl_workorder_assign, ID = varSelectedTask.ID ),
                         {
                             response: varChecklistOutput,
                             status: {
@@ -1116,10 +1116,10 @@ TASK_CHECKLIST_PM As screen:
                         }
                     );
                     
-                    // log tbl_mrl_workorder_assign_log status Processing
+                    // log tbl_workorder_assign_log status Processing
                     Patch(
-                        tbl_mrl_workorder_assign_log,
-                        Defaults(tbl_mrl_workorder_assign_log),
+                        tbl_workorder_assign_log,
+                        Defaults(tbl_workorder_assign_log),
                         {
                             workorder_assign_id: varSelectedTask.ID,
                             maintenanceorder_no: varSelectedTask.maintenanceorder_no,
@@ -1138,7 +1138,7 @@ TASK_CHECKLIST_PM As screen:
                     
                     
                     //////////////////////////////////////////////////////////////////////////////////////////
-                    // Update response to tbl_mrl_workorder 
+                    // Update response to tbl_workorder 
                     // Conflict-Free Merging Logic (Bypasses Table/ParseJSON errors)
                     
                     // 1. Initialize and clear the collection to define schema
@@ -1147,7 +1147,7 @@ TASK_CHECKLIST_PM As screen:
                     
                     // Load all relevant responses into a local collection to avoid delegation issues
                     ClearCollect(colRawResponses, 
-                        Filter(tbl_mrl_workorder_assign, maintenanceorder_no = varSelectedTask.maintenanceorder_no && !IsBlank(response))
+                        Filter(tbl_workorder_assign, maintenanceorder_no = varSelectedTask.maintenanceorder_no && !IsBlank(response))
                     );
                     
                     
@@ -1180,7 +1180,7 @@ TASK_CHECKLIST_PM As screen:
                     });
                     
                     
-                    // 5. Patch to the Master Table (tbl_mrl_workorder)
+                    // 5. Patch to the Master Table (tbl_workorder)
                     Patch(
                         tbl_maintenance_order,
                         LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedTask.maintenanceorder_no), 
@@ -1227,8 +1227,8 @@ TASK_CHECKLIST_PM As screen:
                         // ================= ONLINE =================
                         // response + Technician status → Submitted
                         Patch(
-                            tbl_mrl_workorder_assign,
-                            LookUp(tbl_mrl_workorder_assign, ID = varPMPayload.assign_id),
+                            tbl_workorder_assign,
+                            LookUp(tbl_workorder_assign, ID = varPMPayload.assign_id),
                             {
                                 response: varPMPayload.response_json,
                                 status: { Id: 5, Value: "Submitted" },
@@ -1238,8 +1238,8 @@ TASK_CHECKLIST_PM As screen:
                     
                         // log Submitted
                         Patch(
-                            tbl_mrl_workorder_assign_log,
-                            Defaults(tbl_mrl_workorder_assign_log),
+                            tbl_workorder_assign_log,
+                            Defaults(tbl_workorder_assign_log),
                             {
                                 workorder_assign_id: varPMPayload.assign_id,
                                 maintenanceorder_no: varPMPayload.maintenanceorder_no,

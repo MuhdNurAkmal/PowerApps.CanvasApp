@@ -44,7 +44,7 @@ TASK_CHECKLIST_CM As screen:
             // ONLINE: load live + cache
             ClearCollect(
                 colTblMrlWorkorderAssign,
-                Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
             );
             IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
             
@@ -246,13 +246,13 @@ TASK_CHECKLIST_CM As screen:
                                 maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                                 station_id: ddStation.Selected.ID,
                                 station_value: ddStation.Selected.station_name,
-                                system_id: LookUp(colRefSystem, system_name = ddSystem.Selected.Value).ID,
+                                system_id: LookUp(colRefSystem, system = ddSystem.Selected.Value).ID,
                                 system_value: ddSystem.Selected.Value,
-                                subsystem_id: LookUp(colRefSubsystem, subsystem_name = ddSubSystem.Selected.Value).ID,
+                                subsystem_id: LookUp(colRefSubsystem, sub_system = ddSubSystem.Selected.Value).ID,
                                 subsystem_value: ddSubSystem.Selected.Value,
-                                sub_subsystem_id: LookUp(colRefSubSubsystem, sub_subsystem_name = ddSubSubSystem.Selected.Value).ID,
+                                sub_subsystem_id: LookUp(colRefSubSubsystem, sub_sub_system = ddSubSubSystem.Selected.Value).ID,
                                 sub_subsystem_value: ddSubSubSystem.Selected.Value,
-                                root_cause_id: LookUp(colRefRootCause, root_cause_name = ddRootCause.Selected.Value).ID,
+                                root_cause_id: LookUp(colRefRootCause, root_cause = ddRootCause.Selected.Value).ID,
                                 root_cause_value: ddRootCause.Selected.Value,
                                 plan_start_date: dtPlanStartDate.SelectedDate,
                                 plan_end_date: dtPlanEndDate.SelectedDate,
@@ -1050,19 +1050,19 @@ TASK_CHECKLIST_CM As screen:
                                 Value: ddStation.Selected.station_name
                             },
                             system: {
-                                Id: LookUp(ref_system, system_name = ddSystem.Selected.Value).ID,
+                                Id: LookUp(ref_system, system = ddSystem.Selected.Value).ID,
                                 Value: ddSystem.Selected.Value
                             },
                             subsystem: {
-                                Id: LookUp(ref_subsystem, subsystem_name = ddSubSystem.Selected.Value).ID,
+                                Id: LookUp(ref_sub_system, sub_system = ddSubSystem.Selected.Value).ID,
                                 Value: ddSubSystem.Selected.Value
                             }, 
                             sub_subsystem: {
-                                Id: LookUp(ref_sub_subsystem, sub_subsystem_name = ddSubSubSystem.Selected.Value).ID,
+                                Id: LookUp(ref_sub_subsystem, sub_sub_system = ddSubSubSystem.Selected.Value).ID,
                                 Value: ddSubSubSystem.Selected.Value
                             },
                             root_cause: {
-                                Id: LookUp(ref_root_cause, root_cause_name = ddRootCause.Selected.Value).ID,
+                                Id: LookUp(ref_root_cause, root_cause = ddRootCause.Selected.Value).ID,
                                 Value: ddRootCause.Selected.Value
                             },
                             plan_start_date: dtPlanStartDate.SelectedDate, 
@@ -1081,8 +1081,8 @@ TASK_CHECKLIST_CM As screen:
                     
                     // 2. Update Technician Assignment Status to "Submitted"
                     Patch(
-                        tbl_mrl_workorder_assign,
-                        LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID),
+                        tbl_workorder_assign,
+                        LookUp(tbl_workorder_assign, ID = varSelectedTask.ID),
                         {
                             status: { Id: 5, Value: "Submitted" },
                             end_date: Now()
@@ -1091,8 +1091,8 @@ TASK_CHECKLIST_CM As screen:
                     
                     // 3. Log the status in the Log table
                     Patch(
-                        tbl_mrl_workorder_assign_log,
-                        Defaults(tbl_mrl_workorder_assign_log),
+                        tbl_workorder_assign_log,
+                        Defaults(tbl_workorder_assign_log),
                         {
                             workorder_assign_id: varSelectedTask.ID,
                             maintenanceorder_no: varSelectedTask.maintenanceorder_no,
@@ -1105,7 +1105,7 @@ TASK_CHECKLIST_CM As screen:
                         }
                     );
                     
-                    // 4. Update ONLY the Remark in the Master Table (tbl_mrl_workorder)
+                    // 4. Update ONLY the Remark in the Master Table (tbl_workorder)
                     Patch(
                         tbl_maintenance_order,
                         LookUp(tbl_maintenance_order, maintenanceorder_no = varSelectedTask.maintenanceorder_no),
@@ -1144,13 +1144,13 @@ TASK_CHECKLIST_CM As screen:
                         maintenanceorder_no: varSelectedTask.maintenanceorder_no,
                         station_id: ddStation.Selected.ID,
                         station_value: ddStation.Selected.station_name,
-                        system_id: LookUp(colRefSystem, system_name = ddSystem.Selected.Value).ID,
+                        system_id: LookUp(colRefSystem, system = ddSystem.Selected.Value).ID,
                         system_value: ddSystem.Selected.Value,
-                        subsystem_id: LookUp(colRefSubsystem, subsystem_name = ddSubSystem.Selected.Value).ID,
+                        subsystem_id: LookUp(colRefSubsystem, sub_system = ddSubSystem.Selected.Value).ID,
                         subsystem_value: ddSubSystem.Selected.Value,
-                        sub_subsystem_id: LookUp(colRefSubSubsystem, sub_subsystem_name = ddSubSubSystem.Selected.Value).ID,
+                        sub_subsystem_id: LookUp(colRefSubSubsystem, sub_sub_system = ddSubSubSystem.Selected.Value).ID,
                         sub_subsystem_value: ddSubSubSystem.Selected.Value,
-                        root_cause_id: LookUp(colRefRootCause, root_cause_name = ddRootCause.Selected.Value).ID,
+                        root_cause_id: LookUp(colRefRootCause, root_cause = ddRootCause.Selected.Value).ID,
                         root_cause_value: ddRootCause.Selected.Value,
                         plan_start_date: dtPlanStartDate.SelectedDate,
                         plan_end_date: dtPlanEndDate.SelectedDate,
@@ -1191,12 +1191,12 @@ TASK_CHECKLIST_CM As screen:
                             car_position: If(varCMPayload.is_rsdm, { Id: varCMPayload.car_position_id, Value: varCMPayload.car_position_value }, Blank())
                         });
                     
-                        Patch(tbl_mrl_workorder_assign,
-                            LookUp(tbl_mrl_workorder_assign, ID = varCMPayload.assign_id),
+                        Patch(tbl_workorder_assign,
+                            LookUp(tbl_workorder_assign, ID = varCMPayload.assign_id),
                             { status: { Id: 5, Value: "Submitted" }, end_date: varCMPayload.submitted_at }
                         );
                     
-                        Patch(tbl_mrl_workorder_assign_log, Defaults(tbl_mrl_workorder_assign_log), {
+                        Patch(tbl_workorder_assign_log, Defaults(tbl_workorder_assign_log), {
                             workorder_assign_id: varCMPayload.assign_id,
                             maintenanceorder_no: varCMPayload.assign_mo_no,
                             maintenanceorder_status: "Submitted",
@@ -1300,7 +1300,7 @@ TASK_CHECKLIST_CM As screen:
                 If(
                     varIsOffline,
                     Set(varIsOffline, false);
-                    ClearCollect(colTblMrlWorkorderAssign, Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID));
+                    ClearCollect(colTblMrlWorkorderAssign, Filter(tbl_workorder_assign, technician_id = varUserRecord.ID));
                     IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
                     //Notify("Back online — data refreshed", NotificationType.Success)
                 ),

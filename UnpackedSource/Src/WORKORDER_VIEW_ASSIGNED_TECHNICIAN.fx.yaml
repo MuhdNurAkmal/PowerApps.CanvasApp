@@ -141,8 +141,8 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             UpdateContext({varIsLoading: true});
                             
                             // 2. Perform the Refresh
-                            Refresh(Filter(tbl_mrl_workorder_assign,workorder.Id = varSelectedWorkOrder.ID));
-                            Refresh(Filter(ref_template, Department.Id = varUserRecord.department.Id && Status.Value = "Active"));
+                            Refresh(Filter(tbl_workorder_assign,maintenanceorder_no = varSelectedWorkOrder.ID));
+                            Refresh(Filter(ref_template, department.Id = varUserRecord.department.Id && Status.Value = "Active"));
                             
                             // 3. End the loading state
                             UpdateContext({varIsLoading: false});
@@ -351,7 +351,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
 
                         lblDateOpenedValue As label:
                             Height: =31
-                            Text: =varSelectedWorkOrder.date_opened
+                            Text: =varSelectedWorkOrder.created_on
                             Width: =160
                             X: =234
                             Y: =84
@@ -377,6 +377,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Y: =257
                             ZIndex: =14
 
+                        # this column not exists
                         lblTargetDateValue As label:
                             Height: =29
                             Text: =varSelectedWorkOrder.target_date
@@ -475,6 +476,8 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     X: =569
                     Y: =50
                     ZIndex: =3
+
+                    # START SINI DH ADA MAINTENANCE ORDER CM
 
                     "galleryAssignedTech_1 As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
                         '#CopilotOverlayLabel': ="Filtered"
@@ -691,7 +694,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                         Height: =386
                         Items: |
                             =Filter(
-                                tbl_mrl_workorder_assign,
+                                tbl_workorder_assign,
                                 maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                             )
                         Layout: =Layout.Vertical
@@ -716,7 +719,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             PaddingRight: =0
                             PaddingTop: =0
                             Size: =12
-                            Text: =ThisItem.team.Value & " | " & LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value
+                            Text: =ThisItem.team.Value & " | " & LookUp(tbl_users, ThisItem.technician_id = ID).role.Value
                             VerticalAlign: =VerticalAlign.Top
                             Width: =217
                             X: =92
@@ -754,6 +757,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Width: =4
                             ZIndex: =6
 
+                        # tk tahu error kt mana
                         Title9_1 As label:
                             AutoHeight: =true
                             BorderColor: =RGBA(0, 0, 0, 1)
@@ -769,7 +773,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Size: =14
                             Text: |-
                                 =With(
-                                    { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                                    { matchedEmail: LookUp(tbl_user, ID = Value(ThisItem.technician_id)).employee_email },
                                     If(
                                         !IsBlank(matchedEmail),
                                         Proper(Office365Users.UserProfileV2(matchedEmail).displayName),
@@ -800,7 +804,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Image: |-
                                 =//Office365Users.UserPhotoV2(ThisItem.user_id.Value)
                                 With(
-                                    { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                                    { matchedEmail: LookUp(tbl_users, ID = Value(ThisItem.technician_id)).employee_email },
                                     If(
                                         !IsBlank(matchedEmail),
                                         IfError(Office365Users.UserPhotoV2(matchedEmail), SampleImage),
@@ -832,7 +836,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Size: =12
                             Text: =ThisItem.start_date
                             VerticalAlign: =VerticalAlign.Top
-                            Visible: =If (LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
+                            Visible: =If (LookUp(tbl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
                             Width: =104
                             X: =316
                             Y: =16
@@ -852,7 +856,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Size: =12
                             Text: =ThisItem.end_date
                             VerticalAlign: =VerticalAlign.Top
-                            Visible: =If (LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
+                            Visible: =If (LookUp(tbl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
                             Width: =104
                             X: =440
                             Y: =14
@@ -873,7 +877,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             Size: =12
                             Text: =Coalesce(ThisItem.status.Value,"N/A")
                             VerticalAlign: =VerticalAlign.Top
-                            Visible: =If (LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
+                            Visible: =If (LookUp(tbl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
                             Width: =84
                             X: =543
                             Y: =30
@@ -908,7 +912,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                         Visible: |-
                             =IsBlank(
                                 LookUp(
-                                    tbl_mrl_workorder_assign,
+                                    tbl_workorder_assign,
                                     maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no,
                                     maintenanceorder_no
                                 )
@@ -1142,20 +1146,20 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             =/*
                             If(
                                 // 1. Condition: Check if team is empty OR if the form template is missing
-                                IsBlank(LookUp(tbl_mrl_workorder_assign, workorder.Id = varSelectedWorkOrder.ID)) || 
-                                IsBlank(LookUp(tbl_mrl_workorder, ID = varSelectedWorkOrder.ID, form_template)),
+                                IsBlank(LookUp(tbl_workorder_assign, workorder.Id = varSelectedWorkOrder.ID)) || 
+                                IsBlank(LookUp(tbl_workorder, ID = varSelectedWorkOrder.ID, form_template)),
                             
                                 // True: Show appropriate error message
                                 If(
-                                    IsBlank(LookUp(tbl_mrl_workorder, ID = varSelectedWorkOrder.ID, form_template)),
+                                    IsBlank(LookUp(tbl_workorder, ID = varSelectedWorkOrder.ID, form_template)),
                                     Notify("Please select a 'Checklist Form' before assigning.", NotificationType.Error),
                                     Notify("Please Add Team Members", NotificationType.Error)
                                 ),
                                 
                                 // Update Main Work Order Status
                                 Patch(
-                                    tbl_mrl_workorder,
-                                    LookUp(tbl_mrl_workorder, workorder_no = varSelectedWorkOrder.workorder_no),
+                                    tbl_workorder,
+                                    LookUp(tbl_workorder, workorder_no = varSelectedWorkOrder.workorder_no),
                                     {
                                         status_workorder_dmp: {
                                             Id: 3,
@@ -1166,12 +1170,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             
                                 // Log Main Work Order Change
                                 Patch(
-                                    tbl_mrl_workorder_log,
-                                    Defaults(tbl_mrl_workorder_log),
+                                    tbl_workorder_log,
+                                    Defaults(tbl_workorder_log),
                                     {
                                         workorder_no_ref: varSelectedWorkOrder.workorder_no,
                                         workorder_status: "ASG",
-                                        user_email: varUserRecord.email,
+                                        user_email: varUserRecord.employee_email,
                                         user_role: varUserRecord.role.Value,
                                         user_department: varUserRecord.department.Value,
                                         location_long: Location.Longitude,
@@ -1181,11 +1185,11 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             
                                 // Loop through and Update each Assignment + Log each assignment
                                 ForAll(
-                                    Filter(tbl_mrl_workorder_assign, workorder.Id = varSelectedWorkOrder.ID) As CurrentAssign,
+                                    Filter(tbl_workorder_assign, workorder.Id = varSelectedWorkOrder.ID) As CurrentAssign,
                                     With(
                                         {
                                             UpdatedAssign: Patch(
-                                                tbl_mrl_workorder_assign,
+                                                tbl_workorder_assign,
                                                 CurrentAssign,
                                                 {
                                                     status: { Id: 2, Value: "New" }
@@ -1193,13 +1197,13 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                             )
                                         },
                                         Patch(
-                                            tbl_mrl_workorder_assign_log,
-                                            Defaults(tbl_mrl_workorder_assign_log),
+                                            tbl_workorder_assign_log,
+                                            Defaults(tbl_workorder_assign_log),
                                             {
                                                 workorder_assign_id: UpdatedAssign.ID,
                                                 workorder_no: varSelectedWorkOrder.workorder_no,
                                                 workorder_status: "New",
-                                                user_email: varUserRecord.email,
+                                                user_email: varUserRecord.employee_email,
                                                 user_department: varUserRecord.department.Value,
                                                 user_role: varUserRecord.role.Value,
                                                 location_long: Location.Longitude,
@@ -1216,8 +1220,8 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             
                             /*With(
                                 {
-                                    _workorder: LookUp(tbl_mrl_workorder, ID = varSelectedWorkOrder.ID),
-                                    _team: Filter(tbl_mrl_workorder_assign, workorder.Id = varSelectedWorkOrder.ID)
+                                    _workorder: LookUp(tbl_workorder, ID = varSelectedWorkOrder.ID),
+                                    _team: Filter(tbl_workorder_assign, workorder.Id = varSelectedWorkOrder.ID)
                                 },
                             
                                 If(
@@ -1233,7 +1237,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             
                                     // ✅ MAIN PROCESS
                                     Patch(
-                                        tbl_mrl_workorder,
+                                        tbl_workorder,
                                         _workorder,
                                         {
                                             status_workorder_dmp: {
@@ -1244,12 +1248,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                     );
                             
                                     Patch(
-                                        tbl_mrl_workorder_log,
-                                        Defaults(tbl_mrl_workorder_log),
+                                        tbl_workorder_log,
+                                        Defaults(tbl_workorder_log),
                                         {
                                             workorder_no_ref: varSelectedWorkOrder.workorder_no,
                                             workorder_status: "ASG",
-                                            user_email: varUserRecord.email,
+                                            user_email: varUserRecord.employee_email,
                                             user_role: varUserRecord.role.Value,
                                             user_department: varUserRecord.department.Value,
                                             location_long: Location.Longitude,
@@ -1262,7 +1266,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                         With(
                                             {
                                                 UpdatedAssign: Patch(
-                                                    tbl_mrl_workorder_assign,
+                                                    tbl_workorder_assign,
                                                     CurrentAssign,
                                                     {
                                                         status: { Id: 2, Value: "New" }
@@ -1270,13 +1274,13 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                                 )
                                             },
                                             Patch(
-                                                tbl_mrl_workorder_assign_log,
-                                                Defaults(tbl_mrl_workorder_assign_log),
+                                                tbl_workorder_assign_log,
+                                                Defaults(tbl_workorder_assign_log),
                                                 {
                                                     workorder_assign_id: UpdatedAssign.ID,
                                                     workorder_no: varSelectedWorkOrder.workorder_no,
                                                     workorder_status: "New",
-                                                    user_email: varUserRecord.email,
+                                                    user_email: varUserRecord.employee_email,
                                                     user_department: varUserRecord.department.Value,
                                                     user_role: varUserRecord.role.Value,
                                                     location_long: Location.Longitude,
@@ -1295,7 +1299,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                             With(
                                 {
                                     _workorder: LookUp(tbl_maintenance_order, ID = varSelectedWorkOrder.ID),
-                                    _team: Filter(tbl_mrl_workorder_assign, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)
+                                    _team: Filter(tbl_workorder_assign, maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)
                                 },
                             
                                 // ❌ VALIDATION LOGIC
@@ -1324,12 +1328,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                     );
                             
                                     Patch(
-                                        tbl_mrl_workorder_log,
-                                        Defaults(tbl_mrl_workorder_log),
+                                        tbl_workorder_log,
+                                        Defaults(tbl_workorder_log),
                                         {
                                             maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                                             maintenanceorder_status: "ASG",
-                                            user_email: varUserRecord.email,
+                                            user_email: varUserRecord.employee_email,
                                             user_role: varUserRecord.role.Value,
                                             user_department: varUserRecord.department.Value,
                                             location_longitude: Location.Longitude,
@@ -1342,7 +1346,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                         With(
                                             {
                                                 UpdatedAssign: Patch(
-                                                    tbl_mrl_workorder_assign,
+                                                    tbl_workorder_assign,
                                                     CurrentAssign,
                                                     {
                                                         status: { Id: 2, Value: "New" }
@@ -1350,13 +1354,13 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                                 )
                                             },
                                             Patch(
-                                                tbl_mrl_workorder_assign_log,
-                                                Defaults(tbl_mrl_workorder_assign_log),
+                                                tbl_workorder_assign_log,
+                                                Defaults(tbl_workorder_assign_log),
                                                 {
                                                     workorder_assign_id: UpdatedAssign.ID,
                                                     maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                                                     maintenanceorder_status: "New",
-                                                    user_email: varUserRecord.email,
+                                                    user_email: varUserRecord.employee_email,
                                                     user_department: varUserRecord.department.Value,
                                                     user_role: varUserRecord.role.Value,
                                                     location_longitude: Location.Longitude,
@@ -1565,7 +1569,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                         Font: =Font.Lato
                         Height: =42
                         HoverFill: =RGBA(255, 255, 255, 1)
-                        Items: =Filter(ref_template, Department.Id = varUserRecord.department.Id && Status.Value = "Active")
+                        Items: =Filter(ref_template, department.Id = varUserRecord.department.Id && status.Value = "Active")
                         OnChange: |-
                             =/*If(
                                 IsBlank(ddChecklistTemplate.Selected),
@@ -1576,8 +1580,8 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                 ),
                                 
                                 Patch(
-                                    tbl_mrl_workorder,
-                                    LookUp(tbl_mrl_workorder, workorder_no = varSelectedWorkOrder.workorder_no),
+                                    tbl_workorder,
+                                    LookUp(tbl_workorder, workorder_no = varSelectedWorkOrder.workorder_no),
                                     {
                                         form_template: {
                                             Id: ddChecklistTemplate.Selected.ID,
@@ -1914,7 +1918,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     ClearCollect(
                         colExistingAssign,
                         Filter(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                         )
                     );
@@ -1935,7 +1939,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                                         )
                                     },
                                     Patch(
-                                        Coalesce(existingRecord, Defaults(tbl_mrl_workorder_assign)),
+                                        Coalesce(existingRecord, Defaults(tbl_workorder_assign)),
                                         {
                                             maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                                             technician_id: CurrentMember.technician.Id,
@@ -1959,7 +1963,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                         );
                     
                         // ...then one batched Patch to the data source
-                        Patch(tbl_mrl_workorder_assign, colToPatch);
+                        Patch(tbl_workorder_assign, colToPatch);
                     
                         Patch(
                             tbl_log,
@@ -2035,7 +2039,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                 DelayItemLoading: =true
                 Fill: =RGBA(255, 255, 255, 1)
                 Height: =425
-                Items: =Filter(tbl_mrl_workorder_assign,maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)
+                Items: =Filter(tbl_workorder_assign,maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no)
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 TemplatePadding: =0
@@ -2059,7 +2063,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     Size: =14
                     Text: |-
                         =With(
-                            { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                            { matchedEmail: LookUp(tbl_users, ID = Value(ThisItem.technician_id)).employee_email },
                             If(
                                 !IsBlank(matchedEmail),
                                 Proper(Office365Users.UserProfileV2(matchedEmail).displayName),
@@ -2127,7 +2131,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     Image: |-
                         =//Office365Users.UserPhotoV2(ThisItem.technician_id)
                         With(
-                            { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                            { matchedEmail: LookUp(tbl_users, ID = Value(ThisItem.technician_id)).employee_email },
                             If(
                                 !IsBlank(matchedEmail),
                                 IfError(Office365Users.UserPhotoV2(matchedEmail), SampleImage),
@@ -2188,7 +2192,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     Icon: ="Delete"
                     IconStyle: ='ButtonCanvas.IconStyle'.Outline
                     Layout: ='ButtonCanvas.Layout'.IconOnly
-                    OnSelect: =Remove(tbl_mrl_workorder_assign, ThisItem)
+                    OnSelect: =Remove(tbl_workorder_assign, ThisItem)
                     Text: =
                     VerticalAlign: =VerticalAlign.Middle
                     Width: =50
@@ -2208,7 +2212,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     PaddingRight: =0
                     PaddingTop: =0
                     Size: =14
-                    Text: =LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value
+                    Text: =LookUp(tbl_users, ThisItem.technician_id = ID).role.Value
                     VerticalAlign: =VerticalAlign.Top
                     Width: =180
                     X: =428
@@ -2228,7 +2232,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     PaddingTop: =0
                     Size: =14
                     Text: |
-                        =LookUp(tbl_mrl_users, ThisItem.technician_id = ID).email
+                        =LookUp(tbl_users, ThisItem.technician_id = ID).employee_email
                     VerticalAlign: =VerticalAlign.Top
                     Width: =299
                     X: =102
@@ -2244,7 +2248,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                 Visible: |-
                     =IsBlank(
                         LookUp(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no,
                             maintenanceorder_no
                         )
@@ -2507,7 +2511,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     =If(
                         IsEmpty(
                             Filter(
-                                tbl_mrl_workorder_assign,
+                                tbl_workorder_assign,
                                 maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                             )
                         ),
@@ -2517,7 +2521,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                         ),
                         Concurrent(
                             RemoveIf(
-                                tbl_mrl_workorder_assign,
+                                tbl_workorder_assign,
                                 maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                             ),
                             Notify(
@@ -2645,7 +2649,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                 Items: |-
                     =Sort(
                         Filter(
-                            tbl_mrl_workorder_log, 
+                            tbl_workorder_log, 
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                         ),
                         Created,
@@ -2718,7 +2722,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     PaddingRight: =0
                     PaddingTop: =0
                     Size: =12
-                    Text: =ThisItem.user_email
+                    Text: =ThisItem.employee_email
                     VerticalAlign: =VerticalAlign.Top
                     Width: =413
                     X: =201
@@ -2737,9 +2741,9 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     Size: =12
                     Text: |-
                         =If(
-                            !IsBlank(ThisItem.user_email) && Len(Text(ThisItem.user_email)) > 5,
+                            !IsBlank(ThisItem.employee_email) && Len(Text(ThisItem.employee_email)) > 5,
                             Proper(
-                                Office365Users.UserProfileV2(ThisItem.user_email).displayName
+                                Office365Users.UserProfileV2(ThisItem.employee_email).displayName
                             ),
                             "-"
                         )
@@ -2858,7 +2862,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                 Visible: |-
                     =IsBlank(
                         LookUp(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no,
                             maintenanceorder_no
                         )
@@ -3066,12 +3070,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     );
                     
                     Patch(
-                        tbl_mrl_workorder_log,
-                        Defaults(tbl_mrl_workorder_log),
+                        tbl_workorder_log,
+                        Defaults(tbl_workorder_log),
                         {
                             maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                             maintenanceorder_status: "CLS1",
-                            user_email: varUserRecord.email,
+                            user_email: varUserRecord.employee_email,
                             user_role: varUserRecord.role.Value,
                             user_department: varUserRecord.department.Value,
                             location_longitude: Location.Longitude,
@@ -3266,12 +3270,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                     );
                     
                     Patch(
-                        tbl_mrl_workorder_log,
-                        Defaults(tbl_mrl_workorder_log),
+                        tbl_workorder_log,
+                        Defaults(tbl_workorder_log),
                         {
                             maintenanceorder_no: varSelectedWorkOrder.maintenanceorder_no,
                             maintenanceorder_status: "REV1",
-                            user_email: varUserRecord.email,
+                            user_email: varUserRecord.employee_email,
                             user_role: varUserRecord.role.Value,
                             user_department: varUserRecord.department.Value,
                             location_longitude: Location.Longitude,
@@ -3404,7 +3408,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN As screen:
                 Visible: |-
                     =IsBlank(
                         LookUp(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no,
                             maintenanceorder_no
                         )

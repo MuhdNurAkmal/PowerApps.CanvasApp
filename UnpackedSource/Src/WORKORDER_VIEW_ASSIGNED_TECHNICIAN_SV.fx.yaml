@@ -12,8 +12,8 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
         UpdateContext({varIsLoading: true});
         
         // 2. Perform the Refresh
-        Refresh(Filter(tbl_mrl_workorder_assign,workorder.Id = varSelectedWorkOrder.ID));
-        Refresh(Filter(ref_template, Department.Id = varUserRecord.department.Id && Status.Value = "Active"));
+        Refresh(Filter(tbl_workorder_assign,maintenanceorder_no = varSelectedWorkOrder.ID));
+        Refresh(Filter(ref_template, department.Id = varUserRecord.department.Id && Status.Value = "Active"));
         
         // 3. End the loading state
         UpdateContext({varIsLoading: false});
@@ -152,8 +152,8 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             UpdateContext({varIsLoading: true});
                             
                             // 2. Perform the Refresh
-                            Refresh(Filter(tbl_mrl_workorder_assign,maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no));
-                            Refresh(Filter(ref_template, Department.Id = varUserRecord.department.Id && Status.Value = "Active"));
+                            Refresh(Filter(tbl_workorder_assign,maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no));
+                            Refresh(Filter(ref_template, department.Id = varUserRecord.department.Id && Status.Value = "Active"));
                             
                             // 3. End the loading state
                             UpdateContext({varIsLoading: false});
@@ -420,7 +420,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
 
                         lblDateOpenedValue_1 As label:
                             Height: =29
-                            Text: =varSelectedWorkOrderSV.date_opened
+                            Text: =varSelectedWorkOrderSV.created_on
                             Width: =152
                             X: =224
                             Y: =84
@@ -707,10 +707,10 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                         Height: =476
                         Items: |-
                             =Filter(
-                                tbl_mrl_workorder_assign,
+                                tbl_workorder_assign,
                                 maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no,
                                 LookUp(
-                                    tbl_mrl_users,
+                                    tbl_user,
                                     ID = technician_id
                                 ).role.Value = "Technician"
                             )
@@ -749,7 +749,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             Size: =14
                             Text: |-
                                 =With(
-                                    { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                                    { matchedEmail: LookUp(tbl_user, ID = Value(ThisItem.technician_id)).employee_email },
                                     If(
                                         !IsBlank(matchedEmail),
                                         Proper(Office365Users.UserProfileV2(matchedEmail).displayName),
@@ -802,7 +802,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             VerticalAlign: =VerticalAlign.Top
                             Visible: |-
                                 =If (
-                                    LookUp(tbl_mrl_users,ID = ThisItem.technician_id, role.Value) = "Supervisor",
+                                    LookUp(tbl_user,ID = ThisItem.technician_id, role.Value) = "Supervisor",
                                     false,
                                     true
                                 )
@@ -827,7 +827,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             VerticalAlign: =VerticalAlign.Top
                             Visible: |-
                                 =If (
-                                    LookUp(tbl_mrl_users,ID = ThisItem.technician_id, role.Value) = "Supervisor",
+                                    LookUp(tbl_user,ID = ThisItem.technician_id, role.Value) = "Supervisor",
                                     false,
                                     true
                                 )
@@ -846,7 +846,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             PaddingRight: =0
                             PaddingTop: =0
                             Size: =12
-                            Text: =ThisItem.team.Value & " | " & LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value
+                            Text: =ThisItem.team.Value & " | " & LookUp(tbl_user, ThisItem.technician_id = ID).role.Value
                             VerticalAlign: =VerticalAlign.Top
                             Width: =207
                             X: =24
@@ -903,7 +903,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             Text: ="Verify"
                             Visible: |-
                                 =If (
-                                    LookUp(tbl_mrl_users,ID = ThisItem.technician_id, role.Value) = "Supervisor",
+                                    LookUp(tbl_user,ID = ThisItem.technician_id, role.Value) = "Supervisor",
                                     false,
                                     If(ThisItem.status.Value in ["Processing","New","Closed"],false, true)
                                 )
@@ -936,7 +936,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                         Visible: |-
                             =IsBlank(
                                 LookUp(
-                                    tbl_mrl_workorder_assign,
+                                    tbl_workorder_assign,
                                     maintenanceorder_no = varSelectedWorkOrderSV.maintenanceorder_no,
                                     maintenanceorder_no
                                 )
@@ -1134,9 +1134,9 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             =With(
                                 {
                                     filteredData: Filter(
-                                        tbl_mrl_workorder_assign,
+                                        tbl_workorder_assign,
                                         ID = varSelectedWorkOrderSV.ID && LookUp(
-                                            tbl_mrl_users,
+                                            tbl_user,
                                             ID = technician_id
                                         ).role.Value = "Technician"
                                     )
@@ -1160,7 +1160,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                             With(
                                 {
                                     filteredData: Filter(
-                                        tbl_mrl_workorder_assign,
+                                        tbl_workorder_assign,
                                         ID = varSelectedWorkOrder.ID
                                     )
                                 },
@@ -1169,7 +1169,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                                         techData: Filter(
                                             filteredData,
                                             LookUp(
-                                                tbl_mrl_users,
+                                                tbl_user,
                                                 ID = technician_id
                                             ).role.Value = "Technician"
                                         )
@@ -1451,7 +1451,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                 Items: |-
                     =Sort(
                         Filter(
-                            tbl_mrl_workorder_log, 
+                            tbl_workorder_log, 
                             maintenanceorder_no = varSelectedWorkOrder.maintenanceorder_no
                         ),
                         Created,
@@ -1564,7 +1564,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
             Visible: |-
                 =IsBlank(
                     LookUp(
-                        tbl_mrl_workorder_assign,
+                        tbl_workorder_assign,
                         ID = varSelectedWorkOrder.ID,
                         ID
                     )
@@ -1769,12 +1769,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_SV As screen:
                     );
                     
                     Patch(
-                        tbl_mrl_workorder_log,
-                        Defaults(tbl_mrl_workorder_log),
+                        tbl_workorder_log,
+                        Defaults(tbl_workorder_log),
                         {
                             maintenanceorder_no: varSelectedWorkOrderSV.maintenanceorder_no,
                             maintenanceorder_status: "SUB",
-                            user_email: varUserRecord.email,
+                            user_email: varUserRecord.employee_email,
                             user_role: varUserRecord.role.Value,
                             user_department: varUserRecord.department.Value,
                             location_longitude: Location.Longitude,

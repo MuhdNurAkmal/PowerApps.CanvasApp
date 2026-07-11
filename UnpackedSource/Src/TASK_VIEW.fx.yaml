@@ -8,7 +8,7 @@ TASK_VIEW As screen:
             ClearCollect(
                 colTblMrlWorkorderAssign,
                 Filter(
-                    tbl_mrl_workorder_assign,
+                    tbl_workorder_assign,
                     technician_id = varUserRecord.ID
                 )
             );
@@ -700,8 +700,8 @@ TASK_VIEW As screen:
                     /* stable code 08/07/2026
                     // Change status new to processing
                     Patch(
-                        tbl_mrl_workorder_assign,
-                        LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID && start_date = Blank()),
+                        tbl_workorder_assign,
+                        LookUp(tbl_workorder_assign, ID = varSelectedTask.ID && start_date = Blank()),
                         {
                             status: {
                                 Id: 4,
@@ -712,16 +712,16 @@ TASK_VIEW As screen:
                     );
                     
                     
-                    // log tbl_mrl_workorder_assign_log status Processing
+                    // log tbl_workorder_assign_log status Processing
                     Patch(
-                        tbl_mrl_workorder_assign_log,
+                        tbl_workorder_assign_log,
                         // 1. Try to find an existing record with these two values
                         Coalesce(
                             LookUp(
-                                tbl_mrl_workorder_assign_log, workorder_assign_id = varSelectedTask.ID && maintenanceorder_status = "Processing"
+                                tbl_workorder_assign_log, workorder_assign_id = varSelectedTask.ID && maintenanceorder_status = "Processing"
                             ),
                             // 2. If LookUp is blank, create a new record instead
-                            Defaults(tbl_mrl_workorder_assign_log)
+                            Defaults(tbl_workorder_assign_log)
                         ),
                         {
                             workorder_assign_id: varSelectedTask.ID,
@@ -752,11 +752,11 @@ TASK_VIEW As screen:
                     
                         // ================= ONLINE =================
                         With(
-                            { rec: LookUp(tbl_mrl_workorder_assign, ID = varSelectedTask.ID) },
+                            { rec: LookUp(tbl_workorder_assign, ID = varSelectedTask.ID) },
                             If(
                                 !IsBlank(rec) && IsBlank(rec.start_date),
                                 Patch(
-                                    tbl_mrl_workorder_assign,
+                                    tbl_workorder_assign,
                                     rec,
                                     {
                                         status: { Id: 4, Value: "Processing" },
@@ -764,13 +764,13 @@ TASK_VIEW As screen:
                                     }
                                 );
                                 Patch(
-                                    tbl_mrl_workorder_assign_log,
+                                    tbl_workorder_assign_log,
                                     Coalesce(
                                         LookUp(
-                                            tbl_mrl_workorder_assign_log,
+                                            tbl_workorder_assign_log,
                                             workorder_assign_id = varSelectedTask.ID && maintenanceorder_status = "Processing"
                                         ),
-                                        Defaults(tbl_mrl_workorder_assign_log)
+                                        Defaults(tbl_workorder_assign_log)
                                     ),
                                     {
                                         workorder_assign_id: varSelectedTask.ID,
@@ -983,7 +983,7 @@ TASK_VIEW As screen:
                 Items: |-
                     =Sort(
                         Filter(
-                            tbl_mrl_workorder_assign_log, 
+                            tbl_workorder_assign_log, 
                             workorder_assign_id = varSelectedTask.ID
                         ),
                         Created,
@@ -1222,7 +1222,7 @@ TASK_VIEW As screen:
                 If(
                     varIsOffline,
                     Set(varIsOffline, false);
-                    ClearCollect(colTblMrlWorkorderAssign, Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID));
+                    ClearCollect(colTblMrlWorkorderAssign, Filter(tbl_workorder_assign, technician_id = varUserRecord.ID));
                     IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
                     Notify("Back online — data refreshed", NotificationType.Success)
                 ),

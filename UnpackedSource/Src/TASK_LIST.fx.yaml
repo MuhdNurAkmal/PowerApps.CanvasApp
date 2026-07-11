@@ -6,7 +6,7 @@ TASK_LIST As screen:
             // ONLINE: load live + cache
             ClearCollect(
                 colTblMrlWorkorderAssign,
-                Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
             );
             IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank());
             
@@ -14,8 +14,8 @@ TASK_LIST As screen:
             UpdateContext({varIsLoading: true});
         
             // 2. Perform the Refresh
-            //Refresh(Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID));
-            Refresh(tbl_mrl_workorder_assign);
+            //Refresh(Filter(tbl_workorder_assign, technician_id = varUserRecord.ID));
+            Refresh(tbl_workorder_assign);
             // 3. End the loading state
             UpdateContext({varIsLoading: false});
             ,
@@ -31,12 +31,12 @@ TASK_LIST As screen:
             // ONLINE: refresh connector, load live, cache both
             UpdateContext({varIsLoading: true});
         
-            Refresh(tbl_mrl_workorder_assign);
+            Refresh(tbl_workorder_assign);
             Refresh(tbl_maintenance_order);
         
             ClearCollect(
                 colTblMrlWorkorderAssign,
-                Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
             );
         
             // parent MOs referenced by the assignments (delegable per-row LookUp)
@@ -217,13 +217,13 @@ TASK_LIST As screen:
                                 // ===== ONLINE REFRESH =====
                                 UpdateContext({varIsLoading: true});
                             
-                                Refresh(tbl_mrl_workorder_assign);
+                                Refresh(tbl_workorder_assign);
                                 Refresh(tbl_maintenance_order);
                             
                                 // reload collections (screens read these, not the connector)
                                 ClearCollect(
                                     colTblMrlWorkorderAssign,
-                                    Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                                    Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
                                 );
                             
                                 Clear(colTblMaintenanceOrder);
@@ -306,7 +306,7 @@ TASK_LIST As screen:
                         Fill: =RGBA(255, 255, 255, 1)
                         Height: =434
                         Items: |-
-                            =//Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                            =//Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
                             colTblMrlWorkorderAssign
                         Layout: =Layout.Vertical
                         LoadingSpinner: =LoadingSpinner.Data
@@ -512,7 +512,7 @@ TASK_LIST As screen:
                             PaddingRight: =0
                             PaddingTop: =0
                             Size: =14
-                            Text: =Text(LookUp(tbl_maintenance_order,maintenanceorder_no = ThisItem.maintenanceorder_no, date_opened))
+                            Text: =Text(LookUp(tbl_maintenance_order,maintenanceorder_no = ThisItem.maintenanceorder_no, date_created))
                             VerticalAlign: =VerticalAlign.Top
                             Width: =110
                             X: =521

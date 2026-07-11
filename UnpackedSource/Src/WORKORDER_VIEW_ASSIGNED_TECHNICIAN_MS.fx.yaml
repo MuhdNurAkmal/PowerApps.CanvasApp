@@ -429,7 +429,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
 
                         lblDateOpenedValue_2 As label:
                             Height: =31
-                            Text: =varSelectedWorkOrderMS.date_opened
+                            Text: =varSelectedWorkOrderMS.created_on
                             Width: =160
                             X: =234
                             Y: =75
@@ -725,7 +725,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                         DelayItemLoading: =true
                         Height: =379
                         Items: |
-                            =Filter(tbl_mrl_workorder_assign,maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no)
+                            =Filter(tbl_workorder_assign,maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no)
                         Layout: =Layout.Vertical
                         LoadingSpinner: =LoadingSpinner.Data
                         ShowNavigation: =true
@@ -761,7 +761,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                             Size: =14
                             Text: |-
                                 =With(
-                                    { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                                    { matchedEmail: LookUp(tbl_user, ID = Value(ThisItem.technician_id)).employee_email },
                                     If(
                                         !IsBlank(matchedEmail),
                                         Proper(Office365Users.UserProfileV2(matchedEmail).displayName),
@@ -788,7 +788,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                             Size: =12
                             Text: =ThisItem.end_date
                             VerticalAlign: =VerticalAlign.Top
-                            Visible: =If (LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
+                            Visible: =If (LookUp(tbl_user, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
                             Width: =104
                             X: =440
                             Y: =14
@@ -811,7 +811,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                             Height: =54
                             Image: |-
                                 =With(
-                                    { matchedEmail: LookUp(tbl_mrl_users, ID = Value(ThisItem.technician_id)).email },
+                                    { matchedEmail: LookUp(tbl_user, ID = Value(ThisItem.technician_id)).employee_email },
                                     If(
                                         !IsBlank(matchedEmail),
                                         IfError(Office365Users.UserPhotoV2(matchedEmail), SampleImage),
@@ -843,7 +843,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                             Size: =12
                             Text: =ThisItem.start_date
                             VerticalAlign: =VerticalAlign.Top
-                            Visible: =If (LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
+                            Visible: =If (LookUp(tbl_user, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
                             Width: =104
                             X: =316
                             Y: =16
@@ -864,7 +864,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                             Size: =12
                             Text: =Coalesce(ThisItem.status.Value,"N/A")
                             VerticalAlign: =VerticalAlign.Top
-                            Visible: =If (LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
+                            Visible: =If (LookUp(tbl_user, ThisItem.technician_id = ID).role.Value = "Supervisor",false,true)
                             Width: =84
                             X: =543
                             Y: =30
@@ -881,7 +881,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                             PaddingRight: =0
                             PaddingTop: =0
                             Size: =12
-                            Text: =ThisItem.team.Value & " | " & LookUp(tbl_mrl_users, ThisItem.technician_id = ID).role.Value
+                            Text: =ThisItem.team.Value & " | " & LookUp(tbl_user, ThisItem.technician_id = ID).role.Value
                             VerticalAlign: =VerticalAlign.Top
                             Width: =217
                             X: =92
@@ -924,7 +924,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                         Visible: |-
                             =IsBlank(
                                 LookUp(
-                                    tbl_mrl_workorder_assign,
+                                    tbl_workorder_assign,
                                     maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no,
                                     maintenanceorder_no
                                 )
@@ -1111,7 +1111,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                         Font: =Font.Lato
                         Height: =43
                         HoverFill: =RGBA(255, 255, 255, 1)
-                        Items: =Filter(ref_template, Department.Id = varUserRecord.department.Id && Status.Value = "Active")
+                        Items: =Filter(ref_template, department.Id = varUserRecord.department.Id && Status.Value = "Active")
                         PressedFill: =RGBA(166, 166, 166, 1)
                         SelectionFill: =RGBA(166, 166, 166, 1)
                         Width: =446
@@ -1449,7 +1449,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                 Items: |-
                     =Sort(
                         Filter(
-                            tbl_mrl_workorder_log, 
+                            tbl_workorder_log, 
                             maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no
                         ),
                         Created,
@@ -1562,7 +1562,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                 Visible: |-
                     =IsBlank(
                         LookUp(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no,
                             maintenanceorder_no
                         )
@@ -1793,12 +1793,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                     );
                     
                     Patch(
-                        tbl_mrl_workorder_log,
-                        Defaults(tbl_mrl_workorder_log),
+                        tbl_workorder_log,
+                        Defaults(tbl_workorder_log),
                         {
                             maintenanceorder_no: varSelectedWorkOrderMS.maintenanceorder_no,
                             maintenanceorder_status: "CLS",
-                            user_email: varUserRecord.email,
+                            user_email: varUserRecord.employee_email,
                             user_role: varUserRecord.role.Value,
                             user_department: varUserRecord.department.Value,
                             location_longitude: Location.Longitude,
@@ -1811,7 +1811,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                     ClearCollect(
                         colToCloseMS,
                         Filter(
-                            tbl_mrl_workorder_assign,
+                            tbl_workorder_assign,
                             maintenanceorder_no = varSelectedWorkOrderMS.maintenanceorder_no
                         )
                     );
@@ -1821,7 +1821,7 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                         With(
                             {
                                 UpdatedAssign: Patch(
-                                    tbl_mrl_workorder_assign,
+                                    tbl_workorder_assign,
                                     CurrentAssign,
                                     {
                                         status: { Id: 6, Value: "Closed" }
@@ -1829,13 +1829,13 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                                 )
                             },
                             Patch(
-                                tbl_mrl_workorder_assign_log,
-                                Defaults(tbl_mrl_workorder_assign_log),
+                                tbl_workorder_assign_log,
+                                Defaults(tbl_workorder_assign_log),
                                 {
                                     workorder_assign_id: UpdatedAssign.ID,
                                     maintenanceorder_no: varSelectedWorkOrderMS.maintenanceorder_no,
                                     maintenanceorder_status: "Closed",
-                                    user_email: varUserRecord.email,
+                                    user_email: varUserRecord.employee_email,
                                     user_department: varUserRecord.department.Value,
                                     user_role: varUserRecord.role.Value,
                                     location_longitude: Location.Longitude,
@@ -2027,12 +2027,12 @@ WORKORDER_VIEW_ASSIGNED_TECHNICIAN_MS As screen:
                     );
                     
                     Patch(
-                        tbl_mrl_workorder_log,
-                        Defaults(tbl_mrl_workorder_log),
+                        tbl_workorder_log,
+                        Defaults(tbl_workorder_log),
                         {
                             maintenanceorder_no: varSelectedWorkOrderMS.maintenanceorder_no,
                             maintenanceorder_status: "REV2",
-                            user_email: varUserRecord.email,
+                            user_email: varUserRecord.employee_email,
                             user_role: varUserRecord.role.Value,
                             user_department: varUserRecord.department.Value,
                             location_longitude: Location.Longitude,
