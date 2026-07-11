@@ -141,7 +141,7 @@ USER_VIEW As screen:
                             UpdateContext({varIsLoading: true});
                             
                             // 2. Perform the Refresh
-                            Refresh(tbl_mrl_users);
+                            Refresh(tbl_user);
                             Refresh(ref_status);
                             
                             // 3. End the loading state
@@ -211,7 +211,7 @@ USER_VIEW As screen:
                             =With(
                                 { 
                                     // Get the email from your users table
-                                    TargetEmail: LookUp(tbl_mrl_users, email = varSelectedUser.email).email 
+                                    TargetEmail: LookUp(tbl_user, employee_email = varSelectedUser.employee_email).employee_email 
                                 },
                                 If(
                                     !IsBlank(TargetEmail) && IsMatch(TargetEmail, Match.Email),
@@ -245,7 +245,7 @@ USER_VIEW As screen:
                         FontUnderline: =false
                         FontWeight: =""
                         Height: =65
-                        Image: =Office365Users.UserPhotoV2(varSelectedUser.email)
+                        Image: =Office365Users.UserPhotoV2(varSelectedUser.employee_email)
                         Name: =
                         OutOfOffice: =false
                         Shape: ="Circular"
@@ -294,7 +294,7 @@ USER_VIEW As screen:
                     txtVuEmail As text:
                         BorderColor: =RGBA(166, 166, 166, 1)
                         BorderThickness: =3
-                        Default: =varSelectedUser.email
+                        Default: =varSelectedUser.employee_email
                         Font: =Font.Lato
                         Height: =30
                         HintText: =""
@@ -353,15 +353,15 @@ USER_VIEW As screen:
                         BorderThickness: =3
                         ChevronBackground: =RGBA(166, 166, 166, 1)
                         ChevronHoverBackground: =RGBA(166, 166, 166, 1)
-                        Default: =LookUp( ref_mrl_departments, Department_Code = varSelectedUser.department.Value, Department_Code & " - " & Department_Name)
+                        Default: =LookUp( ref_department, department_code = varSelectedUser.department.Value, department_code & " - " & department_name)
                         Font: =Font.Lato
                         Height: =30
                         HoverFill: =RGBA(255, 255, 255, 1)
                         Items: |-
                             =AddColumns(
-                                ref_mrl_departments,
+                                ref_department,
                                 DisplayLabel,
-                                Department_Code & " - " & Department_Name
+                                department_code & " - " & department_name
                             )
                         PressedFill: =RGBA(166, 166, 166, 1)
                         SelectionFill: =RGBA(166, 166, 166, 1)
@@ -803,10 +803,10 @@ USER_VIEW As screen:
                     
                     IfError(
                         Patch(
-                            tbl_mrl_users,
-                            LookUp(tbl_mrl_users, ID = varSelectedUser.ID),
+                            tbl_user,
+                            LookUp(tbl_user, ID = varSelectedUser.ID),
                             {
-                                email: Trim(txtVuEmail.Text),
+                                employee_email: Trim(txtVuEmail.Text),
                                 // Staff ID is patched only if not blank, otherwise sends blank
                                 mrl_employee_id: If(!IsBlank(txtVuStaffID.Text), Trim(txtVuStaffID.Text), Blank()),
                                 role: { 
@@ -1008,7 +1008,7 @@ USER_VIEW As screen:
             IconStyle: ='ButtonCanvas.IconStyle'.Filled
             Layout: ="Icon before"
             OnSelect: |-
-                =Remove(tbl_mrl_users, LookUp(tbl_mrl_users, ID = varSelectedUser.ID));
+                =Remove(tbl_user, LookUp(tbl_user, ID = varSelectedUser.ID));
                 
                 Notify("User deleted successfully", NotificationType.Success);
                 

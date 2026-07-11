@@ -6,7 +6,7 @@ USER_LIST As screen:
         UpdateContext({varIsLoading: true});
         
         // 2. Perform the Refresh
-        Refresh(tbl_mrl_users);
+        Refresh(tbl_user);
         Refresh(ref_status);
         
         // 3. End the loading state
@@ -218,7 +218,7 @@ USER_LIST As screen:
                                 UpdateContext({varIsLoading: true});
                                 
                                 // 2. Perform the Refresh
-                                Refresh(tbl_mrl_users);
+                                Refresh(tbl_user);
                                 Refresh(ref_status);
                                 
                                 // 3. End the loading state
@@ -272,7 +272,7 @@ USER_LIST As screen:
                         BorderColor: =App.Theme.Colors.Darker10
                         DelayItemLoading: =true
                         Height: =439
-                        Items: =Filter(tbl_mrl_users, department.Value = varUserRecord.department.Value && Len(email) > 0 )
+                        Items: =Filter(tbl_user, department.Value = varUserRecord.department.Value && Len(employee_email) > 0 )
                         Layout: =Layout.Vertical
                         LoadingSpinner: =LoadingSpinner.Data
                         ShowNavigation: =true
@@ -323,7 +323,7 @@ USER_LIST As screen:
                             PaddingRight: =0
                             PaddingTop: =0
                             Size: =12
-                            Text: =ThisItem.email
+                            Text: =ThisItem.employee_email
                             VerticalAlign: =VerticalAlign.Top
                             Width: =405
                             X: =152
@@ -356,9 +356,9 @@ USER_LIST As screen:
                             Size: =12
                             TabIndex: =0
                             Text: |
-                                =//Upper(Left(Office365Users.UserProfileV2(ThisItem.email).givenName, 1))
+                                =//Upper(Left(Office365Users.UserProfileV2(ThisItem.employee_email).givenName, 1))
                                 
-                                //Lower(Mid(Office365Users.UserProfileV2(ThisItem.email).givenName, 2, Len(Office365Users.UserProfileV2(ThisItem.email).givenName) - 1))
+                                //Lower(Mid(Office365Users.UserProfileV2(ThisItem.employee_email).givenName, 2, Len(Office365Users.UserProfileV2(ThisItem.employee_email).givenName) - 1))
                             VerticalAlign: =VerticalAlign.Top
                             Width: =409
                             X: =107
@@ -433,7 +433,7 @@ USER_LIST As screen:
                             FontUnderline: =false
                             FontWeight: =""
                             Height: =54
-                            Image: =Office365Users.UserPhotoV2(ThisItem.email)
+                            Image: =Office365Users.UserPhotoV2(ThisItem.employee_email)
                             Name: =
                             OutOfOffice: =false
                             Shape: ="Circular"
@@ -461,7 +461,7 @@ USER_LIST As screen:
                                 =With(
                                     { 
                                         // Get the email from your users table
-                                        TargetEmail: LookUp(tbl_mrl_users, email = ThisItem.email).email 
+                                        TargetEmail: LookUp(tbl_user, employee_email = ThisItem.employee_email).email 
                                     },
                                     If(
                                         !IsBlank(TargetEmail) && IsMatch(TargetEmail, Match.Email),
@@ -1132,7 +1132,7 @@ USER_LIST As screen:
                 OnSelect: |-
                     =// Check Exist Record
                     If(
-                        !IsBlank(LookUp(tbl_mrl_users, email = txtEmail.Value)),
+                        !IsBlank(LookUp(tbl_user, employee_email = txtEmail.Value)),
                         // If Exist
                         Notify("This email '" & txtEmail.Value & "' already associated with an account ",NotificationType.Error),
                       
@@ -1300,9 +1300,9 @@ USER_LIST As screen:
                 HoverBorderColor: =ColorFade(RGBA(188,30,69,1), 15%)
                 Items: |-
                     =AddColumns(
-                        ref_mrl_departments,
+                        ref_department,
                         DisplayLabel,
-                        Department_Code & " - " & Department_Name
+                        department_code & " - " & department_name
                     )
                 PressedFill: =RGBA(188, 30, 69, 1)
                 Size: =11
@@ -1492,10 +1492,10 @@ USER_LIST As screen:
                     
                     IfError(
                         Patch(
-                            tbl_mrl_users,
-                            Defaults(tbl_mrl_users),
+                            tbl_user,
+                            Defaults(tbl_user),
                             {
-                                email: Trim(txtEmail.Value),
+                                employee_email: Trim(txtEmail.Value),
                                 // Staff ID is patched only if not blank, otherwise sends blank
                                 mrl_employee_id: If(!IsBlank(txtStaffID.Value), Trim(txtStaffID.Value), Blank()),
                                 role: { 

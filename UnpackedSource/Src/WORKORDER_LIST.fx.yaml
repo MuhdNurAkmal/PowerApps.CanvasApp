@@ -847,7 +847,7 @@ WORKORDER_LIST As screen:
                             HoverFill: =RGBA(255, 255, 255, 1)
                             Items: |-
                                 =SortByColumns(
-                                    ref_workorder_status,
+                                    ref_dmp_status,
                                     "ID",
                                     SortOrder.Ascending
                                 )

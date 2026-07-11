@@ -8,7 +8,7 @@ DASHBOARD As screen:
             // ONLINE: load live + cache
             ClearCollect(
                 colTblMrlWorkorderAssign,
-                Filter(tbl_mrl_workorder_assign, technician_id = varUserRecord.ID)
+                Filter(tbl_workorder_assign, technician_id = varUserRecord.ID)
             );
             IfError(SaveData(colTblMrlWorkorderAssign, "colTblMrlWorkorderAssignCache"), Blank()),
         
@@ -710,10 +710,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                'ref_mrl_departments', 
+                                'ref_department', 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "TNMD"
-                            ).Department_BrandColor
+                                department_code = "TNMD"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -722,7 +722,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "TNMD",
                         
@@ -751,10 +751,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                'ref_mrl_departments', 
+                                'ref_department', 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "WS10"
-                            ).Department_BrandColor
+                                department_code = "WS10"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -763,7 +763,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "PSD",
                         
@@ -793,10 +793,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                'ref_mrl_departments', 
+                                'ref_department', 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "WS20"
-                            ).Department_BrandColor
+                                department_code = "WS20"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -805,7 +805,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "SNC",
                         
@@ -835,10 +835,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                'ref_mrl_departments', 
+                                'ref_department', 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "RSDM"
-                            ).Department_BrandColor
+                                department_code = "RSDM"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -847,7 +847,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "RSDM",
                         
@@ -1006,7 +1006,7 @@ DASHBOARD As screen:
                 BorderColor: =App.Theme.Colors.Darker10
                 DelayItemLoading: =true
                 Height: =141
-                Items: =tbl_mrl_users
+                Items: =tbl_user
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 TemplatePadding: =0
@@ -1036,7 +1036,7 @@ DASHBOARD As screen:
                     PaddingRight: =0
                     PaddingTop: =0
                     Size: =15
-                    Text: =ThisItem.email
+                    Text: =ThisItem.employee_email
                     VerticalAlign: =VerticalAlign.Top
                     Width: =395
                     X: =108
@@ -1409,9 +1409,9 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                ref_mrl_departments, 
+                                ref_department, 
                                 ID = varUserRecord.department.Id
-                            ).Department_BrandColor
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -1420,7 +1420,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = varUserRecord.department.Value,
                         
@@ -1433,9 +1433,9 @@ DASHBOARD As screen:
                     Height: =141
                     IconSVG: |-
                         =LookUp(
-                            'ref_mrl_departments', 
+                            'ref_department', 
                             ID = varUserRecord.department.Id
-                        ).DeptIconSVG
+                        ).department_icon_svg
                     IconSVG2: |-
                         ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path d=""M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"" stroke=""#ffffff"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""></path> </g></svg>"
                     NavigateColor1: =RGBA(255, 255, 255, 1)
@@ -1618,12 +1618,12 @@ DASHBOARD As screen:
                 DelayItemLoading: =true
                 Height: =280
                 Items: |-
-                    =//Filter(tbl_mrl_users,department.Value = varUserRecord.department.Value && email <> Blank())
+                    =//Filter(tbl_user,department.Value = varUserRecord.department.Value && employee_email <> Blank())
                     With(
                         {
                             // STEP 1: Fully Delegable. SharePoint happily filters by Department.
                             // This pulls only the users in the matching department into the app.
-                            DeptUsers: Filter(tbl_mrl_users, department.Value = varUserRecord.department.Value)
+                            DeptUsers: Filter(tbl_user, department.Value = varUserRecord.department.Value)
                         },
                         // STEP 2: Runs Locally. Now that the app has a small, safe chunk of data,
                         // we filter out the blank emails.
@@ -1658,7 +1658,7 @@ DASHBOARD As screen:
                     PaddingRight: =0
                     PaddingTop: =0
                     Size: =12
-                    Text: =ThisItem.email
+                    Text: =ThisItem.employee_email
                     VerticalAlign: =VerticalAlign.Top
                     Width: =405
                     X: =152
@@ -1776,7 +1776,7 @@ DASHBOARD As screen:
                     FontUnderline: =false
                     FontWeight: =""
                     Height: =54
-                    Image: =Office365Users.UserPhotoV2(ThisItem.email)
+                    Image: =Office365Users.UserPhotoV2(ThisItem.employee_email)
                     Name: =
                     OutOfOffice: =false
                     Shape: ="Circular"
@@ -1803,8 +1803,8 @@ DASHBOARD As screen:
                     Text: |-
                         =With(
                             { 
-                                // Get the email from your users table
-                                TargetEmail: LookUp(tbl_mrl_users, email = ThisItem.email).email 
+                                // Get the employee_email from your users table
+                                TargetEmail: LookUp(tbl_user, employee_email = ThisItem.employee_email).email 
                             },
                             If(
                                 !IsBlank(TargetEmail) && IsMatch(TargetEmail, Match.Email),
@@ -2556,9 +2556,9 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                ref_mrl_departments, 
+                                ref_department, 
                                 ID = varUserRecord.department.Id
-                            ).Department_BrandColor
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -2567,7 +2567,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = varUserRecord.department.Value,
                         
@@ -2580,9 +2580,9 @@ DASHBOARD As screen:
                     Height: =141
                     IconSVG: |-
                         =LookUp(
-                            ref_mrl_departments, 
+                            ref_department, 
                             ID = varUserRecord.department.Id
-                        ).DeptIconSVG
+                        ).department_icon_svg
                     IconSVG2: |-
                         ="<svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g id=""SVGRepo_bgCarrier"" stroke-width=""0""></g><g id=""SVGRepo_tracerCarrier"" stroke-linecap=""round"" stroke-linejoin=""round""></g><g id=""SVGRepo_iconCarrier""> <path d=""M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"" stroke=""#ffffff"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""></path> </g></svg>"
                     NavigateColor1: =RGBA(255, 255, 255, 1)
@@ -3279,10 +3279,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                ref_mrl_departments, 
+                                ref_department, 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "TNMD"
-                            ).Department_BrandColor
+                                department_code = "TNMD"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -3291,7 +3291,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "TNMD",
                         
@@ -3320,10 +3320,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                ref_mrl_departments, 
+                                ref_department, 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "WS10"
-                            ).Department_BrandColor
+                                department_code = "WS10"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -3332,7 +3332,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "PSD",
                         
@@ -3361,10 +3361,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                ref_mrl_departments, 
+                                ref_department, 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "WS20"
-                            ).Department_BrandColor
+                                department_code = "WS20"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -3373,7 +3373,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "SNC",
                         
@@ -3403,10 +3403,10 @@ DASHBOARD As screen:
                     CardColor: |-
                         =ColorValue(
                             LookUp(
-                                ref_mrl_departments, 
+                                ref_department, 
                                 //ID = varUserRecord.department.Id
-                                Department_Code = "RSDM"
-                            ).Department_BrandColor
+                                department_code = "RSDM"
+                            ).department_brand_color
                         )
                     ChildTabPriority: =true
                     ContentLanguage: =""
@@ -3415,7 +3415,7 @@ DASHBOARD As screen:
                         
                             Filter(
                         
-                                tbl_mrl_users, 
+                                tbl_user, 
                         
                                 department.Value = "RSDM",
                         

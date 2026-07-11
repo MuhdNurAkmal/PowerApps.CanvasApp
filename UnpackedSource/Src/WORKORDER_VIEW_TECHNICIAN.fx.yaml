@@ -166,7 +166,7 @@ WORKORDER_VIEW_TECHNICIAN As screen:
                             Font: =Font.Lato
                             Height: =31
                             Text: |-
-                                =":   " & varSelectedWorkOrder.workorder_no
+                                =":   " & varSelectedWorkOrder.maintenance_no
                             Width: =160
                             X: =289
                             Y: =44
@@ -193,7 +193,7 @@ WORKORDER_VIEW_TECHNICIAN As screen:
                             Font: =Font.Lato
                             Height: =31
                             Text: |-
-                                =":   " & varSelectedWorkOrder.work_order_type.Value
+                                =":   " & varSelectedWorkOrder.maintenance_type.Value
                             Width: =317
                             X: =685
                             Y: =44
@@ -206,7 +206,7 @@ WORKORDER_VIEW_TECHNICIAN As screen:
                         BasePaletteColor: =
                         Content: |-
                             =If(
-                                varSelectedNotification.notification_type.Value = "M7",
+                                varSelectedNotification.maintenance_type.Value = "M7",
                                 "PM",
                                 "CM"
                             )
@@ -224,7 +224,7 @@ WORKORDER_VIEW_TECHNICIAN As screen:
                         TabIndex: =0
                         ThemeColor: |+
                             =If(
-                                varSelectedNotification.notification_type.Value = "M7",
+                                varSelectedNotification.maintenance_type.Value = "M7",
                                 'BadgeCanvas.ThemeColor'.Brand,
                                 'BadgeCanvas.ThemeColor'.Important
                             )
@@ -289,7 +289,7 @@ WORKORDER_VIEW_TECHNICIAN As screen:
                         Label4_54 As label:
                             Height: =31
                             Text: |-
-                                =":   " & varSelectedWorkOrder.date_opened
+                                =":   " & varSelectedWorkOrder.created_on
                             Width: =160
                             X: =289
                             Y: =75
@@ -497,7 +497,7 @@ WORKORDER_VIEW_TECHNICIAN As screen:
                         Label4_86 As label:
                             Height: =31
                             Text: |-
-                                =":   " & varSelectedWorkOrder.work_centre.Value
+                                =":   " & varSelectedWorkOrder.operation_workcenter.Value
                             Width: =160
                             X: =289
                             Y: =168

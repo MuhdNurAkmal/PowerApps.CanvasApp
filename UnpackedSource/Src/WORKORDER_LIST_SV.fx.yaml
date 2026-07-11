@@ -278,7 +278,7 @@ WORKORDER_LIST_SV As screen:
                             HoverFill: =RGBA(255, 255, 255, 1)
                             Items: |-
                                 =SortByColumns(
-                                    ref_workorder_status,
+                                    ref_dmp_status,
                                     "ID",
                                     SortOrder.Ascending
                                 )
@@ -629,7 +629,7 @@ WORKORDER_LIST_SV As screen:
                         Height: =422
                         Items: |-
                             =Filter(
-                                tbl_mrl_workorder_assign,
+                                tbl_workorder_assign,
                                 varUserRecord.ID = technician_id
                             )
                         Layout: =Layout.Vertical
